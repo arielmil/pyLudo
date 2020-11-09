@@ -1,0 +1,82 @@
+- Pre-Desenvolvimento
+	- Estudar as regras e a gameplay do jogo -- OK
+	- Modelagem conceitual -- OK
+	- Modelagem modular -- OK
+	- Fazer o BackLog -- OK
+	- Otimizar o Git
+	- Aprender mais sobre modular
+	- Tirar 10 nos trabalhos -- NOK
+
+- Organizar o desenvolvimento
+	- Refletir sobre os modulos -- OK
+		- Tirar duvidas -- OK
+	- Organizar funcionalidades basicas para cada módulo -- OK
+	- Refletir sobre as proficiencias de cada um -- OK
+	- Separar as tarefas
+
+- Fazer Documentação
+	- Regitros de pedidos do cliente -- OK
+		- Definir requisitos -- OK
+			- Tirar duvidas -- OK
+	- Definir prazos -- OK
+	- XML
+		- Tirar duvidas
+	- Explicar regras do jogo -- OK
+	- Documentar elementos do jogo -- OK
+
+- Desenvolvimento
+	- Tirar duvidas
+	- Programar os modulos
+		- Banco de Dados
+			- Salva jogador
+			- Salva_partida
+
+		- Graphics
+			- pygames.init
+			- Inicia_telas
+			- Desenha_jogo
+			- Aonde_clicou
+			- Renderiza_tela_quantos_jogam()
+			- Desenha_peão
+			- Desenha_tabuleiro
+			- Desenha_dado
+
+		- Dados
+			- Cria_dado -- OK
+			- Clica_dado(Random) -- OK
+
+		- Main
+			
+		- Partida
+			- Inicia_partida
+			- Gerência_Partida
+			- Roda_tabuleiro -- OK
+			- Cria_torre
+			- Captura_peão -- OK
+			- Desmancha_torre
+			- Manda_para_casa -- OK
+			- Roda_dado
+			- Escolhe_peão
+			- Escollhe_cor
+
+		- Peão -- OK 
+			- Cria_peao -- OK
+			- Move_peão -- OK
+
+		- Player -- OK
+			- Cria_jogador -- OK
+
+		- Tabuleiro -- OK
+			- Cria_tabuleiro_vazio -- OK
+			- Cria_casa -- OK
+			- Printa_tabuleiro -- OK
+			- Cria_casas -- OK
+			- Cria_tabuleiro -- OK
+
+
+	- Desenvolver sprites
+		-escolher sprite
+			- Dado
+			- Peão
+			- Tabuleiro
+		- linkar sprites

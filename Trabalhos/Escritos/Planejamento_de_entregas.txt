@@ -1,0 +1,41 @@
+T1 (16/09) :
+
+- Itens de backlog
+
+- Diagrama Estrutural
+
+- Diagrama de Arquitetura Modular
+
+- Definição de Requisitos
+
+- Planejamento de entregas
+
+
+
+T2:
+
+
+- Módulo de peão: 21/09 - 25/09 (Completo com exeção de interface gráfica, com documentação interna e externa + testes)
+
+- Módulo dado:  28/09 - 02/10  (Completo com exeção de interface gráfica, com documentação interna e externa + testes)
+
+- Módulo partida: 05/10 - 09/10 (Algumas funções com exeção de interface gráfica)
+
+- Módulo tabuleiro: 12/10 - 16/10 (Completo com exeção de interface gráfica, com documentação interna e externa + testes)
+
+- Módulo player: 16/10 - 19/10 (Completo com exeção de interface gráfica, com documentação interna e externa + testes)
+
+- Extras até 16/10: Terminar de escolher todos os assets
+
+
+
+T3:
+
+
+- Fazer as funções de acesso de todos os módulos
+
+- Módulo partida (Funções restantes, com documentação interna e externa + testes)
+
+- Módulo Graphics (T3 toda com documentação interna e externa + testes)
+
+- Módulo de Banco de Dados:02/11 - (Com documentação interna e externa + testes)

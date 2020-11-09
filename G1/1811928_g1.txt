@@ -1,0 +1,102 @@
+1)
+
+Requisito de escopo de efeito restrito: Um determinado usuário pode estar associado a uma determinada vacina em uma determinada apenas uma vez. Evitando assim possíveis conflitos de informação que podem gerar confusões.
+
+Requisito de escopo de efeito abrangente: É possível saber quais vacinas são recomendadas pelos órgãos de saúde.
+
+Requisito funcional: Cadastrar um usuário e mostrar-lo as vacinas pendentes (com base nas vacinas associadas a ele), bem como o ponto de vacina mais próximo da sua casa.
+
+Requisito inverso: A aplicação não permite que sejam cadastradas vacinas sem os seus respectivos tipos.
+
+Requisito não funcional: Um requisito não funcional é a portabilidade, em termos do problema destacado, o aplicativo Vacina Online deve estar disponível em todas as plataformas digitais (Apple store, Play store, etc.). Outro tipo de requisito não funcional se dá na segurança do aplicativo, no qual, por exemplo, para acessar as suas bases de vacina, o usuário deve inserir seu login, e sua senha determinadas por sí mesmo.
+
+
+2) Imagens enviadas no .zip. Diagrama modular: 1811928_diagrama_modular_g1.pdf, Diagrama estrutural: 1811928_diagrama_estrutural_g1.pdf
+
+
+3)
+
+Código:
+
+Função escolhida:
+
+def Cria_usuario():
+    """Usado para criar um usuário"""
+    LIMITE = 30
+    escolhendo = True
+    i = 0
+    while (escolhendo == True and i < 10):
+        nome = str(input("\nPor favor, escolha seu nome de usuário, ou aperte enter para não escolher: "))
+        if len(nome) > LIMITE:
+            print("\nErro: o nome deve ter no máximo 30 caracteres.")
+            i = i + 1
+        elif nome == "":
+            return -1
+        else:
+            escolhendo = False
+    if (i == 10):
+    	print("Usuário ultrapassou o limite de tentativas para criação de nome. Por favor, tente novamente.")
+    	return -2
+
+    i = 0
+    escolhendo = True
+    while (escolhendo == True and i < 10):
+        senha = str(input("\nPor favor, digite a senha a ser cadastrada: "))
+        if len(senha) > LIMITE:
+            print("\nErro: a senha deve ter no máximo 30 caracteres.")
+            i = i + 1
+        elif senha == "":
+            return -3
+        else:
+            escolhendo = False
+    if (i == 10):
+    	print("Usuário ultrapassou o limite de tentativas para criação de senha. Por favor, tente novamente.")
+    	return -4
+    usuario = {"nome": nome, "senha": senha}
+    return usuario
+
+
+Testes:
+
+import unittest
+from Usuario import *
+
+class Testa_vacina_app(unittest.TestCase):
+
+    def test_01_Cria_usuario_NOK_nao_escolheu_nome_deixou_em_branco(self):
+        print("Caso de Teste 01 - Cria um usuário e ele não escolhe um nome, pois o usuário optou por deixar em branco.")
+        teste = Cria_usuario()
+        retorno_esperado = -1
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_02_Cria_usuario_NOK_nao_escolheu_nome_tentativas_acabaram(self):
+        print("Caso de Teste 02 - Cria um usuário e ele não escolhe um nome, pois suas tentativas acabaram.")
+        teste = Cria_usuario()
+        retorno_esperado = -2
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_03_Cria_usuario_NOK_nao_escolheu_senha_deixou_em_branco(self):
+        print("Caso de Teste 03 - Cria um usuário e ele não escolhe uma senha, pois ele optou por deixar em branco.")
+        teste = Cria_usuario()
+        retorno_esperado = -3
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_04_Cria_usuario_NOK_nao_escolheu_senha_tentativas_acabaram(self):
+        print("Caso de Teste 04 - Cria um usuário e ele não escolhe uma senha, pois suas tentativas acabaram.")
+        teste = Cria_usuario()
+        retorno_esperado = -4
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_05_Cria_usuario_OK(self):
+        print("Caso de Teste 05 - Cria um usuário com sucesso.")
+        teste = Cria_usuario()
+        retorno_esperado = {"nome": teste["nome"], "senha": teste["senha"]}
+        self.assertEqual(retorno_esperado, teste)
+        
+if __name__ == '__main__':
+    unittest.main()
+
+Ambos estão em arquivos.py também. Cria_usuário está em Usuario.py, e seus testes estão em teste.py
+
+
+4) A principal proposta da metodologia ágil é agilizar as entregas e realizá-las com mais frequência, se adequando as necessidades do cliente. Logo a primeira relação é a facilitação gerada pela Programação Modular para futuras mudanças no projeto conforme novas demandas vão surgindo ao código. Através da separação dos programas em módulos consegue-se definir objetivos, através de diagramas bem definidos e uma documentação extensa para cada um dos mesmos, e fazendo com que esses módulos não dependam um dos outros para realizar suas funções, facilita-se a possibilidade de serem feitas rápidas mudanças e aprimoramentos, uma vez que o código está devidamente organizado. A segunda vantagem da Programação Modular é a facilitação de uma comunicação frequente com o cliente e suas solicitações por meio de documentos claros sobre como o programa funciona na versão atual, tudo o que ele faz e não faz, facilitando que o projeto tome o rumo que o cliente desejar, seguindo um lema da metodologia ágil: "colaboração do cliente mais que negociação". de contratos.

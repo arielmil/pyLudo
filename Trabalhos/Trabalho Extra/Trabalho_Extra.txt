@@ -1,0 +1,33 @@
+1) Explique a relação entre a vantagem de
+reutilizar um módulo e a capacidade de gerar a
+estimativa para o desenvolvimento de uma
+aplicação.
+
+	R: Caso algum módulo seja reaproveitado, o desenvolvemento de um programa / aplicação tende a ser mais rápido pois o tempo de desenvolvemento é encurtado em função de utilizar um módulo já pronto. O fato de um módulo ser (de acordo com a sua definição lógica) um artefato da aplicação que tem um objetivo único e definido garante que a nova aplicação que esta sendo desenvolvida tem algum grau de semelhança com a aplicação que deu luz ao módulo reutilizado, o que implica em um potencial de gerar uma estimativa mais precisa para o fim de desenvolvimento do projeto.
+
+
+
+2) Apresente a diferença entre uma
+documentação elaborada em um módulo de
+definição e em um módulo de implementação.
+
+	R: A documentação elaborada nos módulos de definição apenas precisa documentar informações que dizem respeito aos protótipos de funções que vão ser implementadas no(s) módulo(s) de implementação (Como o tipo de dados uma determinada função recebe e retorna), além de documentação básica sobre structs definidas nele. A documentação de um módulo de implementação tem como objetivo documentar informações que dizem respeito ao uso prático interno do módulo (Como o objetivo e uso das funções definidas no módulo de definições).
+
+
+3) Todo artefato é um construto, mas nem todo
+construto é um artefato. Certo, errado,
+justifique.
+
+	R: Artefato: Componente do projeto pode ser vercionado (Isto é: Possui um histórico de versões de desenvolvemento que é alterado crescentemente de acordo com determinadas atualizações notaveis. Construto: Segundo http://www.inf.puc-rio.br/~inf1301/docs/2016_2/Aula01_Apresentacao_2016_2.pdf, "Construto é uma implementação parcial de um programa, permitindo avaliar e, possivelmente, utilizá-lo de forma produtiva." Logo nem todo artefato é um construto.
+
+V(x) | ( (A(x) -> C(x)) ^ !(C(x) -> A(x)) )
+A(x): x é um Artefato, C(x): x é um Construto.
+
+Sabemos que a Afirmação (A(x) -> C(x)) está incorreta (de acordo com o que foi escrito acima). Logo toda a formula inteira está incorreta.
+
+
+
+4) Um tipo abstrato de dados admite variáveis
+globais em seu código. Certo, errado, justifique
+
+	R: Um TAD não admite o uso de váriaveis externas ao seu próprio escopo, pois isso permitiria o acesso externo a estrutura, o que foge do motivo para o qual essas estruturas são conceitualmente elaboradas.

@@ -1,0 +1,39 @@
+											O Jogo:
+
+Player:
+	- O jogador.
+	- Antes de começar o jogo escolhe uma cor e recebe 4 peões correspondentes a ela, além de ficar associado a uma parte do tabuleiro também colorida com a cor escolhida.
+	- A cada turno um jogador lança um dado.
+	- Caso o dado jogado retorne seis, o jogador ganha uma outra rodada após o fim desta.
+	- Caso um peão de um jogador capture o de outro, o jogador também ganha uma outra rodada após o fim desta.
+	- O jogador ganha quando seus quatro peões chegam a sua casa final.
+	- A cada turno o jogador escolhe um peão para andar (caso essa opção esteja disponível no contexto).
+	- As casas das posições 52 (inclusa) a 56 (inclusa) referentes a cada jogador só podem acessadas pelo mesmo, impossibilitanto então os peões que estejam nela se serem capturados.
+	- Uma vitória para um jogador só é considerada no ranking caso ele termine o jogo em primeiro lugar.
+
+Peão:
+	- O peão é a principal forma com a qual o jogador interage com o jogo.
+	- Um peão tem seu movimento determinado pelo numero retornado pelo dado que foi utilizado pelo player. 
+	- Um peão pode "capturar" (mandar o peão de volta para sua base) outro peão adversário caso ele chegue a mesma casa que o outor esteja no momento.
+	- Dois peões da mesma cor formam uma "Semi-Torre", quando ambos estão presentes na mesma casa isso os impedem de serem "capturados" por peões adversários, a menos que três peões adverários da mesma cor ocupem a casa da semi torre após a formação dela.
+	- Três peões da mesma cor formam uma "Torre". Eles não podem ser capturados nesse estado.
+	- Os peões capturçam em uma casa inicial chamada "base" correspondente a sua cor, e finalizam seu percurso na casa final (57 lances depois da base).
+	- O peão pertence a player em grupos de 4. Eles se ligam a ele por sua cor.
+	- Um peão só pode sair da base a partir do momento que seu jogador tira o numero seis com o dado na rodada, e escolhe sair da base com ele.
+
+Tabuleiro:
+	- Possui 73 casas.
+	- Os peões se movimentam por elas.
+	- Algumas delas são marcadas com um simbolo especial no qual caso o peão esteje nela, ele fica impossibilitado de ser capturado.
+	- É dividio de três a cinco cores, (cada uma correspondente a um jogador, e uma neutra).
+	- As quatro bases são marcadas com simbolos unicos.
+	
+
+Dado:
+	- O dado é a forma secundária com a qual o jogador interage com o jogo.
+	- Sua função é ser lançado por um jogador e retornar um numero de um (incluso) a seis (incluso) tirado na sorte.
+
+Jogo:
+	- Pode ser jogado de dois a quatro jogadores
+	- Acaba quando um dos jogadores tem seus quatro peões em sua ultima casa (Caso o jogo seja jogado por dois jogadores) ou quando a maioria dos jogadores tem seus quatro peões em sua ultima casa. Nesse caso a ordem de vencedores é determinado por ordem cronológica.
+	
