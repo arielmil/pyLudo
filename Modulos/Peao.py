@@ -3,7 +3,7 @@ import time
 
 def Cria_peao(cor,ini_pos):
     """ Cria um peão"""
-    esse_peao = {"cor":cor, "act_pos":ini_pos, "fin_pos": ini_pos, "sprite": '../../Assets/peão'+'_' + cor +'.png'}
+    esse_peao = {"cor":cor, "act_pos":ini_pos, "fin_pos": ini_pos, "sprite": '../Assets/peão'+'_' + cor +'.png'}
     return esse_peao
 
 def Move_peao(peao,numero_dado):

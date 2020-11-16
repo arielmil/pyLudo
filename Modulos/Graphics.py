@@ -3,7 +3,6 @@ from pygame.locals import *
 import time
 from random import randint
 
-
 def Inicia_telas():
     """Inicia e renderiza a interface gráfica"""
     pygame.init()
@@ -67,47 +66,7 @@ def Inicia_telas():
 
 def Desenha_jogo():
     """Renderiza as imagens recebidas"""
-    imgs_tabuleiro = []
-    imgs_dado = []
-    peoes_vermelhos = []
-    peoes_verdes = []
-    peoes_azuis = []
-    peoes_amarelos = []
-    imgs_peao = []
-    imagens = []
-    img_tabuleiro = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/Board.jpg')
-    img_dado1 = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/Dado_branco/dice_1.png')
-    img_dado2 = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/Dado_branco/dice_2.png')
-    img_dado3 = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/Dado_branco/dice_2.png')
-    img_dado4 = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/Dado_branco/dice_2.png')
-    img_dado5 = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/Dado_branco/dice_5.png')
-    img_dado6 = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/Dado_branco/dice_6.png')
-    img_peao_vermelho = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/peão_vermelho.png')
-    img_peao_verde = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/peão_verde.png')
-    img_peao_azul = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/peão_azul.png')
-    img_peao_amarelo = pygame.image.load('C:/Users/guilh/Documents/Matéria/8º Período/Programção Modular/pyLudo/Assets/peão_amarelo.png')
-    
-    #Única imagem de tabuleiro
-    imgs_tabuleiro.append(img_tabuleiro) 
-    
-    #Valores do dado
-    imgs_dado.append(img_dado1)
-    imgs_dado.append(img_dado2)
-    imgs_dado.append(img_dado3)
-    imgs_dado.append(img_dado4)
-    imgs_dado.append(img_dado5)
-    imgs_dado.append(img_dado6)
-    
-    #Todos os peões
-    for i in range(4):
-        peoes_vermelhos.append(img_peao_vermelho)
-        peoes_verdes.append(img_peao_verde)
-        peoes_azuis.append(img_peao_azul)
-        peoes_amarelos.append(img_peao_amarelo)        
-    imgs_peao = [peoes_vermelhos, peoes_verdes, peoes_azuis, peoes_amarelos]
-    
-    imagens = [imgs_tabuleiro, imgs_dado, imgs_peao]
-    return imagens
+    return #imagens
     
 def Aonde_clicou():
     """Identifica em que lugar da tela foi clicado"""

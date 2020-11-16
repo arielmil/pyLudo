@@ -1,4 +1,7 @@
+from Peao import *
 from Tabuleiro import *
+from Dado import *
+
 casa = {"x": 0, "y": 0, "peoes": [], "semi_torres": [], "torres": []}
 MENOR_CASA = 0
 MAIOR_CASA = 57

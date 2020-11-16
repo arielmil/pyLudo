@@ -6,7 +6,7 @@ def Cria_jogador():
         nome = str(input("\nPor favor, digite o seu nome de jogo ou aperte enter para não escolher: "))
         if len(nome) > limit:
             print("\nErro: o nome deve ter no máximo 30 caracteres.")
-        elif nome == "":
+        elif nome == "sair" or nome == "Sair" or nome == "SAIR":
             return -1
         else:
             escolhendo = False
