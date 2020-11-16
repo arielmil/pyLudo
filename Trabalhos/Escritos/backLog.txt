@@ -46,6 +46,7 @@
 			- Clica_dado(Random) -- OK
 
 		- Main
+			- Quantos_jogam
 			
 		- Partida
 			- Inicia_partida
