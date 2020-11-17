@@ -34,8 +34,8 @@ T3:
 
 - Fazer as funções de acesso de todos os módulos
 
-- Módulo partida (Funções restantes, com documentação interna e externa + testes)
+- Implementar o Modulo Banco de Dados e suas funções + testes
 
-- Módulo Graphics (T3 toda com documentação interna e externa + testes)
+- Módulo partida (Prototipos das funções restantes + implementação das funcões de Banco de Dados, com documentação interna e externa + testes)
 
-- Módulo de Banco de Dados:02/11 - (Com documentação interna e externa + testes)
+- Módulo Graphics (Iniciar e testar algumas funções)
