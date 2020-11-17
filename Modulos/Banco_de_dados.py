@@ -1,7 +1,7 @@
 import mysql.connector as mysql
 
-def Exporta_conexao():
-    db = Conecta_Banco(True)
+def Exporta_conexao(debug1 = False, debug2 = False, debug3 = False):
+    db = Conecta_Banco("localhost","ariel","123456789",debug1)
     cursor = 0
     checagem = 0
     
@@ -17,22 +17,22 @@ def Exporta_conexao():
         input("\n(Pressione enter para fechar o programa)")
         exit(1)
     
-    checagem = Cria_Database(cursor)
+    checagem = Cria_Database(cursor,debug2)
     if (checagem == -1):
         input("\nPressione enter para fechar o programa)")
         exit(1)
 
     db.database = "pyLudo"
-    checagem = Cria_Tabela(cursor)
+    checagem = Cria_Tabela(cursor,debug3)
 
     if (checagem == -1):
         input("\nPressione enter para fechar o programa)")
         
     return {"db":db, "cursor":cursor}
 
-def Conecta_Banco(debug=False):
+def Conecta_Banco(h, u, p, debug = False):
     try:
-        db = mysql.connect(host = "localhost", user = "ariel", passwd = "123456789")
+        db = mysql.connect(host = h, user = u, passwd = p)
     except mysql.Error as err:
         if (debug):
             print(vars(err))
@@ -46,13 +46,10 @@ def Conecta_Banco(debug=False):
         return db
 
 def Cria_Cursor(db):
-    if (db != -1 and db != -2):
-        cursor = db.cursor()
-        return cursor
-    else:
-        return -1
+    cursor = db.cursor()
+    return cursor
 
-def Cria_Database(cursor, debug=False):
+def Cria_Database(cursor, debug = False):
     try:
         cursor.execute("CREATE DATABASE pyLudo")
     except mysql.Error as err:
@@ -63,7 +60,7 @@ def Cria_Database(cursor, debug=False):
             return -1
     return 0
 
-def Cria_Tabela(cursor, debug=False):
+def Cria_Tabela(cursor, debug = False):
     try:
         cursor.execute("CREATE TABLE posicoes (jogador VARCHAR(31), cor VARCHAR(20), peao SMALLINT, PRIMARY KEY (jogador, cor, peao))")
     except mysql.Error as err:
@@ -75,9 +72,11 @@ def Cria_Tabela(cursor, debug=False):
     return 0
 
 def Salva_jogador():
-    """Salva o nome do usuário que foi cadastrado"""
+    """Salva o nome do usuario que foi cadastrado"""
     return 0
     
 def Salva_partida():
     """Salva o histórico de partidas"""
     return 0
+
+print(Exporta_conexao())
