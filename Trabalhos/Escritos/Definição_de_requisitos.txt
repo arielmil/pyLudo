@@ -8,6 +8,11 @@
 
 			- Salva_jogador: Salva o nome do usuário que foi cadastrado pela função Cria_jogador do modulo Player.
 			- Salva_partida: Salva o historico da partida e o placar dela.
+            - Exporta_conexao: Recebe debug1, debug2 e debug3, todos falsos por padrão, mas que podem ser alterados pelo usuário, caso desejar. retorna os dados necessários para a conexão do banco de dados.
+            - Conecta_Banco: Recebe h (host), u (usuário), p (senha) e o debug, que é falso por padrão. Pode retornar -1, caso o nome do host forem inválidos; -2, caso o host não tenha permissão para acesso; ou, em caso de sucesso, os dados do usuário.
+            - Cria_Cursor: Recebe os dados para criar um cursor. Retorna o prórpio cursor em caso de sucesso, e -1 em caso de erro.
+            - Cria_Database: Recebe um cursor e um debug, que é falso por padrão, e cria um banco de dados. Em caso de erro, retorna -1; em caso de sucesso, retorna 0.
+            - Cria_Tabela: Recebe um cursor e um debug, que é falso por padrão, e cria uma tabela para os dados do jogador. Retorna -1, em caso de erro; em caso de sucesso, retorna 0.
 
 	- Dados:
 		
