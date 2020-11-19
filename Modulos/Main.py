@@ -28,24 +28,24 @@ def Quantos_jogam():
         jogador = Cria_jogador()
 
         while (flag):
-        cor = input("\nPor favor, escolha a sua cor, ou sair, Sair, ou SAIR caso deseje sair do jogo: ")
+            cor = input("\nPor favor, escolha a sua cor, ou sair, Sair, ou SAIR caso deseje sair do jogo: ")
 
-        if (cor == "sair" or cor == "Sair" or cor == "SAIR"):
-            input("\nObrigado por jogar. Pressione enter para sair do jogo.")
-            exit()
+            if (cor == "sair" or cor == "Sair" or cor == "SAIR"):
+                input("\nObrigado por jogar. Pressione enter para sair do jogo.")
+                exit()
 
-        elif (cor not in ["amarelo", "azul", "verde", "vermelho"]):
-            print("\nErro: Cor inválida. Por favor, tente novamente.")
+            elif (cor not in ["amarelo", "azul", "verde", "vermelho"]):
+                print("\nErro: Cor inválida. Por favor, tente novamente.")
 
-        elif cor in cores:
-            print("\nErro: Essa cor já foi escolhida. Por favor escolha outra cor.")
+            elif cor in cores:
+                print("\nErro: Essa cor já foi escolhida. Por favor escolha outra cor.")
             
-        else:
-            flag = False
-            cores.append(cor)
-            peao = Cria_peao(cor)
-            jogadores.append([jogador, cor])
+            else:
+                cores.append(cor)
+                peoes = Cria_peoes(cor)
+                jogadores.append([jogador, peoes])
+                flag = False
 
-    return 0
+    return jogadores
         
         
