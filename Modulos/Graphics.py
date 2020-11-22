@@ -3,7 +3,6 @@ from pygame.locals import *
 import time
 from Partida import *
 
-
 def Inicia_telas():
     """Inicia e renderiza a interface gráfica"""
     pygame.init()
@@ -109,6 +108,7 @@ def Desenha_jogo():
     
     imagens = [imgs_tabuleiro, imgs_dado, imgs_peao]
     return imagens
+
     
 def Aonde_clicou():
     """Identifica em que lugar da tela foi clicado"""
@@ -137,8 +137,6 @@ def Desenha_dado():
     """Implementa a funcionalidade necessária para desenhar o dado."""
     
     return valor_dado
-
-
 
 
 Inicia_telas()

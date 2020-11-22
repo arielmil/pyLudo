@@ -30,6 +30,11 @@
 		- Banco de Dados
 			- Salva jogador
 			- Salva_partida
+            - Exporta_conexao
+            - Conecta_Banco
+            - Cria_Cursor
+            - Cria_Database
+            - Cria_Tabela
 
 		- Graphics
 			- pygames.init
@@ -46,6 +51,7 @@
 			- Clica_dado(Random) -- OK
 
 		- Main
+			- Quantos_jogam
 			
 		- Partida
 			- Inicia_partida

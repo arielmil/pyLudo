@@ -1,10 +1,17 @@
 import pygame
 import time
 
-def Cria_peao(cor,ini_pos):
+def Cria_peao(cor, pos):
     """ Cria um peão"""
-    esse_peao = {"cor":cor, "act_pos":ini_pos, "fin_pos": ini_pos, "sprite": '../../Assets/peão'+'_' + cor +'.png'}
+    esse_peao = {"cor":cor, "pos": pos, "sprite": '../Assets/peão'+'_' + cor +'.png'}
     return esse_peao
+
+def Cria_peoes(cor):
+    peoes = []
+    #Tratar aqui as quatro posicoes iniciais para as 4 cores diferentes.
+    for i in range(0,4):
+        peoes.append(Cria_peao(cor,0))
+    return peoes
 
 def Move_peao(peao,numero_dado):
     """Usado para mover um peão"""
@@ -15,16 +22,3 @@ def Move_peao(peao,numero_dado):
         return 0
     else:
         return -2
-
-
-            
- 
-
-
-
-
-            
- 
-
-
-
