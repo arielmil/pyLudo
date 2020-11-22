@@ -1,5 +1,7 @@
 - Módulos:
-
+	
+	- XML:
+	
 	- Banco de Dados:
 
 		- Objetivo: Registrar dados gerais sobre o jogo, como cadastro de jogadores e registro de partida.
@@ -19,11 +21,15 @@
             
             		- Cria_Tabela: Recebe um cursor e um debug, que é falso por padrão, e cria uma tabela para os dados do jogador. Retorna -1, em caso de erro; em caso de sucesso, retorna 0.
             		
-            		- Salva_Jogador:
+            		- Salva_Jogador: Recebe um cursor, um jogador provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Salva este jogador (nome) e seus quatro peões na base (numero de peão (de 0 a 3), cor e posição). Retorna 0 se bem sucedido, ou -1 caso o contrário. Printa informações de erros caso debug seja True.
             		
-            		- Salva_Jogadores:
+            		- Salva_Jogadores: Recebe um cursor, e um array de jogadores provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Itera sobre este array chamando a função Salva_Jogador para cada elemento. Retorna 0 em caso de sucesso para todos os elementos, ou -1 caso algum problema em algum elemento. Printa informações de erro caso debug seja True.
             		
-            		- Deleta_Informacoes:
+            		- Pegar_posicão_peão_jogador: Recebe um cursor, um jogador (com seu nome), um peão (numero inteiro de 0 a 4), e um booleano chamado debug (False por padrão). Pega do Banco de Dados a posição deste peão para este jogador e a retorna caso seja bem sucedido, ou -1 caso contrário. Printa informações de erro caso debug seja True.
+            		
+            		- Salvar_posicao_peão_jogador: Recebe um cursor, um jogador (com seu nome), um peão (numero inteiro de 0 a 4) a sua posição, e um booleano chamado debug (False por padrão). Salva no banco a posição deste peão para este jogador, e retorna 0 caso seja bem sucedido, ou -1 caso contrário. Printa informações de erro caso debug seja True.
+            		
+            		- Deleta_Informacoes: Deve ser chamada pelo módulo Main ao final de cada partida. Recebe um cursor, e um booleano chamado debub. Deleta todas as informações salvas na tabela Jogadores do Banco, mantendo somente sua estrutura semantica (Primary Keys, Foreign Keys, etc...). Retorna 0 caso seja bem sucedido, ou -1 caso contrário. Printa informações de erro caso debug seja True.
 
 	- Dados:
 		
@@ -67,6 +73,9 @@
 
 			- Quantos_jogam: Permite que o jogador que iniciou o jogo selecione quantos jogadores irão jogar (um inteiro de 2 a 4 (ambos inclusivos) ) (Repete a pergunta até que seja digitado um valor válido, ou sair Sair, ou SAIR (nestes ultimos casos, para a execução do jogo.) ), assim como selecionar as cores que os representam. Entra em um loop para criar a quantidade de jogadores selecionados representados por objetos de Player com seus respectivos nomes. Repete o processo de seleção de cor para um jogador, até que seja digitada uma cor válida, e printa um erro caso o contrário. Mantém-se no loop até que todos os jogadores selecionarem uma cor válida, ou digitem "sair" ou "Sair" ou "SAIR", na seleção de cor ou nome, nesse caso printa uma mensagem adequada e sai do jogo. Retorna um array com um numero de indices entre 2 e 4 representando cada jogador, aonde cada indice contém um sub_array tendo em seu primeiro indice um objeto player, e no seu segundo indice um array contendo seus quatro peões já criados e configurados para posição 0.
 			
+			- Salvar_XML: Utilizando funções do módulo XML, salva todas as informações da partida que acabou de ser jogada em um arquivo XML. Retorna 0 caso seja bem sucedido, ou -1 caso contrário.
+			
+			- Encerrar_jogo: Chama a tela de mostrar o vencedor, e de jogar novamente, ou a tela de sair, fornecendo o usuário esta escolha. Independente do escolhido, chama a função Deleta_Informações do módulo Banco_de_dados para encerrar a partida. Sai do jogo caso o usuário selecione sair.
 
 	- Partida:
 

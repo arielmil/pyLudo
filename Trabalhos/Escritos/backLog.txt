@@ -27,15 +27,17 @@
 - Desenvolvimento
 	- Tirar duvidas
 	- Programar os modulos
+		
 		- Banco de Dados
 			- Salva jogador
 			- Salva_partida
-            - Exporta_conexao
-            - Conecta_Banco
-            - Cria_Cursor
-            - Cria_Database
-            - Cria_Tabela
-
+            		- Exporta_conexao - OK
+            		- Conecta_Banco - OK
+           		- Cria_Cursor - OK
+            		- Cria_Database - OK
+            		- Cria_Tabela - OK
+		- XML
+		
 		- Graphics
 			- pygames.init
 			- Inicia_telas
