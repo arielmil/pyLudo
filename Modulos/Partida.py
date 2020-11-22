@@ -1,6 +1,6 @@
 from Peao import *
 from Tabuleiro import *
-from Dado import *
+from Dados import *
 
 casa = {"x": 0, "y": 0, "peoes": [], "semi_torres": [], "torres": []}
 MENOR_CASA = 0
@@ -8,6 +8,8 @@ MAIOR_CASA = 57
 tabuleiro = Cria_tabuleiro(casa,2)
 ALT_TABULEIRO = 20
 LARG_CASA = 25
+
+dado = Cria_dado('Vermelho')
 
 def Gerencia_partida():
     """Implementa a funcionalidade de troca de turnos."""
