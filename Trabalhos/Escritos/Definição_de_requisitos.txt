@@ -63,6 +63,8 @@
 			
 			- Desenha_dado: Deve ser usada sendo chamada por Desenha_jogo. Implementa toda a funcionalidade necessária para desenhar o dado.
 
+			- Tela_final: Renderiza o nome do vencedor e dá a opção de sair do jogo ou continuar. Retorna 1, caso o usuário clique em continuar ou 0, caso escolha sair.
+
 
 
 	- Main:
@@ -100,8 +102,8 @@
 			- Roda_dado: Faz um jogador jogue o Dado. Para isso, utiliza a função Joga_dado() do módulo Dado, caso o jogador clique no icone do Dado.
 			
 			- Escolhe_peão: Permite que o jogador escolha um peão retornando um número inteiro de 0 (incluso) a 3 (incluso) de forma a qual cada número está associado a um dos 4 peões, caso o jogador clique no peão desejado.
-			
-			- Escollhe_cor: Associa uma cor a uma instância de jogador.
+
+			- Quem_ganhou: Retorna o jogador (com seu nome) que venceu o jogo, ou -1 em caso de problema.
 
 
 	- Peão:

@@ -39,3 +39,40 @@ T3:
 - Módulo partida (Prototipos das funções restantes + implementação das funcões de Banco de Dados, com documentação interna e externa + testes)
 
 - Módulo Graphics (Iniciar e testar algumas funções)
+
+
+
+T4:
+
+- 22/11 - 29/11:
+                - Ver lógica do Tabuleiro girando e a distribuição de posições referentes a cor para captura.
+		- Ver lógica de da posição inicial (0) e confirmar se andar para casa pode se basear nisso.
+		- Ver lógica do Iniciar_partida.
+
+		- Ariel:
+
+		      - Terminar módulo Banco de dados
+		      - Fazer funções Cria_torre, Captura_peão, Desmancha_torre, Manda_para_casa, Roda_dado, Escolhe_peão do módulo Partida.
+
+		- Guilherme:
+
+		      - Fazer funções Gerência_Partida e Roda_tabuleiro do módulo Partida.
+		      - Fazer o módulo XML.
+
+- 29/11 - 06/12:
+
+		- Ariel:
+
+		       - Pensar no while da Main (sair dele quando sair do jogo).
+		       - Terminar Main.
+
+		- Guilherme:
+		      
+		       - Concluir módulo Graphics.
+
+06/12 - 13/12:
+
+		- Finalizar os detalhes:
+
+			- Resolver os bugs que faltaram.
+			- Polir o projeto final.

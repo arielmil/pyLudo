@@ -28,7 +28,7 @@
 	- Tirar duvidas
 	- Programar os modulos
 		
-		- Banco de Dados
+		- Banco de Dados - Ariel
 			- Salva jogador
 			- Salva_partida
             		- Exporta_conexao - OK
@@ -36,7 +36,8 @@
            		- Cria_Cursor - OK
             		- Cria_Database - OK
             		- Cria_Tabela - OK
-		- XML
+
+		- XML - Guilherme
 		
 		- Graphics
 			- pygames.init
@@ -54,18 +55,19 @@
 
 		- Main
 			- Quantos_jogam
+			- Salvar_XML - Guilherme
+			- Encerrar_jogo - Ariel
 			
 		- Partida
-			- Inicia_partida
-			- Gerência_Partida
-			- Roda_tabuleiro -- OK
-			- Cria_torre
-			- Captura_peão -- OK
-			- Desmancha_torre
-			- Manda_para_casa -- OK
-			- Roda_dado
-			- Escolhe_peão
-			- Escollhe_cor
+			- Inicia_partida - Guilherme/Ariel
+			- Gerência_Partida - Guilherme
+			- Roda_tabuleiro - Guilherme
+			- Cria_torre - Ariel
+			- Captura_peão - Ariel
+			- Desmancha_torre - Ariel
+			- Manda_para_casa - Ariel
+			- Roda_dado - Ariel
+			- Escolhe_peão - Ariel
 
 		- Peão -- OK 
 			- Cria_peao -- OK
