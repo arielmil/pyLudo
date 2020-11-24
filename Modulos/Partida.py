@@ -13,6 +13,26 @@ dado = Cria_dado('Vermelho')
 
 def Gerencia_partida():
     """Implementa a funcionalidade de troca de turnos."""
+    turno = randint(0,3)
+    while True:
+        if turno == 0:
+            #vez do vermelho
+            
+        elif turno == 1:
+            #vez do verde
+            
+        elif turno == 2:
+            #vez do azul
+            
+        elif turno == 3:
+            #vez do amarelo
+            
+            
+        if turno == 3:
+            turno = 0
+        else:
+            turno += 1
+    
     return 0
 
 def Roda_tabuleiro(tabuleiro):
