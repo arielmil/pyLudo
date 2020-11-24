@@ -8,28 +8,25 @@
 
  		- Funções:
 
-			- Salva_jogador: Salva o nome do usuário que foi cadastrado pela função Cria_jogador do modulo Player.
-			
-			- Salva_partida: Salva o historico da partida e o placar dela.
+			- Salva_jogador: Recebe um cursor, um jogador (um array contendo em seu primeiro índice um player como definido pelo módulo Player, e em segundo índice um array contendo seus quatro peões (como definidos pelo módulo Peão) ), e um booleano chamado debug (False por padrão). Salva no Banco este jogador com a sua cor e seus quatro peões em suas posições iniciais. Retorna 0 em caso de sucesso, -1 em caso de erros genericos, ou -2 em caso de erros por cursor inválido. Printa informações de erro caso debug seja True.
             		
-            		- Exporta_conexao: Recebe debug1, debug2 e debug3, todos falsos por padrão, mas que podem ser alterados pelo usuário, caso desejar. retorna os dados necessários para a conexão do banco de dados.
-            		- Conecta_Banco: Recebe h (host), u (usuário), p (senha) e o debug, que é falso por padrão. Pode retornar -1, caso o nome do host forem inválidos; -2, caso o host não tenha permissão para acesso; ou, em caso de sucesso, os dados do usuário.
+            		- Exporta_conexao: Recebe um booleno chamado debug (False por padrão). Cria, ou retorna todos os dados necessários para o uso do banco de dados, ou sai do jogo com um código de erro caso o contrário (código de erro 1 para: Erro no nome do host para conexão com o SGBD, criação do cursor, criação do Banco de dados, ou criação da tabela. Ou código de erro 2 para: Erros no nome de usuário ou senha ou algum erro genérico para conexão com o SGBD, ou de cursor inválido). Printa informações de erro caso debug seja True. 
+            		
+            		- Conecta_SGBD: Recebe quatro strings: h (host), u (usuário), p (senha), e um booleno chamado debug (False por padrão). Conecta com o SBGD. Retorna um ponteiro para ele em caso de sucesso, -1 em caso de erro por host inválido, -2 em caso de erro nos campos user ou senha, ou -3 em caso de erros genéricos. Printa informações de erro caso debug seja True.
             
-            		- Cria_Cursor: Recebe os dados para criar um cursor. Retorna o prórpio cursor em caso de sucesso, e -1 em caso de erro.
+            		- Cria_Cursor: Recebe um ponteiro para o SGBD, e um booleano chamado debug (False por padão). Cria um cursor (objeto de Banco de Dados). Retorna o cursor em caso de sucesso, -1 em caso de erro por conexão ao SGBD, ou -2 em caso de erros genéricos.
             
-            		- Cria_Database: Recebe um cursor e um debug, que é falso por padrão, e cria um banco de dados. Em caso de erro, retorna -1; em caso de sucesso, retorna 0.
+            		- Cria_Banco: Recebe um cursor, e um booleno chamado debug (False por padrão). Cria um banco de dados chamado pyGames (ou não faz nada caso esse banco já exista). Retorna 0 em caso de sucesso, -1 em caso de erros genéricos, ou -2 em caso de erros por cursor inválido.
             
-            		- Cria_Tabela: Recebe um cursor e um debug, que é falso por padrão, e cria uma tabela para os dados do jogador. Retorna -1, em caso de erro; em caso de sucesso, retorna 0.
+            		- Cria_Tabela: Recebe um cursor e um booleno chamado debug (False por padrão), e cria uma tabela para guardar dados de jogador dentro do banco de dados (ou não faz nada caso essa tabela já exista). Retorna 0 em caso de sucesso, -1 em caso de erros genericos, ou -2 em caso de erros por cursor inválido. Printa informações de erros caso debug seja True.
+            			
+            		- Salva_Jogadores: Recebe um cursor, e um array de jogadores provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Itera sobre este array chamando a função Salva_Jogador para cada elemento afim de salvar todos os jogadores da partida no Banco. Retorna 0 em caso de sucesso para todos os elementos, ou sai do jogo caso algum problema em algum elemento (código de erro 1 para erros genericos, e 2 para cursor inválido). Printa informações de erro caso debug seja True.
             		
-            		- Salva_Jogador: Recebe um cursor, um jogador provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Salva este jogador (nome) e seus quatro peões na base (numero de peão (de 0 a 3), cor e posição). Retorna 0 se bem sucedido, ou -1 caso o contrário. Printa informações de erros caso debug seja True.
+            		- Pega_Posicao_Peão_Cor: Recebe um cursor, uma cor (string), um peão (numero inteiro de 0 a 4), e um booleano chamado debug (False por padrão). Pega no Banco de Dados a posição deste peão para este jogador, e a retorna caso seja bem sucedido ou sai do jogo caso o contrário (código de erro 1 para erros genericos, e 2 para cursor inválido). Printa informações de erro caso debug seja True.
             		
-            		- Salva_Jogadores: Recebe um cursor, e um array de jogadores provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Itera sobre este array chamando a função Salva_Jogador para cada elemento. Retorna 0 em caso de sucesso para todos os elementos, ou -1 caso algum problema em algum elemento. Printa informações de erro caso debug seja True.
+            		- Salva_Posicao_Peão_Cor: Recebe um cursor, uma cor (string), um peão (numero inteiro de 0 a 4), a sua posição, e um booleano chamado debug (False por padrão). Salva no banco a posição deste peão para o jogador desta cor, e retorna 0 caso seja bem sucedido, ou sai do jogo caso o contrário (código de erro 1 para erros genericos, e 2 para cursor inválido). Printa informações de erro caso debug seja True.
             		
-            		- Pegar_posicão_peão_jogador: Recebe um cursor, um jogador (com seu nome), um peão (numero inteiro de 0 a 4), e um booleano chamado debug (False por padrão). Pega do Banco de Dados a posição deste peão para este jogador e a retorna caso seja bem sucedido, ou -1 caso contrário. Printa informações de erro caso debug seja True.
-            		
-            		- Salvar_posicao_peão_jogador: Recebe um cursor, um jogador (com seu nome), um peão (numero inteiro de 0 a 4) a sua posição, e um booleano chamado debug (False por padrão). Salva no banco a posição deste peão para este jogador, e retorna 0 caso seja bem sucedido, ou -1 caso contrário. Printa informações de erro caso debug seja True.
-            		
-            		- Deleta_Informacoes: Deve ser chamada pelo módulo Main ao final de cada partida. Recebe um cursor, e um booleano chamado debub. Deleta todas as informações salvas na tabela Jogadores do Banco, mantendo somente sua estrutura semantica (Primary Keys, Foreign Keys, etc...). Retorna 0 caso seja bem sucedido, ou -1 caso contrário. Printa informações de erro caso debug seja True.
+            		- Deleta_Informacoes: Deve ser chamada pelo módulo Main ao final de cada partida. Recebe um cursor, e um booleano chamado debug (False por padrão). Deleta todas as informações salvas na tabela Jogadores do Banco, mantendo somente sua estrutura semantica (Primary Keys, Foreign Keys, etc...). Retorna 0 caso seja bem sucedido, ou sai do jogo caso o contrário (código de erro 1 para erros genericos, e 2 para cursor inválido). Printa informações de erro caso debug seja True.
 
 	- Dados:
 		
@@ -73,7 +70,7 @@
 
 		- Funções: 
 
-			- Quantos_jogam: Permite que o jogador que iniciou o jogo selecione quantos jogadores irão jogar (um inteiro de 2 a 4 (ambos inclusivos) ) (Repete a pergunta até que seja digitado um valor válido, ou sair Sair, ou SAIR (nestes ultimos casos, para a execução do jogo.) ), assim como selecionar as cores que os representam. Entra em um loop para criar a quantidade de jogadores selecionados representados por objetos de Player com seus respectivos nomes. Repete o processo de seleção de cor para um jogador, até que seja digitada uma cor válida, e printa um erro caso o contrário. Mantém-se no loop até que todos os jogadores selecionarem uma cor válida, ou digitem "sair" ou "Sair" ou "SAIR", na seleção de cor ou nome, nesse caso printa uma mensagem adequada e sai do jogo. Retorna um array com um numero de indices entre 2 e 4 representando cada jogador, aonde cada indice contém um sub_array tendo em seu primeiro indice um objeto player, e no seu segundo indice um array contendo seus quatro peões já criados e configurados para posição 0.
+			- Quantos_jogam: Permite que o jogador que iniciou o jogo selecione quantos jogadores irão jogar (um inteiro de 2 a 4 (ambos inclusivos) ) (Repete a pergunta até que seja digitado um valor válido, ou sair Sair, ou SAIR (nestes ultimos casos, para a execução do jogo.) ), assim como selecionar as cores que os representam. Entra em um loop para criar a quantidade de jogadores selecionados representados por objetos de Player com seus respectivos nomes. Repete o processo de seleção de cor para um jogador, até que seja digitada uma cor válida, e printa um erro caso o contrário. Mantém-se no loop até que todos os jogadores selecionarem uma cor válida, ou digitem "sair" ou "Sair" ou "SAIR", na seleção de cor ou nome, nesse caso printa uma mensagem adequada e sai do jogo. Retorna um array com um numero de índices entre 2 e 4 representando cada jogador, aonde cada índice contém um sub_array tendo em seu primeiro índice um player, e no seu segundo índice um array contendo seus quatro peões já criados e configurados para posição 0.
 			
 			- Salvar_XML: Utilizando funções do módulo XML, salva todas as informações da partida que acabou de ser jogada em um arquivo XML. Retorna 0 caso seja bem sucedido, ou -1 caso contrário.
 			
@@ -135,7 +132,7 @@
 		- Funções:
 		
 
-			- Cria_tabuleiro_vazio: Utilizado pela função Cria_tabuleiro, esta função cria e retorna um array de 58 indices com todos os valores de seus indices iguais a [] (lista vazia).
+			- Cria_tabuleiro_vazio: Utilizado pela função Cria_tabuleiro, esta função cria e retorna um array de 58 índices com todos os valores de seus índices iguais a [] (lista vazia).
 
 			- Cria_casa: Recebe como parâmetro um ou dois valores inteiros (x e y). Cria e retorna um dicionario chamado Casa representando uma casa do tabuleiro com suas coordenadas x e y iguais aos parametros recebidos, além de que Casa terá também os campos: "peoes" (uma lista que mantem registro dos peões nessa casa), "semi_torres" (uma lista que mantem registro das semi torres nessa casa), e "torres" (uma lista que mantem registro das torres nessa casa), todos iguais a [] (lista vazia). Retorna -1 e printa uma mensagem de erro caso não sejam recebidos x e y.
 

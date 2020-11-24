@@ -2,85 +2,104 @@
 
 import mysql.connector as mysql
 
-def Exporta_Conexao(debug1 = False, debug2 = False, debug3 = False):
-    db = Conecta_Banco("localhost","ariel","123456789",debug1)
+def Exporta_Conexao(debug = False):
+    db = Conecta_SGBD("localhost","ariel","123456789",debug)
     cursor = 0
     checagem = 0
     
     if (db == -1):
         input("\n(Pressione enter para fechar o programa)")
         exit(1)
-    elif (db == -2):
+    elif (db == -2 or db == -3):
         input("\n(Pressione enter para fechar o programa)")
         exit(2)
 
-    cursor = Cria_Cursor(db)
-    if (cursor == -1):
+    cursor = Cria_Cursor(db, debug)
+    if (cursor == -1 or cursor == -2):
         input("\n(Pressione enter para fechar o programa)")
         exit(1)
     
-    checagem = Cria_Database(cursor,debug2)
+    checagem = Cria_Banco(cursor,debug)
     if (checagem == -1):
-        print("oi")
         input("\nPressione enter para fechar o programa)")
         exit(1)
+    elif (checagem == -2):
+        input("\nPressione enter para fechar o programa)")
+        exit(2)
 
     db.database = "pyLudo"
-    checagem = Cria_Tabela(cursor,debug3)
+    checagem = Cria_Tabela(cursor,debug)
 
     if (checagem == -1):
         input("\nPressione enter para fechar o programa)")
+        exit(1)
+    elif (checagem == -2):
+        input("\nPressione enter para fechar o programa)")
+        exit(2)
         
     return {"db":db, "cursor":cursor}
 
-def Conecta_Banco(h, u, p, debug = False):
+def Conecta_SGBD(h, u, p, debug = False):
     try:
         db = mysql.connect(host = h, user = u, passwd = p)
     except mysql.Error as err:
-        if (debug):
-            print(vars(err))
         if err.errno == 2005 and err.sqlstate == "HY000":
-            print("\nErro: host com nome desconhecido. Tente novamente mais tarde.")
+            if (debug):
+                print("\nErro: host com nome desconhecido. Tente novamente.")
             return -1
         elif err.errno == 1045 and err.sqlstate == "28000":
-            print("\nErro: acesso negado para este user. Tente novamente mais tarde.")
+            if (debug):
+                print("\nErro: acesso negado para este user. Tente novamente.")
             return -2
+        else:
+            if (debug):
+                 print("\n\nErro generico: %s"%err.msg)
+            return -3
     else:
         return db
 
-def Cria_Cursor(db):
+def Cria_Cursor(db, debug = False):
     if (type(db) != mysql.connection_cext.CMySQLConnection):
-        print("Erro: Banco de dados invalido. Por favor, tente novamente.")
+        if (debug):
+            print("Erro: Problemas na conexao com o SGBD. Por favor, tente novamente.")
         return -1
-    cursor = db.cursor(prepared=True)
+    try:
+        cursor = db.cursor(prepared=True)
+    except mysql.Error as err:
+        if (debug):
+            print("\n\nErro generico: %s"%err.msg)
+        return -2
+    
     return cursor
 
-def Cria_Database(cursor, debug = False):
+def Cria_Banco(cursor, debug = False):
     try:
         cursor.execute("CREATE DATABASE pyLudo")
     except mysql.Error as err:
-        if (debug):
-            print(vars(err))
         if (err.errno != 1007 and err.sqlstate != "HY000") and (err.errno != -1 and err.sqlstate != None):
-            print("Erro: ",err.msg)
+            if (debug):
+                print("\n\nErro generico: %s"%err.msg)
             return -1
+        else:
+            if (debug):
+                print("\n\n Banco ja existe.")
     except AttributeError:
-        print("Erro: cursor inválido. Por favor, tente novamente.")
-        return -1
+        if (debug):
+            print("Erro: cursor inválido. Por favor, tente novamente.")
+        return -2
     return 0
 
 def Cria_Tabela(cursor, debug = False):
     try:
-        cursor.execute("CREATE TABLE pyLudo.posicoes (jogador VARCHAR(31), cor VARCHAR(20), peao SMALLINT, posicao SMALLINT, PRIMARY KEY (jogador, cor, peao, posicao))")
+        cursor.execute("CREATE TABLE pyLudo.posicoes (jogador VARCHAR(31), cor VARCHAR(20), peao SMALLINT, posicao SMALLINT, PRIMARY KEY (cor, peao))")
     except mysql.Error as err:
-        if(debug):
-            print(vars(err))
         if (err.errno != 1050 and err.sqlstate != "42S01") and (err.errno != -1 and err.sqlstate != None):
-                print(vars(err))
+            if (debug):
+                 print("\n\nErro generico: %s"%err.msg)
                 return -1
     except AttributeError:
         print("Erro: Cursor inválido. Por favor, tente novamente.")
-        return -1
+        return -2
     return 0
 
 def Deleta_Informacoes(cursor, debug = False):
@@ -89,15 +108,13 @@ def Deleta_Informacoes(cursor, debug = False):
         cursor.execute("TRUNCATE TABLE pyLudo.posicoes")
         
     except mysql.Error as err:
-        print("Erro inesperado. Por favor, tente novamente mais tarde.")
         if (debug):
-            print(vars(err)+"\n\n"+err.msg)
-            return -1
-        
+            print("\n\nErro generico: %s"%err.msg)
+        exit(1)
     except AttributeError:
-        print(cursor)
-        print("Erro: Cursor inválido. Por favor, tente novamente.")
-        return -2
+        if (debug):
+            print("Erro: Cursor inválido. Por favor, tente novamente.")
+        exit(2)
     
     return 0
 
@@ -106,17 +123,16 @@ def Salva_Jogador(cursor, jogador, debug = False):
     """Salva na base um jogador, com seus respectivos peões e suas posições iniciais."""
     for i in range(0,4):
         try:
-            cursor.execute("INSERT INTO posicoes jogador = %s, cor = %s, peao = %s, posicao = %s"%(jogador[0]["nome"], jogador[1][i]["cor"], 0, jogador[1][i]["pos"]))
+            cursor.execute("INSERT INTO pyLudo.posicoes jogador = %s, cor = %s, peao = %s, posicao = %s"%(jogador[0]["nome"], jogador[1][i]["cor"], 0, jogador[1][i]["pos"]))
 
-        except mysql.Error as err:
-            print("Erro inesperado inserindo o peão %d. Por favor, tente novamente mais tarde."%i)
-        
+        except mysql.Error as err:        
             if (debug):
-                print(vars(err)+"\n\n"+err.msg)
-                return -1
-        
+                print("\n\nErro generico: %s"%err.msg)
+            return -1,
+                            
         except AttributeError:
-            print("Erro: Cursor inválido. Por favor, tente novamente.")
+            if (debug):
+                print("Erro: Cursor inválido. Por favor, tente novamente.")
             return -2
         
     return 0
@@ -125,15 +141,45 @@ def Salva_Jogadores(cursor, jogadores, debug = False):
      """Salva na base todos os jogadores com todos os peões."""
      ok = 0
      for i in range(0,size(jogadores)):
-         if (ok == 0):
-             ok = Salva_Jogador(cursor, jogadores[i], debug)
-         else:
-             return -1
+         ok = Salva_Jogador(cursor, jogadores[i], debug)
+         if (ok == -1):
+             exit(1)
+         elif (ok == -2):
+             exit(2)
      return 0
 
-def Salva_partida():
-    """Salva o histórico de partidas."""
-    return 0
+def Pega_Posicao_Peao_Cor(cursor, cor, peao, debug = False):
+    """Retorna a posicao do peao recebido do jogador da cor recebida."""
+    try:
+        cursor.execute("SELECT posicao FROM pyLudo.posicoes WHERE cor = %s and peao = %s"%(cor, peao))
 
-a = Exporta_Conexao()
-Deleta_Informacoes(a["db"],True)
+    except mysql.Error as err:        
+        if (debug):
+            print("\n\nErro generico ao pegar o peao %s da cor %s: %s"%(peao, cor, err.msg))
+        exit(1)
+        
+    except AttributeError:
+        if (debug):
+            print("Erro: Cursor inválido. Por favor, tente novamente.")
+        exit(2)
+        
+    pos = cursor.fetchall()
+    
+    return pos[0]
+
+def Salva_Posicao_Peao_Cor(cursor, cor, peao, posicao, debug = False):
+    """Salva no banco de dados a posicao do peao recebido do jogador da cor recebida."""
+     try:
+        cursor.execute("INSERT INTO pyLudo.posicoes posicao = %s WHERE cor = %s and peao = %s"%(posicao,cor, peao))
+        
+    except: mysql.Error as err:
+        if (debug):
+            print("\n\nErro generico ao salvar o peao %s da cor %s: %s"%(peao, cor, err.msg))
+        exit(1)
+        
+    except AttributeError:
+            if (debug):
+                print("Erro: Cursor inválido. Por favor, tente novamente.")
+            exit(2)
+        
+    return 0

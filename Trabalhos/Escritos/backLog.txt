@@ -29,13 +29,16 @@
 	- Programar os modulos
 		
 		- Banco de Dados - Ariel
-			- Salva jogador
-			- Salva_partida
+			- Salva_jogador
+			- Salva_jogadores
             		- Exporta_conexao - OK
-            		- Conecta_Banco - OK
+            		- Conecta_SGBD - OK
            		- Cria_Cursor - OK
-            		- Cria_Database - OK
+            		- Cria_Banco - OK
             		- Cria_Tabela - OK
+            		- Pega_Posicao_Peão_Cor
+            		- Salva_Posicao_Peão_Cor
+            		- Deleta_Informacoes
 
 		- XML - Guilherme
 		
