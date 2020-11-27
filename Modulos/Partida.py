@@ -11,27 +11,40 @@ LARG_CASA = 25
 
 dado = Cria_dado('Vermelho')
 
+def Inicia_partida():
+    #Determina a vez de um jogador
+    #Roda o tabuleiro
+    #Jogador lança o dado
+    #Jogador escolhe qual peão moverá a quantidade tirada no dado
+    #Volta ao início
+    
+    Gerencia_partida()
+    Roda_tabuleiro()
+    Roda_dado()
+    Escolhe_peao()
+    return 0
+
 def Gerencia_partida():
     """Implementa a funcionalidade de troca de turnos."""
-    turno = randint(0,3)
-    while True:
-        if turno == 0:
-            #vez do vermelho
-            
-        elif turno == 1:
-            #vez do verde
-            
-        elif turno == 2:
-            #vez do azul
-            
-        elif turno == 3:
-            #vez do amarelo
-            
-            
-        if turno == 3:
-            turno = 0
-        else:
-            turno += 1
+    turno = 0
+    if turno == 0:
+        #vez do vermelho
+        #Apenas peões vermelhos poderão se mover, após jogar o dado
+        
+    elif turno == 1:
+        #vez do verde
+        
+    elif turno == 2:
+        #vez do azul
+        
+    elif turno == 3:
+        #vez do amarelo
+        
+        
+    if turno == 3:
+        turno = 0
+    else:
+        turno += 1
     
     return 0
 

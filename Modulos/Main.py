@@ -49,3 +49,7 @@ def Quantos_jogam():
     return jogadores
         
         
+
+def Salvar_XML():
+    
+    return 0
