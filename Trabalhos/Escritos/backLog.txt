@@ -29,16 +29,16 @@
 	- Programar os modulos
 		
 		- Banco de Dados - Ariel
-			- Salva_jogador
-			- Salva_jogadores
+			- Salva_jogador - Testar
+			- Salva_jogadores - Testar
             		- Exporta_conexao - OK
             		- Conecta_SGBD - OK
            		- Cria_Cursor - OK
             		- Cria_Banco - OK
             		- Cria_Tabela - OK
-            		- Pega_Posicao_Peão_Cor
-            		- Salva_Posicao_Peão_Cor
-            		- Deleta_Informacoes
+            		- Pega_Posicao_Peão_Cor - Testar
+            		- Salva_Posicao_Peão_Cor - Testar
+            		- Deleta_Informacoes - Testar
 
 		- XML - Guilherme
 		
