@@ -1,9 +1,8 @@
 # coding: utf-8
 
 from Banco_de_dados import *
+from Peao import Cria_peoes
 import unittest
-import random
-import importlib
 
 class Testa_Partida(unittest.TestCase):
     def test_01_Conecta_SGBD_OK(self):
@@ -149,6 +148,219 @@ class Testa_Partida(unittest.TestCase):
         retorno_esperado = dict
 
         self.assertEqual(retorno_esperado, type(conexao))
+
+    def test_16_Deleta_Informacoes_OK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 16 - Deleta_Informacoes funcionando com sucesso.")
+
+        db = Exporta_Conexao()
+        retorno_esperado = 0
+        checa = Deleta_Informacoes(db, False)
+
+        self.assertEqual(retorno_esperado, checa)
+
+    def test_17_Deleta_Informacoes_NOK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 17 - Deleta_Informacoes falhando por cursor invalido, e printando informacoes de debug.")
+
+        db = {"cursor": -1}
+        retorno_esperado = -2
+        checa = Deleta_Informacoes(db, True)
+
+        self.assertEqual(retorno_esperado, checa)
+        
+    def test_18_Salva_Jogador_OK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 18 - Salva_Jogador funcionando com sucesso.")
+
+        db = Exporta_Conexao()
+        player = {"nome": "Jogador 1"}
+        peoes = Cria_peoes("vermelho")
+        jogador = [player,peoes]
+
+        checa = Salva_Jogador(db, jogador, False)
+        resultado_consulta_teorica = [("Jogador 1", "vermelho", 0, 0), ("Jogador 1", "vermelho", 1, 0), ("Jogador 1", "vermelho", 2, 0), ("Jogador 1", "vermelho", 3, 0)]
+        
+        db["cursor"].execute("SELECT * from pyLudo.posicoes")
+        resultado_real = db["cursor"].fetchall()
+        
+        Deleta_Informacoes(db)
+        
+        if (checa == 0):
+            self.assertEqual(resultado_consulta_teorica, resultado_real)
+        else:
+            self.assertEqual(1,0)
+
+    def test_19_Salva_Jogador_NOK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 19 - Salva_Jogador falhando por cursor invalido, e printando informacoes de debug.")
+
+        db = {"cursor": -1}
+        player = {"nome": "Jogador 1"}
+        peoes = Cria_peoes("vermelho")
+        jogador = [player,peoes]
+
+        checa = Salva_Jogador(db, jogador, True)
+        retorno_esperado = -2
+
+        self.assertEqual(retorno_esperado, checa)
+
+    def test_20_Salva_Jogadores_OK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 20 - Salva_Jogadores funcionando com sucesso.")
+
+        db = Exporta_Conexao()
+        
+        player1 = {"nome": "Jogador 1"}
+        player2 = {"nome": "Jogador 2"}
+        player3 = {"nome": "Jogador 3"}
+        player4 = {"nome": "Jogador 4"}
+        
+        peoes1 = Cria_peoes("vermelho")
+        peoes2 = Cria_peoes("amarelo")
+        peoes3 = Cria_peoes("azul")
+        peoes4 = Cria_peoes("verde")
+
+        jogadores = [[player1, peoes1],[player2, peoes2],[player3, peoes3],[player4, peoes4]]
+
+        checa = Salva_Jogadores(db, jogadores)
+        retorno_esperado = 0
+        
+        Deleta_Informacoes(db)
+
+        self.assertEqual(retorno_esperado, checa)
+
+    def test_21_Salva_Jogadores_NOK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 21 - Salva_Jogadores falhando por cursor invalido, e printando informacoes de debug.")
+
+        db = {"cursor": -1}
+        
+        player1 = {"nome": "Jogador 1"}
+        player2 = {"nome": "Jogador 2"}
+        player3 = {"nome": "Jogador 3"}
+        player4 = {"nome": "Jogador 4"}
+        
+        peoes1 = Cria_peoes("vermelho")
+        peoes2 = Cria_peoes("amarelo")
+        peoes3 = Cria_peoes("azul")
+        peoes4 = Cria_peoes("verde")
+
+        jogadores = [[player1, peoes1],[player2, peoes2],[player3, peoes3],[player4, peoes4]]
+
+        checa = Salva_Jogadores(db, jogadores, True)
+        retorno_esperado = -2
+        
+        Deleta_Informacoes(db)
+
+        self.assertEqual(retorno_esperado, checa)
+
+    def test_22_Salva_Posicao_Peao_Cor_OK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 22 - Salva_Posicao_Peao_Cor funcionando com sucesso.")
+
+        db = Exporta_Conexao()
+
+        player1 = {"nome": "Jogador 1"}
+        player2 = {"nome": "Jogador 2"}
+        player3 = {"nome": "Jogador 3"}
+        player4 = {"nome": "Jogador 4"}
+        
+        peoes1 = Cria_peoes("vermelho")
+        peoes2 = Cria_peoes("amarelo")
+        peoes3 = Cria_peoes("azul")
+        peoes4 = Cria_peoes("verde")
+
+        jogadores = [[player1, peoes1],[player2, peoes2],[player3, peoes3],[player4, peoes4]]
+
+        Salva_Jogadores(db, jogadores)
+        db["cursor"].execute("SELECT * FROM pyLudo.posicoes")
+        antes = db["cursor"].fetchall()
+        
+        checagem = Salva_Posicao_Peao_Cor(db, peoes1[0], 0, 1, True)
+        
+        db["cursor"].execute("SELECT * FROM pyLudo.posicoes")
+        depois = db["cursor"].fetchall()
+
+        Deleta_Informacoes(db)
+        
+        if (checagem == 0):
+            self.assertNotEqual(antes, depois)
+        else:
+            self.assertEqual(1, -1)
+
+    def test_23_Salva_Posicao_Peao_Cor_NOK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 23 - Salva_Posicao_Peao_Cor falhando por cursor invalido, e printando informacoes de debug.")
+        db = {"cursor": -1}
+
+        player1 = {"nome": "Jogador 1"}
+        player2 = {"nome": "Jogador 2"}
+        player3 = {"nome": "Jogador 3"}
+        player4 = {"nome": "Jogador 4"}
+        
+        peoes1 = Cria_peoes("vermelho")
+        peoes2 = Cria_peoes("amarelo")
+        peoes3 = Cria_peoes("azul")
+        peoes4 = Cria_peoes("verde")
+
+        jogadores = [[player1, peoes1],[player2, peoes2],[player3, peoes3],[player4, peoes4]]
+
+        checagem = Salva_Posicao_Peao_Cor(db, peoes1[0], 0, 1, True)
+        retorno_esperado = -2
+
+        Deleta_Informacoes(db)
+
+        self.assertEqual(checagem, retorno_esperado)
+        
+    def test_24_Pega_Posicao_Peao_Cor_OK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 24 - Pega_Posicao_Peao_Cor funcionando com sucesso.")
+
+        db = Exporta_Conexao()
+        cursor = db["cursor"]
+
+        player1 = {"nome": "Jogador 1"}
+        player2 = {"nome": "Jogador 2"}
+        player3 = {"nome": "Jogador 3"}
+        player4 = {"nome": "Jogador 4"}
+        
+        peoes1 = Cria_peoes("vermelho")
+        peoes2 = Cria_peoes("amarelo")
+        peoes3 = Cria_peoes("azul")
+        peoes4 = Cria_peoes("verde")
+
+        jogadores = [[player1, peoes1],[player2, peoes2],[player3, peoes3],[player4, peoes4]]
+
+        Salva_Jogadores(db, jogadores)
+        Salva_Posicao_Peao_Cor(db, peoes1[0], 0, 9)
+
+        retorno_esperado = 9
+        pos = Pega_Posicao_Peao_Cor(cursor, peoes1[0], 0, True)
+
+        Deleta_Informacoes(db)
+
+        self.assertEqual(retorno_esperado, pos)
+        
+    def test_25_Pega_Posicao_Peao_Cor_NOK(self):
+        print("\nTeste Modulo Banco de Dados - Caso de Teste 25 - Pega_Posicao_Peao_Cor falhando por cursor invalido, e printando informacoes de debug.")
+
+        db = Exporta_Conexao()
+        cursor = db["cursor"]
+
+        player1 = {"nome": "Jogador 1"}
+        player2 = {"nome": "Jogador 2"}
+        player3 = {"nome": "Jogador 3"}
+        player4 = {"nome": "Jogador 4"}
+        
+        peoes1 = Cria_peoes("vermelho")
+        peoes2 = Cria_peoes("amarelo")
+        peoes3 = Cria_peoes("azul")
+        peoes4 = Cria_peoes("verde")
+
+        jogadores = [[player1, peoes1],[player2, peoes2],[player3, peoes3],[player4, peoes4]]
+
+        Salva_Jogadores(db, jogadores)
+        Salva_Posicao_Peao_Cor(db, peoes1[0], 0, 9)
+
+        cursor = -1
+        retorno_esperado = -2
+        pos = Pega_Posicao_Peao_Cor(cursor, peoes1[0], 0, True)
+
+        Deleta_Informacoes(db)
+
+        self.assertEqual(retorno_esperado, pos)
         
 if __name__ == '__main__':
     unittest.main()

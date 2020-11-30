@@ -105,29 +105,39 @@ def Cria_Tabela(cursor, debug = False):
         return -2
     return 0
 
-def Deleta_Informacoes(cursor, debug = False):
-    '''Para ser chamada ao final de cada partida.'''
+def Deleta_Informacoes(db, debug = False):
+    '''Para ser chamada sempre ao final de uma partida: Deleta todos os dados nao estruturais salvos na tabela posicoes.'''
     try:
-        cursor.execute("TRUNCATE TABLE pyLudo.posicoes")
+        db["cursor"].execute("TRUNCATE TABLE pyLudo.posicoes")
+        db["db"].commit()
+        db["cursor"].close()
         
-    except mysql.Error as err:
-        if (debug):
-            print("\n\nErro generico: %s"%err.msg)
-        exit(1)
-    except AttributeError:
-        if (debug):
-            print("\n\nErro: Cursor inválido. Por favor, tente novamente.")
-        exit(2)
-    
+    except:
+        try:
+            db["cursor"].close()
+            db["cursor"] = Cria_Cursor(db["db"])
+            db["cursor"].execute("TRUNCATE TABLE pyLudo.posicoes")
+            db["db"].commit()
+            db["cursor"].close()
+        except mysql.Error as err:
+            if (debug):
+                print("\n\nErro generico: %s"%err.msg)
+            return -1
+        except AttributeError:
+            if (debug):
+                print("\n\nErro: Cursor inválido. Por favor, tente novamente.")
+            return -2
     return 0
 
 
-def Salva_Jogador(cursor, jogador, debug = False):
+def Salva_Jogador(db, jogador, debug = False):
     """Salva na base um jogador, com seus respectivos peões e suas posições iniciais."""
     for i in range(0,4):
         try:
-            cursor.execute("INSERT INTO pyLudo.posicoes jogador = %s, cor = %s, peao = %s, posicao = %s"%(jogador[0]["nome"], jogador[1][i]["cor"], 0, jogador[1][i]["pos"]))
-
+            sql = "INSERT INTO pyLudo.posicoes (jogador, cor, peao, posicao) VALUES (%s, %s, %s, %s)"
+            valores = (jogador[0]["nome"], jogador[1][0]["cor"], i, jogador[1][i]["pos"])
+            db["cursor"].execute(sql, valores)
+            db["db"].commit()
         except mysql.Error as err:        
             if (debug):
                 print("\n\nErro generico: %s"%err.msg)
@@ -140,49 +150,55 @@ def Salva_Jogador(cursor, jogador, debug = False):
         
     return 0
 
-def Salva_Jogadores(cursor, jogadores, debug = False):
+def Salva_Jogadores(db, jogadores, debug = False):
      """Salva na base todos os jogadores com todos os peões."""
      ok = 0
-     for i in range(0,size(jogadores)):
-         ok = Salva_Jogador(cursor, jogadores[i], debug)
+     for i in range(0,len(jogadores)):
+         ok = Salva_Jogador(db, jogadores[i], debug)
          if (ok == -1):
-             exit(1)
+             return -1
          elif (ok == -2):
-             exit(2)
+             return -2
      return 0
 
-def Pega_Posicao_Peao_Cor(cursor, cor, peao, debug = False):
+def Pega_Posicao_Peao_Cor(cursor, peao, peao_num, debug = False):
     """Retorna a posicao do peao recebido do jogador da cor recebida."""
+    cor = peao["cor"]
     try:
-        cursor.execute("SELECT posicao FROM pyLudo.posicoes WHERE cor = %s and peao = %s"%(cor, peao))
+        sql = "SELECT posicao FROM pyLudo.posicoes WHERE cor = %s and peao = %s"
+        valores = (cor, peao_num)
+        cursor.execute(sql, valores)
 
     except mysql.Error as err:        
         if (debug):
-            print("\n\nErro generico ao pegar o peao %s da cor %s: %s"%(peao, cor, err.msg))
-        exit(1)
+            print("\n\nErro generico ao pegar o peao %s da cor %s: %s"%(peao_num, cor, err.msg))
+        return -1
         
     except AttributeError:
         if (debug):
             print("\n\nErro: Cursor inválido. Por favor, tente novamente.")
-        exit(2)
+        return -2
         
-    pos = cursor.fetchall()
-    
-    return pos[0]
+    pos = cursor.fetchall()    
+    return pos[0][0]
 
-def Salva_Posicao_Peao_Cor(cursor, cor, peao, posicao, debug = False):
+def Salva_Posicao_Peao_Cor(db, peao, peao_num, posicao, debug = False):
     """Salva no banco de dados a posicao do peao recebido do jogador da cor recebida."""
     try:
-        cursor.execute("INSERT INTO pyLudo.posicoes posicao = %s WHERE cor = %s and peao = %s"%(posicao,cor, peao))
+        cor = peao["cor"]
+        sql = "UPDATE pyLudo.posicoes SET posicao = %s WHERE cor = %s and peao = %s"
+        valores = (posicao, cor, peao_num)
+        db["cursor"].execute(sql, valores)
+        db["db"].commit()
         
     except mysql.Error as err:
         if (debug):
-            print("\n\nErro generico ao salvar o peao %s da cor %s: %s"%(peao, cor, err.msg))
-        exit(1)
+            print("\n\nErro generico ao salvar o peao %s da cor %s: %s"%(peao_num, cor, err.msg))
+        return -1
         
     except AttributeError:
             if (debug):
                 print("\n\nErro: Cursor inválido. Por favor, tente novamente.")
-            exit(2)
+            return -2
         
     return 0

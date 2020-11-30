@@ -28,17 +28,17 @@
 	- Tirar duvidas
 	- Programar os modulos
 		
-		- Banco de Dados - Ariel
-			- Salva_jogador - Testar
-			- Salva_jogadores - Testar
-            		- Exporta_conexao - OK
+		- Banco de Dados - OK
+			- Salva_Jogador - OK
+			- Salva_Jogadores - OK
+            		- Exporta_Conexao - OK
             		- Conecta_SGBD - OK
            		- Cria_Cursor - OK
             		- Cria_Banco - OK
             		- Cria_Tabela - OK
-            		- Pega_Posicao_Peão_Cor - Testar
-            		- Salva_Posicao_Peão_Cor - Testar
-            		- Deleta_Informacoes - Testar
+            		- Pega_Posicao_Peão_Cor - OK
+            		- Salva_Posicao_Peão_Cor - OK
+            		- Deleta_Informacoes - OK
 
 		- XML - Guilherme
 		
@@ -52,7 +52,7 @@
 			- Desenha_tabuleiro
 			- Desenha_dado
 
-		- Dados
+		- Dados -- OK
 			- Cria_dado -- OK
 			- Clica_dado(Random) -- OK
 
