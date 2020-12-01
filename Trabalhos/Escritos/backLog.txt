@@ -37,16 +37,16 @@
             		- Cria_Database - OK
             		- Cria_Tabela - OK
 
-		- XML - Guilherme
+		- XML - Guilherme -- Ok
 		
-		- Graphics
-			- pygames.init
+		- Graphics - Guilherme
+			- pygame.init -- OK
 			- Inicia_telas
-			- Desenha_jogo
-			- Aonde_clicou
+			- Desenha_jogo -- OK
+			- Aonde_clicou -- OK
 			- Renderiza_tela_quantos_jogam()
 			- Desenha_peão
-			- Desenha_tabuleiro
+			- Desenha_tabuleiro -- OK
 			- Desenha_dado
 
 		- Dados
@@ -60,7 +60,7 @@
 			
 		- Partida
 			- Inicia_partida - Guilherme/Ariel
-			- Gerência_Partida - Guilherme
+			- Gerência_Partida - Guilherme -- Ok
 			- Roda_tabuleiro - Guilherme
 			- Cria_torre - Ariel
 			- Captura_peão - Ariel

@@ -102,6 +102,20 @@ class Testa_Partida(unittest.TestCase):
         retorno_esperado = -2
         self.assertEqual(retorno_esperado, teste)
         
+    def test_12_Gerencia_partida_NOK(self):
+        turno = 5
+        teste = Gerencia_partida(turno)
+        print("Teste Módulo Partida - Caso de Teste 12 - Turno não é válido")
+        retorno_esperado = -1
+        self.assertEqual(retorno_esperado, teste)
+        
+    def test_13_Gerencia_partida_OK(self):
+        turno = 2
+        teste = Gerencia_partida(turno)
+        print("Teste Módulo Partida - Caso de Teste 13 - Turno é válido (Verde)")
+        retorno_esperado = 3
+        self.assertEqual(retorno_esperado, teste)
+        
 if __name__ == '__main__':
     unittest.main()
 

@@ -2,6 +2,8 @@ from Banco_de_Dados import *
 from Graphics import *
 from Player import *
 from Partida import *
+import xml.etree.ElementTree as ET
+import requests
 
 def Quantos_jogam():
     i = 0
@@ -51,5 +53,6 @@ def Quantos_jogam():
         
 
 def Salvar_XML():
-    
-    return 0
+    arquivo = 'XML.xml'
+    arvore = ET.parse(arquivo)
+    return arvore

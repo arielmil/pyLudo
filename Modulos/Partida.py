@@ -8,45 +8,56 @@ MAIOR_CASA = 57
 tabuleiro = Cria_tabuleiro(casa,2)
 ALT_TABULEIRO = 20
 LARG_CASA = 25
+turno_inicial = 0
 
 dado = Cria_dado('Vermelho')
 
 def Inicia_partida():
-    #Determina a vez de um jogador
-    #Roda o tabuleiro
-    #Jogador lança o dado
-    #Jogador escolhe qual peão moverá a quantidade tirada no dado
-    #Volta ao início
+    #1: Menu
+    #2: Determina a vez de um jogador
+    #3: Roda o tabuleiro
+    #4: Jogador lança o dado
+    #5: Jogador escolhe qual peão moverá a quantidade tirada no dado
+    #6: Volta ao passo 2
     
+    jogadores_restantes = 4
+    
+    Inicializa_player()
+    while jogadores_restantes > 0:
+        Escolhe_cor()
+    
+    #while casa_final['peoes'] < 4:
     Gerencia_partida()
     Roda_tabuleiro()
     Roda_dado()
     Escolhe_peao()
-    return 0
+    return
 
-def Gerencia_partida():
+def Gerencia_partida(turno):
     """Implementa a funcionalidade de troca de turnos."""
-    turno = 0
-    if turno == 0:
-        #vez do vermelho
-        #Apenas peões vermelhos poderão se mover, após jogar o dado
-        
-    elif turno == 1:
-        #vez do verde
-        
-    elif turno == 2:
-        #vez do azul
-        
-    elif turno == 3:
-        #vez do amarelo
-        
-        
-    if turno == 3:
-        turno = 0
+    
+    if turno == 4:
+        turno = 1
     else:
         turno += 1
     
-    return 0
+    if turno == 1:
+        #vez do vermelho
+        print("Vez do vermelho")        
+    elif turno == 2:
+        #vez do verde
+        print("Vez do verde")        
+    elif turno == 3:
+        #vez do azul
+        print("Vez do azul")        
+    elif turno == 4:
+        #vez do amarelo
+        print("Vez do amarelo")        
+    else:
+        print("Erro na função Gerencia_partida: jogador não existe")
+        return -1        
+        
+    return turno
 
 def Roda_tabuleiro(tabuleiro):
     """Rotaciona o tabuleiro em 90 graus re calculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation() do módulo Tabuleiro."""
