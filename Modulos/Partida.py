@@ -60,7 +60,7 @@ def Gerencia_partida(turno):
     return turno
 
 def Roda_tabuleiro(tabuleiro):
-    """Rotaciona o tabuleiro em 90 graus re calculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation() do módulo Tabuleiro."""
+    """Rotaciona o tabuleiro em 90 graus recalculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation() do módulo Tabuleiro."""
     if len(tabuleiro) <= 0:
         return -1
     else:
