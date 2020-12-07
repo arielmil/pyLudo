@@ -1,7 +1,5 @@
 from Dados import *
 import unittest
-import random
-
 
 '''Arquivo de testes do módulo Dado'''
 
@@ -11,24 +9,24 @@ class Testa_Dado(unittest.TestCase):
         teste = Cria_dado("vermelho")
 
         print("Caso de Teste 01 - Criar um elemento dado vermelho")
-        retorno_esperado = {"num": None, "sprites": ['../../Assets/Dado_vermelho/dice_1.png',
-                    '../../Assets/Dado_vermelho/dice_2.png',
-                    '../../Assets/Dado_vermelho/dice_3.png',
-                    '../../Assets/Dado_vermelho/dice_4.png',
-                    '../../Assets/Dado_vermelho/dice_5.png',
-                    '../../Assets/Dado_vermelho/dice_6.png']}
+        retorno_esperado = {"num": None, "sprites": ['../Assets/Dado_vermelho/dice_1.png',
+                    '../Assets/Dado_vermelho/dice_2.png',
+                    '../Assets/Dado_vermelho/dice_3.png',
+                    '../Assets/Dado_vermelho/dice_4.png',
+                    '../Assets/Dado_vermelho/dice_5.png',
+                    '../Assets/Dado_vermelho/dice_6.png']}
         self.assertEqual(retorno_esperado, teste)
 
     def test_02_Cria_dado_branco_OK(self):
         teste = Cria_dado("branco")
 
         print("Caso de Teste 02 - Criar um elemento dado branco")
-        retorno_esperado = {"num": None, "sprites": ['../../Assets/Dado_branco/dice_1.png',
-                    '../../Assets/Dado_branco/dice_2.png',
-                    '../../Assets/Dado_branco/dice_3.png',
-                    '../../Assets/Dado_branco/dice_4.png',
-                    '../../Assets/Dado_branco/dice_5.png',
-                    '../../Assets/Dado_branco/dice_6.png']}
+        retorno_esperado = {"num": None, "sprites": ['../Assets/Dado_branco/dice_1.png',
+                    '../Assets/Dado_branco/dice_2.png',
+                    '../Assets/Dado_branco/dice_3.png',
+                    '../Assets/Dado_branco/dice_4.png',
+                    '../Assets/Dado_branco/dice_5.png',
+                    '../Assets/Dado_branco/dice_6.png']}
         self.assertEqual(retorno_esperado, teste)
         
     def test_03_num_dado_OK(self):
