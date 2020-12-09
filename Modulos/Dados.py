@@ -12,10 +12,9 @@ def Cria_dado(cor):
                     '../Assets/Dado_'+cor+'/dice_6.png']}
     return esse_dado
 
-def Clica_dado(dado):
+def Clica_dado():
     """Gera um número randomico entre [1,6]"""
-    dado["num"] = random.randint(1,6)
-    return 0
+    return random.randint(1,6)
 
 
 
