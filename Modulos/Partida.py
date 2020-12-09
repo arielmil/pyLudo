@@ -147,7 +147,7 @@ def Captura_peao(peao):
         if (("pos") in peao):
             casa_peao = int(peao["pos"]) #Converti para inteiro só para garantir.
             if (casa_peao < MENOR_CASA or casa_peao > MAIOR_CASA):
-                print("fin_pos desse peão não é um valor valido.")
+                print("\nA posição deste peão não é um valor valido.")
                 return -3
             if (len (tabuleiro[casa_peao]["peoes"])) > 0 and (len (tabuleiro[casa_peao]["peoes"])) < 3:
                 for peca in tabuleiro[casa_peao]["peoes"]:

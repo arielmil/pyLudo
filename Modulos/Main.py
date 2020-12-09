@@ -49,7 +49,15 @@ def Quantos_jogam():
                 flag = False
 
     return jogadores
-        
+
+def Cria_dados(jogadores):
+    dados = []
+    for jogador in jogadores:
+        cor = jogador[1]["cor"]
+        dado = Cria_dado(cor)
+        dados.append(dado)
+
+    return dados
         
 
 def Salvar_XML():
