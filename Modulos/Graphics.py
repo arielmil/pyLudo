@@ -2,11 +2,14 @@ import pygame
 from pygame.locals import *
 import time
 from Dados import *
+from random import randint
 
 
 def Inicia_telas():
     """Inicia e renderiza a interface gráfica"""
-    return 0
+    pygame.font.init()
+    pygame.init()
+    return
 
 
 def Desenha_jogo():
@@ -28,31 +31,31 @@ def Desenha_jogo():
    
 def Aonde_clicou():
     """Identifica em que lugar da tela foi clicado"""
-    onde = 0
+    x = 0
+    y = 0
     if pygame.mouse.get_pressed() == (1,0,0):
-        onde = pygame.mouse.get_pos()
+        x,y = pygame.mouse.get_pos()
        
-    return onde
+    return [x,y]
 
 def Renderiza_tela_quantos_jogam():
     """Permite selecionar quantos jogadores irão participar da partida"""
-    quant_jogadores = 0
-    fundo_menu = pygame.draw.rect(tela, (0, 0, 0), [210, 30, 690, 870])
-    opcao_2j = pygame.draw.circle(tela, (255, 255, 255), [570, 390], 20)
-    opcao_3j = pygame.draw.circle(tela, (255, 255, 255), [630, 450], 20)
-    opcao_4j = pygame.draw.circle(tela, (255, 255, 255), [690, 510], 20)
-   
-    if Aonde_clicou() in opcao_2j:
-        quant_jogadores = 2
-        fundo_menu = pygame.Rect.move(1000, 1000)
-    elif Aonde_clicou() in opcao_3j:
-        quant_jogadores = 3
-        fundo_menu = pygame.Rect.move(1000, 1000)
-    elif Aonde_clicou() in opcao_4j:
-        quant_jogadores = 4
-        fundo_menu = pygame.Rect.move(1000, 1000)
-       
-    return quant_jogadores
+    pygame.draw.rect(tela, (122, 122, 122), (210, 30, 660, 660))
+    fonte = pygame.font.SysFont("Aerial", 30)
+    texto_menu1 = fonte.render("Aperte 2 para 2 jogadores", 1, (255, 255, 255))
+    texto_menu2 = fonte.render("Aperte 3 para 3 jogadores", 1, (255, 255, 255))
+    texto_menu3 = fonte.render("Aperte 4 para 4 jogadores", 1, (255, 255, 255))
+    tela.blit(texto_menu1, (540, 360))
+    tela.blit(texto_menu2, (540, 370))
+    tela.blit(texto_menu3, (540, 380))
+    if pygame.key.get_pressed()[pygame.K_2] != 0:
+        return 2
+    elif pygame.key.get_pressed()[pygame.K_3] != 0:
+        return 3
+    elif pygame.key.get_pressed()[pygame.K_4] != 0:
+        return 4
+
+    return 0
 
 def Desenha_peao(img_peao):
     """Desenha a movimentação do peão"""
@@ -90,19 +93,19 @@ def Desenha_dado(img_dado):
     """Implementa a funcionalidade necessária para desenhar o dado."""
     tela.blit(img_dado[valor_dado - 1], (50, 50))
     return
-'''
+
 def Tela_final():
-    fundo_final = pygame.draw.rect(tela, (0, 0, 0), [210, 30, 870, 690])
-    botao_sair = pygame.draw.rect(tela, (122, 122, 122), [210, 640, 310, 690])
-    botao_reiniciar = pygame.draw.rect(tela, (122, 122, 122), [770, 640, 870, 690])
+    for i in range(len(imagens)):
+        for j in range(len(imagens[i])):
+            pygame.Rect.move(imagens[i][j], (1000, 1000))
    
-    if Aonde_clicou() in botao_sair:
+    if pygame.key.get_pressed()[pygame.K_s] != 0:
         pygame.quit()
-    elif Aonde_clicou() in botao_reiniciar:
-        #inicia uma nova partida
+    elif pygame.key.get_pressed()[pygame.K_n] != 0:
+        Renderiza_tela_quantos_jogam()
     return
 
-'''
+
 
 vermelho = (255, 0, 0)
 verde = (0, 255, 0)
@@ -115,13 +118,13 @@ path = '../Assets/'
 imagens = []
 imagens = Desenha_jogo()
 valor_dado = 1
+apertou = False
 
 tela = pygame.display.set_mode((1080, 720))
 icone = pygame.image.load(path + 'icone_ludo.png')
 pygame.display.set_caption('Ludo')
 pygame.display.set_icon(icone)
-pygame.init()
-
+Inicia_telas()
 
 while True:
     tela.fill(cor_fundo)
@@ -129,12 +132,23 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
 
-   
-    Desenha_tabuleiro(imagens[0])
-    Desenha_peao(imagens[1])
-    Desenha_dado(imagens[2])
+    
     Renderiza_tela_quantos_jogam()
-    if Aonde_clicou() in imagens[2]:
-        valor_dado = Clica_dado()
+    if Renderiza_tela_quantos_jogam() != 0:
+        apertou = True
+
+    if apertou == True:
+        Desenha_tabuleiro(imagens[0])
+        Desenha_peao(imagens[1])
         Desenha_dado(imagens[2])
+
+
+        if (Aonde_clicou()[0] > 50 and Aonde_clicou()[1] < 118) and (Aonde_clicou()[1] > 50 and Aonde_clicou()[1] < 118):
+            valor_dado = Dados.Clica_dado()
+
+    '''if casa_final['peoes'] == 4:
+        apertou = False
+        Tela_final()'''
+
     pygame.display.update()
+

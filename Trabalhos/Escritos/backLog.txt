@@ -28,14 +28,17 @@
 	- Tirar duvidas
 	- Programar os modulos
 		
-		- Banco de Dados - Ariel
-			- Salva jogador
-			- Salva_partida
-            		- Exporta_conexao - OK
-            		- Conecta_Banco - OK
+		- Banco de Dados - OK
+			- Salva_Jogador - OK
+			- Salva_Jogadores - OK
+            		- Exporta_Conexao - OK
+            		- Conecta_SGBD - OK
            		- Cria_Cursor - OK
-            		- Cria_Database - OK
+            		- Cria_Banco - OK
             		- Cria_Tabela - OK
+            		- Pega_Posicao_Peão_Cor - OK
+            		- Salva_Posicao_Peão_Cor - OK
+            		- Deleta_Informacoes - OK
 
 		- XML - Guilherme -- Ok
 		
@@ -49,7 +52,7 @@
 			- Desenha_tabuleiro -- OK
 			- Desenha_dado
 
-		- Dados
+		- Dados -- OK
 			- Cria_dado -- OK
 			- Clica_dado(Random) -- OK
 
@@ -62,9 +65,11 @@
 			- Inicia_partida - Guilherme/Ariel
 			- Gerência_Partida - Guilherme -- Ok
 			- Roda_tabuleiro - Guilherme
-			- Cria_torre - Ariel
+			- Checa_torres - Ariel OK
+			- Controla_peca - Ariel OK
+			- Cria_torres - Ariel OK
+			- Desfaz_torres - Ariel OK
 			- Captura_peão - Ariel
-			- Desmancha_torre - Ariel
 			- Manda_para_casa - Ariel
 			- Roda_dado - Ariel
 			- Escolhe_peão - Ariel

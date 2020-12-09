@@ -1,6 +1,4 @@
 import random
-import pygame
-import time
 
 def Cria_dado(cor):
     """Cria um dado"""

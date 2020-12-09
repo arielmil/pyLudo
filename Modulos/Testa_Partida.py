@@ -1,8 +1,14 @@
 from Partida import *
-from Peao import *
 import unittest
-import random
-import importlib
+
+casa = {"x": 0, "y": 0, "peoes": [], "semi_torres": [], "torres": []}
+MENOR_CASA = 0
+MAIOR_CASA = 57
+tabuleiro = Cria_tabuleiro(casa,2)
+ALT_TABULEIRO = 20
+LARG_CASA = 25
+
+dado = Cria_dado('Vermelho')
 
 '''Arquivo de testes do módulo Partida'''
 
