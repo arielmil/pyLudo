@@ -1,6 +1,3 @@
-import pygame
-import time
-
 def Cria_peao(cor, pos):
     """ Cria um peão"""
     esse_peao = {"cor":cor, "pos": pos, "sprite": '../Assets/peão'+'_' + cor +'.png'}
@@ -13,12 +10,14 @@ def Cria_peoes(cor):
         peoes.append(Cria_peao(cor,0))
     return peoes
 
-def Move_peao(peao,numero_dado):
+def Move (peao,numero_dado):
     """Usado para mover um peão"""
     if (numero_dado <= 0 or numero_dado > 6):
-            return -1
-    if (numero_dado + peao["fin_pos"]) <= 57:
-        peao["fin_pos"] = numero_dado + peao["fin_pos"]
+        print("\nNumero de dado recebido invalido.")
+        return -1
+    if (numero_dado + peao["pos"]) <= 57:
+        peao["pos"] = numero_dado + peao["pos"]
         return 0
     else:
-        return -2
+        #Peao nao pode se mover.
+        return 1

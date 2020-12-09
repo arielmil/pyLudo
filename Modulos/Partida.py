@@ -4,7 +4,7 @@ from Dados import *
 
 MENOR_CASA = 1
 TABULEIRO = Cria_tabuleiro(0, 0, 1)
-MAIOR_CASA = 57#.
+MAIOR_CASA = 2 #Ver qual e a maior casa
 
 def Gerencia_partida():
     """Implementa a funcionalidade de troca de turnos."""

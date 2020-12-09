@@ -2,13 +2,13 @@
 	
 	- XML:
 	
+	
+	
 	- Banco de Dados:
 
 		- Objetivo: Registrar dados gerais sobre o jogo, como cadastro de jogadores e registro de partida.
 
  		- Funções:
-
-			- Salva_jogador: Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um jogador (um array contendo em seu primeiro índice um player como definido pelo módulo Player, e em segundo índice um array contendo seus quatro peões (como definidos pelo módulo Peão) ), e um booleano chamado debug (False por padrão). Salva no Banco este jogador com a sua cor e seus quatro peões em suas posições iniciais. Retorna 0 em caso de sucesso, -1 em caso de erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
             		
             		- Exporta_conexao: Recebe um booleno chamado debug (False por padrão). Cria, ou retorna todos os dados necessários para o uso do banco de dados em um dicionário contendo dois campos: db que armazena um ponteiro para o SGBD configurado para o banco de dados pyLudo, e cursor que armazena um cursor para este SGBD, ou sai do jogo com um código de erro caso o contrário (código de erro 1 para: Erro no nome do host para conexão com o SGBD, criação do cursor, criação do Banco de dados, ou criação da tabela. Ou código de erro 2 para: Erros no nome de usuário ou senha ou algum erro genérico para conexão com o SGBD, ou de cursor inválido). Printa informações de erro caso debug seja True. 
             		
@@ -19,14 +19,18 @@
             		- Cria_Banco: Recebe um cursor, e um booleno chamado debug (False por padrão). Cria um banco de dados chamado pyGames (ou não faz nada caso esse banco já exista). Retorna 0 em caso de sucesso, -1 em caso de erros genéricos, ou -2 em caso de erro por cursor inválido.
             
             		- Cria_Tabela: Recebe um cursor, e um booleno chamado debug (False por padrão). Cria uma tabela para guardar dados de jogador dentro do banco de dados (ou não faz nada caso essa tabela já exista). Retorna 0 em caso de sucesso, -1 em caso de erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erros caso debug seja True.
+            		
+            		- Salva_jogador: Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um jogador (um array contendo em seu primeiro índice um player (como definido pelo módulo Player), e em seu segundo índice um array contendo seus quatro peões (como definidos pelo módulo Peão) ), e um booleano chamado debug (False por padrão). Salva no Banco este jogador com a sua cor e seus quatro peões em suas posições iniciais. Retorna 0 em caso de sucesso, -1 em caso de erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
             			
             		- Salva_Jogadores: Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um array de jogadores provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Itera sobre este array chamando a função Salva_Jogador para cada elemento nele afim de salvar todos os jogadores da partida no Banco. Retorna 0 em caso de sucesso para todos os elementos, -1 para erros genericos em algum elemento, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
             		
-            		- Pega_Posicao_Peão_Cor: Recebe um cursor, um peão (como definido pelo módulo Peoes), um numero inteiro de 0 a 4 representando um dos quatro peões de um jogador, e um booleano chamado debug (False por padrão). Pega no Banco de Dados a posição deste peão para este jogador (conhecido pela sua cor contída na variável peão recebida), e retorna a posição recolhida em caso seja de sucesso, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
+            		- Pega_Posicao_Peão_Cor: Recebe um cursor, um peão (como definido pelo módulo Peões), um número inteiro de 0 a 4 representando um dos quatro peões de um jogador, e um booleano chamado debug (False por padrão). Pega no Banco de Dados a posição deste peão para este jogador (conhecido pela sua cor contída na variável peão recebida), e retorna a posição recolhida em caso seja de sucesso, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
             		
-            		- Salva_Posicao_Peão_Cor: Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um peão (como definido pelo módulo Peoes), um numero inteiro de 0 a 4 representando um dos quatro peões de um jogador, a sua posição, e um booleano chamado debug (False por padrão). Salva no banco a posição deste peão para o jogador desta cor (conhecido pela sua cor contída na variável peão recebida), e retorna 0 caso seja bem sucedido, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
+            		- Salva_Posicao_Peão_Cor: Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um peão (como definido pelo módulo Peoes), um número inteiro de 0 a 4 representando um dos quatro peões de um jogador, a sua posição, e um booleano chamado debug (False por padrão). Salva no banco a posição deste peão para o jogador desta cor (conhecido pela sua cor contída na variável peão recebida), e retorna 0 caso seja bem sucedido, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
             		
             		- Deleta_Informacoes: Deve ser chamada pelo módulo Main ao final de cada partida. Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), e um booleano chamado debug (False por padrão). Deleta todas as informações salvas na tabela Jogadores do Banco, mantendo somente sua estrutura semantica (Primary Keys, Foreign Keys, etc...). Retorna 0 caso seja bem sucedido, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
+
+
 
 	- Dados:
 		
@@ -37,6 +41,7 @@
 				
 			- Clica_dado: Implementa a função Randint da biblioteca Random. Retorna um número inteiro pseudo-randomizado de 1 (incluído) a 6 (incluído).
 			 	
+
 
 	- Graphics:
 
@@ -52,7 +57,7 @@
 
 			- Aonde_clicou: Retorna as posições x e y aonde o jogador clicou na tela. Chama as funções necessárias para serem usadas de acordo com os eventos da aplicação que requerem cliques em lugares ou momentos específicos.
 			
-			- Renderiza_tela_quantos_jogam(): Implementa e renderiza na tela a interface que permite a um jogador selecionar quantos jogadores irão jogar nesta partida. Retorna um número de 2 a 4 referente ao número de jogadores.
+			- Renderiza_tela_quantos_jogam: Implementa e renderiza na tela a interface que permite a um jogador selecionar quantos jogadores irão jogar nesta partida. Retorna um número de 2 a 4 referente ao número de jogadores.
 			
 			- Desenha_peão: Deve ser usada sendo chamada por Desenha_jogo. De acordo com os valores de posição final do peão(ultima posição que ele deve estar, posição que ele está no sistema) e posição atual do peão(posição que ele esta sendo exibido na tela), ela desenha a movimentação do peão, ou caso a posição final do peão seja igual a sua posição atual, ele é mostrado parado.
 			
@@ -70,11 +75,15 @@
 
 		- Funções: 
 
-			- Quantos_jogam: Permite que o jogador que iniciou o jogo selecione quantos jogadores irão jogar (um inteiro de 2 a 4 (ambos inclusivos) ) (Repete a pergunta até que seja digitado um valor válido, ou sair Sair, ou SAIR (nestes ultimos casos, para a execução do jogo.) ), assim como selecionar as cores que os representam. Entra em um loop para criar a quantidade de jogadores selecionados representados por objetos de Player com seus respectivos nomes. Repete o processo de seleção de cor para um jogador, até que seja digitada uma cor válida, e printa um erro caso o contrário. Mantém-se no loop até que todos os jogadores selecionarem uma cor válida, ou digitem "sair" ou "Sair" ou "SAIR", na seleção de cor ou nome, nesse caso printa uma mensagem adequada e sai do jogo. Retorna um array com um numero de índices entre 2 e 4 representando cada jogador, aonde cada índice contém um sub_array tendo em seu primeiro índice um player, e no seu segundo índice um array contendo seus quatro peões já criados e configurados para posição 0.
+			- Quantos_jogam: Permite que o jogador que iniciou o jogo selecione quantos jogadores irão jogar (um inteiro de 2 a 4 (ambos inclusivos) ) (Repete a pergunta até que seja digitado um valor válido, ou sair Sair, ou SAIR (nestes ultimos casos, para a execução do jogo.) ), assim como selecionar as cores que os representam. Entra em um loop para criar a quantidade de jogadores selecionados representados por objetos de Player com seus respectivos nomes. Repete o processo de seleção de cor para um jogador, até que seja digitada uma cor válida, e printa um erro caso o contrário. Mantém-se no loop até que todos os jogadores selecionarem uma cor válida, ou digitem "sair" ou "Sair" ou "SAIR", na seleção de cor ou nome, nesse caso printa uma mensagem adequada e sai do jogo. Retorna um array com um número de índices entre 2 e 4 representando cada jogador, aonde cada índice contém um sub_array tendo em seu primeiro índice um player, e no seu segundo índice um array contendo seus quatro peões já criados e configurados para posição 0.
+			
+			- Cria_dados: Cria n dados de cores distintas aonde n é igual ao numero de jogadores jogando, usando dados providos pela função Quantos_jogam. Retorna um array de dados.
 			
 			- Salvar_XML: Utilizando funções do módulo XML, salva todas as informações da partida que acabou de ser jogada em um arquivo XML. Retorna 0 caso seja bem sucedido, ou -1 caso contrário.
 			
 			- Encerrar_jogo: Chama a tela de mostrar o vencedor, e de jogar novamente, ou a tela de sair, fornecendo o usuário esta escolha. Independente do escolhido, chama a função Deleta_Informações do módulo Banco_de_dados para encerrar a partida. Sai do jogo caso o usuário selecione sair.
+
+
 
 	- Partida:
 
@@ -86,21 +95,22 @@
 
 			- Gerência_Partida: Implementa a funcionalidade de troca de turnos
 
-			- Roda_tabuleiro: rotaciona o tabuleiro em 90 graus re calculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation() do módulo Tabuleiro, para isso recalculamos a posição de cada casa(canto superior esquerdo da mesma), ultilizando o seguinte algoritimo: [x = (tamanho_y_do_tabuleiro - tamanho_x_da_casa) - y; y = x.
+			- Roda_tabuleiro: rotaciona o tabuleiro em 90 graus re calculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation do módulo Tabuleiro, para isso recalculamos a posição de cada casa(canto superior esquerdo da mesma), ultilizando o seguinte algoritimo: [x = (tamanho_y_do_tabuleiro - tamanho_x_da_casa) - y; y = x.
 
-			- Cria_torre: Implementa no jogo os objetos Torre e Semi-Torre. É chamada sempre após Move_peão(). Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão da mesma cor. Caso sim, cria o objeto Semi-Torre. Caso ele esteja em uma casa que já tem uma Semi-Torre, uma Torre é Criada no lugar dela. Caso ele esteja em uma casa sem nenhum outro peão, retorna 0.
-
-			- Captura_peão: É chamada sempre após Move_peão(). Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão de outra cor, cajo esteja, Manda_para_casa() sera executada como esse outro peão como argumento. Retorna 0 Caso um peão seja capturado, 1 caso contrário, e -1 em caso de erro.
+			- Controla_peca: Recebe um peão, um número inteiro representando o valor do dado que acabou de ser jogado. De inicio guarda a casa em que o peão recebido está em uma váriavel e chama Move_peao passando o peão e o número inteiro recebidos como parametros também guardando seu retorno em uma variável passando como parametros os dois valores recebidos. Após isso, caso Move_peão tenha retornado 0: Chama Checa_torres e atribui o resultado em uma váriavel. Após isso atribui o resultado de uma chamada a Desfaz_torres a uma váriavel passando o peão recebido e o resultado de Checa_torres como parametros. Após isso caso Desfaz_torres retorne 0: Atualiza a casa em que o peão estava anteriormente tirando este peão do array de peões desta casa. Por último: atualiza a casa que este peão está, colocando este peão no array de peões desta casa, e chama Cria_torres passando como argumento esse peão. Retorna -1 caso o peão recebido não possa se movimentar, ou 0 caso o contrário.
 			
-			- Desmancha_torre: ver
+			- Cria_torres: Implementa no jogo os objetos torre e semi-torre. É chamada sempre após Controla_peca. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão da mesma cor. Caso sim, retira o peão desta casa, e cria o objeto semi-torre. Caso ele esteja em uma casa que já tem uma semi-torre, retira a semi torre, e uma torre é Criada no lugar dela. Caso ele esteja em uma casa sem nenhum outro peão, ou já exista uma torre desta cor nesta casa, não cria nada. Retorna -1 caso já exista uma torre dessa cor nesta casa, -2 se não crie nada, 0 caso crie uma semi-torre, ou 1 caso crie uma torre. 
 
-			- Manda_para_casa: É chamada sempre após a função Captura_peça. faz com que o peão capturado retorne para sua posição inicial. Retorna 0 case rode com sucerro, e -1 caso contrário.
+			- Captura_peão: É chamada sempre após a função Controla_peca. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão de outra cor, cajo esteja, Manda_para_casa sera executada como esse outro peão como argumento. Retorna 0 Caso um peão seja capturado, 1 caso contrário, e -1 em caso de erro.
 			
-			- Roda_dado: Faz um jogador jogue o Dado. Para isso, utiliza a função Joga_dado() do módulo Dado, caso o jogador clique no icone do Dado.
+			- Desfaz_torre: Recebe um peao, e um número inteiro. Na casa atual deste peão: Desfaz (remove) uma semi-torre da cor do peão recebido caso o inteiro recebido seja igual a 1, ou Desfaz (regressa) uma torre a uma semi-torre caso o inteiro recebido seja igual a 2. Retorna o inteiro recebido.
+			
+			- Manda_para_casa: É chamada sempre após a função Captura_peão. faz com que o peão capturado retorne para sua posição inicial. Retorna 0 case rode com sucerro, e -1 caso contrário.
 			
 			- Escolhe_peão: Permite que o jogador escolha um peão retornando um número inteiro de 0 (incluso) a 3 (incluso) de forma a qual cada número está associado a um dos 4 peões, caso o jogador clique no peão desejado.
 
 			- Quem_ganhou: Retorna o jogador (com seu nome) que venceu o jogo, ou -1 em caso de problema.
+
 
 
 	- Peão:
@@ -109,12 +119,13 @@
 
 		- Funções:
 
-			- Cria_peao: função que recebe a cor do peao, que é referente ao jogador, e a posição inicial. Retorna um dicionario peao com as informações úteis para o jogo (cor, posição atual, posição final e sprite).
+			- Cria_peao: função que recebe a cor do peao, que é referente ao jogador, e a sua posição. Retorna um dicionario peão com as informações úteis para o jogo (cor, posição atual, posição final e sprite).
 			
 			- Cria_peoes: Recebe uma string representando uma cor válida. Utilizando a função Cria_peao, cria um array de 4 peões com a cor selecionada, e com suas respectivas posições em suas respectivas casas iniciais. Retorna este array.
 
-			- Move_peão: Recebe um valor da função "Joga_dado" do módulo Dado, e informa ao peão escolhido a próxima casa que ele "está", sua posição final, correspondente com o valor recebido.
+			- Move_peao: Recebe um valor da função "Joga_dado" do módulo Dado, e atualiza o campo "casa" do peão recebido com o valor. Retorna -1 caso receba um valor incorreto, 1 caso o peão passado por parametro já esteja em sua última posição (final do tabuleiro), ou 0 caso a casa em que ele está seja atualizada.
 	
+
 
 	- Player: 
 
@@ -122,7 +133,8 @@
 
 		- Funções: 
 
-			- Cria_jogador: Para ser usado em conjunto com o banco de dados: Entra em um loop até que seja digitada uma sequência de caracteres que será o nome do jogador. Retorna um dicionario chamado jogador com um campo nome, ou -1 caso não seja digitado nada (Caso decida-se sair do loop).
+			- Cria_jogador: Para ser usado em conjunto com o banco de dados: Entra em um loop até que seja digitada uma sequência de caracteres que será o nome do jogador, ou até que o jogador resolva sair. Retorna um dicionario chamado jogador com um campo nome, ou -1 caso seja digitado: sair, Sair, SAIR, ou nada.
+
 
 
 	- Tabuleiro:
@@ -136,6 +148,6 @@
 
 			- Cria_casa: Recebe como parâmetro um ou dois valores inteiros (x e y). Cria e retorna um dicionario chamado Casa representando uma casa do tabuleiro com suas coordenadas x e y iguais aos parametros recebidos, além de que Casa terá também os campos: "peoes" (uma lista que mantem registro dos peões nessa casa), "semi_torres" (uma lista que mantem registro das semi torres nessa casa), e "torres" (uma lista que mantem registro das torres nessa casa), todos iguais a [] (lista vazia). Retorna -1 e printa uma mensagem de erro caso não sejam recebidos x e y.
 
-			- Cria_casas: Recebe como parâmetros: Uma casa como posição inicial, o número de casas que irá criar, a distância em x ou y entre duas casas, a direção e o sentido que irá seguir. Utilizando a função Cria_Casa(), esta função cria com seus valores x ou y sequencialmente uma ou mais casas, seguindo pela direção (vertical ou horizontal) e pelo sentido  (negativo se igual a -1 , e positivo caso o contrário). Retorna um array de casas, ou -1 em caso de erro.
+			- Cria_casas: Recebe como parâmetros: Uma casa como posição inicial, o número de casas que irá criar, a distância em x ou y entre duas casas, a direção e o sentido que irá seguir. Utilizando a função Cria_Casa, esta função cria com seus valores x ou y sequencialmente uma ou mais casas, seguindo pela direção (vertical ou horizontal) e pelo sentido  (negativo se igual a -1 , e positivo caso o contrário). Retorna um array de casas, ou -1 em caso de erro.
 
-			- Cria_tabuleiro: Recebe como parâmetros: Uma casa como posição inicial, e a distancia em x ou y entre duas casas, além de um parametro opcional booleano chamado debugging. Cria utilizando sequencialmente a função Cria_Casas() todas as casas necessárias para o tabuleiro poder ser usado com seus valores x e y. Retorna um array de 58 Casas representando o tabuleiro. Caso debugging seja diferente de False, printa utilizando a função Printa_tabuleiro todas as casas do tabuleiro criado.
+			- Cria_tabuleiro: Recebe como parâmetros: Uma casa como posição inicial, e a distancia em x ou y entre duas casas, além de um parametro opcional booleano chamado debugging. Cria utilizando sequencialmente a função Cria_Casas todas as casas necessárias para o tabuleiro poder ser usado com seus valores x e y. Retorna um array de 58 Casas representando o tabuleiro. Caso debugging seja diferente de False, printa utilizando a função Printa_tabuleiro todas as casas do tabuleiro criado.
