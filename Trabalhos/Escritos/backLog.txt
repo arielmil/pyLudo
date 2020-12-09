@@ -58,6 +58,7 @@
 
 		- Main
 			- Quantos_jogam
+			- Cria_dados
 			- Salvar_XML - Guilherme
 			- Encerrar_jogo - Ariel
 			
@@ -73,6 +74,7 @@
 			- Manda_para_casa - Ariel
 			- Roda_dado - Ariel
 			- Escolhe_peão - Ariel
+			- Quem_ganhou
 
 		- Peão -- OK 
 			- Cria_peao -- OK

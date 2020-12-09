@@ -4,6 +4,7 @@ from Dados import *
 
 MENOR_CASA = 1
 TABULEIRO = Cria_tabuleiro(0, 0, 1)
+MAIOR_CASA = 2 #Ver qual e a maior casa
 
 def Gerencia_partida():
     """Implementa a funcionalidade de troca de turnos."""
@@ -104,7 +105,7 @@ def Captura_peao(peao):
         if (("pos") in peao):
             casa_peao = int(peao["pos"]) #Converti para inteiro só para garantir.
             if (casa_peao < MENOR_CASA or casa_peao > MAIOR_CASA):
-                print("fin_pos desse peão não é um valor valido.")
+                print("\nA posição deste peão não é um valor valido.")
                 return -3
             if (len (tabuleiro[casa_peao]["peoes"])) > 0 and (len (tabuleiro[casa_peao]["peoes"])) < 3:
                 for peca in tabuleiro[casa_peao]["peoes"]:
@@ -128,10 +129,6 @@ def Manda_para_casa(peao):
 
 def Inicializa_player():
     """Recebe um número inteiro de 2 a 4 da função Quantos_jogam do módulo Main, e Inicializa e retorna um array de jogadores com o número recebido."""
-    return
-
-def Roda_dado():
-    """Faz um jogador jogue o Dado. Para isso, utiliza a função Joga_dado() do módulo Dado, caso o jogador clique no icone do Dado."""
     return
 
 def Escolhe_peao():
