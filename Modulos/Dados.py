@@ -1,10 +1,8 @@
 import random
-import pygame
-import time
 
 def Cria_dado(cor):
     """Cria um dado"""
-    esse_dado = {"num": None, "sprites": ['../Assets/Dado_'+cor+'/dice_1.png',
+    esse_dado = {"cor": cor, "num": None, "sprites": ['../Assets/Dado_'+cor+'/dice_1.png',
                     '../Assets/Dado_'+cor+'/dice_2.png',
                     '../Assets/Dado_'+cor+'/dice_3.png',
                     '../Assets/Dado_'+cor+'/dice_4.png',
