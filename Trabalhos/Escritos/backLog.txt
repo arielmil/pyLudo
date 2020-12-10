@@ -64,19 +64,19 @@
 			
 		- Partida
 			- Inicia_partida - Guilherme/Ariel
-			- Gerência_Partida - Guilherme
+			- Gerência_Partida - Guilherme/Ariel
 			- Roda_tabuleiro - Guilherme
-			- Checa_torres - Ariel OK
-			- Controla_peca - Ariel OK
-			- Cria_torres - Ariel OK
-			- Desfaz_torres - Ariel OK
-			- Captura_peão - Ariel
-			- Manda_para_casa - Ariel
-			- Roda_dado - Ariel
-			- Escolhe_peão - Ariel
-			- Quem_ganhou
+			- Checa_torres - Ariel Testar
+			- Controla_peca - Ariel Testar
+			- Cria_torres - Ariel Testar
+			- Desfaz_torres - Ariel Testar
+			- Captura_peão - Ariel Testar
+			- Manda_para_casa - Ariel Testar
+			- Escolhe_peão - Ariel Testar
+			- Quem_ganhou - Guilherme/Ariel
+			- Checa_disponibilidade_peao - Ariel Testar
 
-		- Peão -- OK 
+		- Peão
 			- Cria_peao -- OK
 			- Move_peão -- OK
 
@@ -89,12 +89,13 @@
 			- Printa_tabuleiro -- OK
 			- Cria_casas -- OK
 			- Cria_tabuleiro -- OK
-			- Converte_posicao -- FALTA TESTAR
+			- Converte_posicao -- Testar
+			- Checa_disponibilidade -- Testar
 			
 
 	- Desenvolver sprites
-		-escolher sprite
+		- Escolher sprite
 			- Dado
 			- Peão
 			- Tabuleiro
-		- linkar sprites
+		- Linkar sprites

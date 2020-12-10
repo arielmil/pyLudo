@@ -97,7 +97,7 @@ def Cria_casas (posicao_inicial, times, inc, direction, x = False, y = False):
     return casas_array
 
 #Sera exportada.       
-def Cria_tabuleiro(posicao_inicial,inc, debugging = False):
+def Cria_tabuleiro(posicao_inicial, inc, debugging = False):
     """Chamadada uma vez por tabulerio, cria e preenche um array contendo 58 casas representando as posições no tabuleiro."""
     
     times = 5
@@ -227,9 +227,12 @@ def Cria_tabuleiro(posicao_inicial,inc, debugging = False):
 
     return tabuleiro
 
-def Converte_posicao(peao, posicao):
-    '''"Converte" a posicao do peao recebido para a posicao correspondente em relacao ao peao azul, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes.'''
-
+def Converte_posicao(cor, posicao):
+    '''"Converte" a posicao recebida para a posicao correspondente em relacao as posicoes azuis, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes. Retorna esta posição convertida em uma váriavel chamada casa_relativa'''
+    
+    if posicao == 0 or posicao >= 52:
+        return posicao
+    
     cor_e_defasagem = {'amarelo': 39, 'verde': 26, 'vermelho': 13, 'azul': 0}
     cor = peao["cor"]
     posicao = posicao + cor_e_defasagem[cor]
@@ -238,3 +241,15 @@ def Converte_posicao(peao, posicao):
         posicao = posicao - 52
 
     return posicao
+
+def Checa_disponibilidade(numero_dado, casa, cor):
+    
+    if casa < 0:
+        if numero_dado != 6:
+            return -1
+        return 1
+
+    if casa_relativa + numero_dado > 57:
+        return -1
+    
+    return 1
