@@ -41,13 +41,13 @@ def Aonde_clicou():
 def Renderiza_tela_quantos_jogam():
     """Permite selecionar quantos jogadores irão participar da partida"""
     pygame.draw.rect(tela, (122, 122, 122), (210, 30, 660, 660))
-    fonte = pygame.font.SysFont("Aerial", 30)
+    fonte = pygame.font.SysFont("Arial", 30)
     texto_menu1 = fonte.render("Aperte 2 para 2 jogadores", 1, (255, 255, 255))
     texto_menu2 = fonte.render("Aperte 3 para 3 jogadores", 1, (255, 255, 255))
     texto_menu3 = fonte.render("Aperte 4 para 4 jogadores", 1, (255, 255, 255))
-    tela.blit(texto_menu1, (540, 360))
-    tela.blit(texto_menu2, (540, 370))
-    tela.blit(texto_menu3, (540, 380))
+    tela.blit(texto_menu1, (480, 360))
+    tela.blit(texto_menu2, (480, 390))
+    tela.blit(texto_menu3, (480, 420))
     if pygame.key.get_pressed()[pygame.K_2] != 0:
         return 2
     elif pygame.key.get_pressed()[pygame.K_3] != 0:
@@ -82,6 +82,9 @@ def Desenha_peao(img_peao):
     tela.blit(img_peao[3], (655, 535))
     tela.blit(img_peao[3], (805, 535))
     tela.blit(img_peao[3], (725, 605))
+
+    #Diferença: 44 pixels
+    tela.blit(img_peao[2], (482, 512))
     return
 
 def Desenha_tabuleiro(img_tab):
@@ -91,19 +94,77 @@ def Desenha_tabuleiro(img_tab):
 
 def Desenha_dado(img_dado):
     """Implementa a funcionalidade necessária para desenhar o dado."""
-    tela.blit(img_dado[valor_dado - 1], (50, 50))
+    if dado_usado["num"] == None:
+        tela.blit(img_dado[0], (50, 50))
+    else:
+        tela.blit(img_dado[dado_usado["num"] - 1], (50, 50))
     return
 
-def Tela_final():
-    for i in range(len(imagens)):
-        for j in range(len(imagens[i])):
-            pygame.Rect.move(imagens[i][j], (1000, 1000))
-   
-    if pygame.key.get_pressed()[pygame.K_s] != 0:
-        pygame.quit()
-    elif pygame.key.get_pressed()[pygame.K_n] != 0:
-        Renderiza_tela_quantos_jogam()
+def Posicao_peoes():
     return
+
+def Clica_casa():
+    """Retorna o valor absoluto da casa"""
+    if Aonde_clicou() in casa_valida:
+        return [casa_valida['x'], casa_valida['y']]
+    return 0
+
+def Localiza_casa():
+    coordenadas = []
+    num = pygame.font.SysFont("Arial", 15)
+    for casa in range(58):
+        #Casa inicial
+        if casa == 0:
+            coordenadas.append([0,0])
+
+        #Primeira casa depois de sair da casa inicial
+        if casa == 1:
+            coordenadas.append([482, 512])
+
+        #Norte
+        elif (casa > 1 and casa < 6) or (casa > 11 and casa < 14) or (casa > 19 and casa < 25) or (casa > 51):
+            c = [coordenadas[casa-1][0], coordenadas[casa-1][1] - 44]
+            coordenadas.append(c)
+
+        #Noroeste
+        elif casa == 6:
+            coordenadas.append([coordenadas[casa-1][0] - 44, coordenadas[casa-1][1] - 44])
+
+        #Oeste
+        elif (casa > 6 and casa < 12) or (casa > 39 and casa < 45) or (casa == 51):
+            coordenadas.append([coordenadas[casa-1][0] - 44, coordenadas[casa-1][1]])
+        
+        #Nordeste
+        elif casa == 19:
+            coordenadas.append([coordenadas[casa-1][0] + 44, coordenadas[casa-1][1] - 44])
+
+        #Leste
+        elif (casa >= 14 and casa < 19) or (casa >= 25 and casa < 27) or (casa > 32 and casa <= 37):
+            coordenadas.append([coordenadas[casa-1][0] + 44, coordenadas[casa-1][1]])
+
+        #Sudeste
+        elif casa == 32:
+            coordenadas.append([coordenadas[casa-1][0] + 44, coordenadas[casa-1][1] + 44])
+
+        #Sul
+        elif (casa > 26 and casa < 32) or (casa > 37 and casa < 40) or (casa > 45 and casa < 52):
+            coordenadas.append([coordenadas[casa-1][0], coordenadas[casa-1][1] + 44])
+
+        #Sudoeste
+        elif casa == 45:
+            coordenadas.append([coordenadas[casa-1][0] - 44, coordenadas[casa-1][1] + 44])
+
+        #texto = num.render(str(casa), 1, (0, 0, 0))
+        #tela.blit(texto, tuple(coordenadas[casa-1]))
+
+    return coordenadas
+
+def Tela_final():
+    if pygame.key.get_pressed()[pygame.K_s] != 0:
+        return True
+    elif pygame.key.get_pressed()[pygame.K_n] != 0:
+        return False
+    return 0
 
 
 
@@ -117,8 +178,9 @@ cor_fundo = (139,69,19)
 path = '../Assets/'
 imagens = []
 imagens = Desenha_jogo()
-valor_dado = 1
-apertou = False
+jogo = False
+final = False
+dado_usado = Cria_dado("branco")
 
 tela = pygame.display.set_mode((1080, 720))
 icone = pygame.image.load(path + 'icone_ludo.png')
@@ -132,23 +194,30 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
 
-    
-    Renderiza_tela_quantos_jogam()
-    if Renderiza_tela_quantos_jogam() != 0:
-        apertou = True
+    #Menu inicial
+    if jogo == False and final == False:
+        Renderiza_tela_quantos_jogam()
+        if Renderiza_tela_quantos_jogam() != 0:
+            jogo = True
 
-    if apertou == True:
+    #Durante o jogo
+    elif jogo == True:
         Desenha_tabuleiro(imagens[0])
         Desenha_peao(imagens[1])
         Desenha_dado(imagens[2])
-
+        Localiza_casa()
 
         if (Aonde_clicou()[0] > 50 and Aonde_clicou()[1] < 118) and (Aonde_clicou()[1] > 50 and Aonde_clicou()[1] < 118):
-            valor_dado = Dados.Clica_dado()
+            Clica_dado(dado_usado)
 
-    '''if casa_final['peoes'] == 4:
-        apertou = False
-        Tela_final()'''
+    #Fim de jogo
+    elif final == True:
+        jogo = False
+        Tela_final()
+        if Tela_final() == True:
+            final = False
+        elif Tela_final == False:
+            pygame.quit()
 
     pygame.display.update()
 
