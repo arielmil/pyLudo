@@ -151,3 +151,6 @@
 			- Cria_casas: Recebe como parâmetros: Uma casa como posição inicial, o número de casas que irá criar, a distância em x ou y entre duas casas, a direção e o sentido que irá seguir. Utilizando a função Cria_Casa, esta função cria com seus valores x ou y sequencialmente uma ou mais casas, seguindo pela direção (vertical ou horizontal) e pelo sentido  (negativo se igual a -1 , e positivo caso o contrário). Retorna um array de casas, ou -1 em caso de erro.
 
 			- Cria_tabuleiro: Recebe como parâmetros: Uma casa como posição inicial, e a distancia em x ou y entre duas casas, além de um parametro opcional booleano chamado debugging. Cria utilizando sequencialmente a função Cria_Casas todas as casas necessárias para o tabuleiro poder ser usado com seus valores x e y. Retorna um array de 58 Casas representando o tabuleiro. Caso debugging seja diferente de False, printa utilizando a função Printa_tabuleiro todas as casas do tabuleiro criado.
+			
+			- Converte_posicao: "Converte" a posicao do peao recebido para a posicao correspondente em relacao ao peao azul, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes.
+

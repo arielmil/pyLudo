@@ -227,4 +227,14 @@ def Cria_tabuleiro(posicao_inicial,inc, debugging = False):
 
     return tabuleiro
 
+def Converte_posicao(peao, posicao):
+    '''"Converte" a posicao do peao recebido para a posicao correspondente em relacao ao peao azul, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes.'''
 
+    cor_e_defasagem = {'amarelo': 39, 'verde': 26, 'vermelho': 13, 'azul': 0}
+    cor = peao["cor"]
+    posicao = posicao + cor_e_defasagem[cor]
+
+    if posicao > 52:
+        posicao = posicao - 52
+
+    return posicao

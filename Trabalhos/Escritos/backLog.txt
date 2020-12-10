@@ -89,7 +89,8 @@
 			- Printa_tabuleiro -- OK
 			- Cria_casas -- OK
 			- Cria_tabuleiro -- OK
-
+			- Converte_posicao -- FALTA TESTAR
+			
 
 	- Desenvolver sprites
 		-escolher sprite
