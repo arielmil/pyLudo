@@ -2,7 +2,7 @@ import random
 
 def Cria_dado(cor):
     """Cria um dado"""
-    esse_dado = {"cor": cor, "num": None, "sprites": ['../Assets/Dado_'+cor+'/dice_1.png',
+    esse_dado = {"cor": cor, "sprites": ['../Assets/Dado_'+cor+'/dice_1.png',
                     '../Assets/Dado_'+cor+'/dice_2.png',
                     '../Assets/Dado_'+cor+'/dice_3.png',
                     '../Assets/Dado_'+cor+'/dice_4.png',
@@ -12,8 +12,7 @@ def Cria_dado(cor):
 
 def Clica_dado(dado):
     """Gera um número randomico entre [1,6]"""
-    dado["num"] = random.randint(1,6)
-    return 0
+    return random.randint(1,6)
 
 
 

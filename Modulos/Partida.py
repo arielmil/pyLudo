@@ -1,36 +1,31 @@
 from Peao import *
 from Tabuleiro import *
+from Banco_de_dados import *
 from Dados import *
 
 MENOR_CASA = 1
 TABULEIRO = Cria_tabuleiro(0, 0, 1)
-MAIOR_CASA = 2 #Ver qual e a maior casa
+MAIOR_CASA = 57
 
-def Gerencia_partida():
-    """Implementa a funcionalidade de troca de turnos."""
-    return 0
+#OBS: Foi obtida permissão do professor para fazer com que a casa guarde quantos peoes tem nela.
 
-def Roda_tabuleiro(tabuleiro):
-    """Rotaciona o tabuleiro em 90 graus re calculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation() do módulo Tabuleiro."""
-    if len(tabuleiro) <= 0:
-        return -1
-    else:
-        for casa in tabuleiro:
-            if type(casa) == dict: 
-                casa["x"] = ALT_TABULEIRO - casa["y"] - LARG_CASA
-                casa["y"] = casa["x"]
-                if casa["x"] < 0 or casa["y"] < 0:
-                    print("ERRO AO ROTACIONAR TABULEIRO, POSIÇÃO DE CASA NEGATIVO")
-                    return -2
-            else:
-                Roda_tabuleiro(casa)
-    return 0
+def Gerencia_partida(jogadores):
+    '''Implementa a funcionalidade de troca de turnos.'''
+    #flag = 0
+
+    #while !flag:
+     #   num_dado = Clica_dado()
+      #  flag = Checa_disponibilidade_peao()
+    #return 0
 
 def Checa_torres(peao):
+    '''Recebe um peão, e checa se na sua posição relativa existe uma semi_torre, ou torre de sua cor. Retorna 1 caso exista uma semi_torre, 2 caso exista uma torre, 0 caso caso não existam nenhuma das duas.'''
+
     cor = peao["cor"]
-    casa = TABULEIRO[peao["casa"]]
-    torres = casa["torres"]
-    semi_torres = casa["semi_torres"]
+    numero_casa = Converte_posicao(cor, peao["pos"])
+    casa_relativa = TABULEIRO[numero_casa]
+    torres = casa_relativa["torres"]
+    semi_torres = casa_relativa["semi_torres"]
 
     for semi_torre in semi_torres:
         if semi_torre["cor"] == cor:
@@ -44,98 +39,147 @@ def Checa_torres(peao):
 
 def Desfaz_torres(peao, option):
     '''Recebe um peao, e um número inteiro. Na casa atual deste peão: Desfaz (remove) uma semi-torre da cor do peão recebido caso o inteiro recebido seja igual a 1, ou Desfaz (regressa) uma torre a uma semi-torre caso o inteiro recebido seja igual a 2. Retorna o inteiro recebido.'''
-    cor = peao["cor"]
-    casa = TABULEIRO[peao["casa"]]
 
-    if torre_ou_semi-torre == "s" or torre_ou_semi-torre == "S":
-        casa["semi_torre"].remove({"cor": cor})
+    cor = peao["cor"]
+    numero_casa = Converte_posicao(cor, peao["pos"])
+    casa_relativa = TABULEIRO[numero_casa]
+
+    if option == 1:
+        casa_relativa["semi_torre"].remove({"cor": cor})
+        casa_relativa["peoes"].append(peao)
     
-    elif torre_ou_semi-torre == "t" or torre_ou_semi-torre == "T":
-        casa["torre"].remove({"cor": cor})
-        casa["semi_torres"].append({"cor": cor})
+    elif option == 2:
+        casa_relativa["torre"].remove({"cor": cor})
+        casa_relativa["semi_torres"].append({"cor": cor})
 
     return option
     
 def Cria_torres(peao):
-    """Implementa no jogo os objetos torre e semi-torre. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão da mesma cor. Caso sim, retira o peão desta casa, e cria o objeto semi-torre. Caso ele esteja em uma casa que já tem uma semi-torre, retira a semi torre, e uma torre é Criada no lugar dela. Caso ele esteja em uma casa sem nenhum outro peão, ou já exista uma torre desta cor nesta casa, não cria nada. Retorna -1 caso já exista uma torre dessa cor nesta casa, -2 se não crie nada, 0 caso crie uma semi-torre, ou 1 caso crie uma torre."""
+    '''Implementa no jogo os objetos torre e semi-torre. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão da mesma cor. Caso sim, retira o peão desta casa, e cria o objeto semi-torre. Caso ele esteja em uma casa que já tem uma semi-torre, retira a semi torre, e uma torre é Criada no lugar dela. Caso ele esteja em uma casa sem nenhum outro peão, ou já exista uma torre desta cor nesta casa, não cria nada. Retorna -1 caso já exista uma torre dessa cor nesta casa, -2 se não crie nada, 0 caso crie uma semi-torre, ou 1 caso crie uma torre.'''
+
     cor = peao["cor"]
-    casa = TABULEIRO[peao["pos"]]
-    peoes = casa["peoes"]
+    numero_casa = Converte_posicao(cor, peao["pos"])
+    casa_relativa = TABULEIRO[numero_casa]
+    peoes = casa_relativa["peoes"]
     checa = Checa_torres(peao)
 
-    if checa == 1:
+    if checa == 0:
         for peao in peoes:
             if peao["cor"] == cor:
                 peoes.remove(peao)
-        casa["semi_torres"].append({"cor": cor})
+        casa_relativa["semi_torres"].append({"cor": cor})
         return 1
 
-    elif checa == 2:
-        casa["semi_torres"].remove({"cor": cor})
-        casa["torres"].append({"cor": cor})
+    elif checa == 1:
+        casa_relativa["semi_torres"].remove({"cor": cor})
+        casa_relativa["torres"].append({"cor": cor})
         return 2
     
     return 0
 
 def Controla_peca(peao, numero_dado):
-    '''Recebe um peão, um número inteiro representando o valor do dado que acabou de ser jogado. De inicio guarda a casa em que o peão recebido está em uma váriavel e chama Move_peao passando como parametros os dois valores recebidos. Após isso Chama Checa_torres e atribui o resultado em uma váriavel. Após isso atribui o resultado de uma chamada a Desfaz_torres a uma váriavel passando o peão recebido e o resultado de Checa_torres como parametros. Após isso caso Desfaz_torres retorne 0: Atualiza a casa em que o peão estava anteriormente tirando este peão do array de peões desta casa. Após isso chama Move_peão do módulo Peão passando o peão e o número inteiro recebidos como parametros. Por último: atualiza a casa que este peão está, colocando este peão no array de peões desta casa, e chama Cria_torres passando como argumento esse peão.'''
-    casa = TABULEIRO[peao["casa"]]
+    '''Recebe um peão, um número inteiro representando o valor do dado que acabou de ser jogado. De inicio guarda a casa_relativa em que o peão recebido está em uma váriavel e chama Move_peao passando o peão e o número inteiro recebidos como parametros também guardando seu retorno em uma variável passando como parametros os dois valores recebidos. Após isso, caso Move_peão tenha retornado 0: Chama Checa_torres e atribui o resultado em uma váriavel. Após isso atribui o resultado de uma chamada a Desfaz_torres a uma váriavel passando o peão recebido e o resultado de Checa_torres como parametros. Após isso caso Desfaz_torres retorne 0 ou 1: Atualiza a casa_relativa em que o peão estava anteriormente tirando este peão do array de peões desta casa. Por último: atualiza a casa_relativa que este peão está, colocando este peão no array de peões desta casa, e chama Cria_torres passando como argumento esse peão. Retorna -1 caso o peão recebido não possa se movimentar, ou 0 caso o contrário.'''
+    
+    cor = peao["cor"]
+    numero_casa = Converte_posicao(cor, peao["pos"])
+    casa_relativa = TABULEIRO[numero_casa]
+    
+    checa = Checa_torres(peao)
+    checa = Desfaz_torres(peao, checa)
+
+    if checa == 0 or checa == 1:
+        casa_relativa["peoes"].remove(peao)
+
     checa = Move_peao(peao, numero_dado)
 
     if checa != 0:
         return -1
 
-    checa = Checa_torres(peao)
-    checa = Desfaz_torres(peao, checa)
-
-    if checa == 0:
-        casa["peoes"].remove(peao)
-
-    TABULEIRO[peao["pos"]]["peoes"].append(peao)
+    numero_casa = Converte_posicao(cor, peao["pos"])
+    casa_relativa = TABULEIRO[numero_casa]
+    
+    casa_relativa["peoes"].append(peao)
 
     Cria_torre(peao)
 
     return 0
     
-    
-    
 def Captura_peao(peao):
-    """É chamada sempre após Move_peão(). Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão de outra cor, cajo esteja, Manda_para_casa() sera executada como esse outro peão como argumento. Retorna 0 Caso um peão seja capturado, 1 caso contrário, e -1 em caso de erro."""
+    '''É chamada sempre após Move_peão(). Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão de outra cor, cajo esteja, Manda_para_casa() sera executada como esse outro peão como argumento. Retorna 0 Caso um peão seja capturado, 1 caso contrário, e -1 em caso de erro.'''
     if (type(peao) == dict):
+        
         if (("pos") in peao):
-            casa_peao = int(peao["pos"]) #Converti para inteiro só para garantir.
-            if (casa_peao < MENOR_CASA or casa_peao > MAIOR_CASA):
+            cor = peao["cor"]
+            numero_casa = Converte_posicao(cor, peao["pos"])
+            
+            if numero_casa < MENOR_CASA or numero_casa > MAIOR_CASA:
                 print("\nA posição deste peão não é um valor valido.")
                 return -3
-            if (len (tabuleiro[casa_peao]["peoes"])) > 0 and (len (tabuleiro[casa_peao]["peoes"])) < 3:
-                for peca in tabuleiro[casa_peao]["peoes"]:
-                    if peca["cor"] != peao["cor"]:
-                        Manda_para_casa(peca)
-                        return 0
+
+            casa_relativa = TABULEIRO[numero_casa]
+            peoes = casa_relativa["peoes"]
+            
+            for peao in peoes:
+                
+                if peao["cor"] != cor:
+                    Manda_para_casa(peao)
+                    return 0
           
             print("Não existem peões para serem capturados nessa casa.")
             return -2
+        
         print("Erro: dicionário recebido não é um peão.")
         return -4
+    
     print("Erro: parametro recebido não é um dicionário.")
     return -1
 
 def Manda_para_casa(peao):
-    """É chamada sempre após a função Captura_peao. faz com que o peão capturado retorne para sua posição inicial. Retorna 0 caso rode com sucesso, e -1 caso contrário."""
-    if (type(peao) == dict): # and checar se naquele dict tem um campo chamado fin_pos#
-        peao["fin_pos"] = 0
+    '''É chamada sempre após a função Captura_peao. faz com que o peão capturado retorne para sua posição inicial. Retorna 0 caso rode com sucesso, e -1 caso contrário.'''
+    if (type(peao) == dict):
+        if "pos" in peao:
+            peao["pos"] = 0
         return 0
+    
     return -1
 
-def Inicializa_player():
-    """Recebe um número inteiro de 2 a 4 da função Quantos_jogam do módulo Main, e Inicializa e retorna um array de jogadores com o número recebido."""
-    return
+def Checa_disponibilidade_peao(cor, numero_dado, casa):
+    '''Recebe um peao, e dois inteiros representando o número de dado que acabou de ser tirado, e uma posição (número de casa). Checa junto a função Checa_disponibilidade do módulo Tabuleiro se o peão recebido pode se movimentar baseado no número de dado tirado. Retorna -2 caso não existam peões na posição recebida, -1 caso exista, mas esse peão não pode se mover, ou 1 caso exista, e possa.'''
 
-def Escolhe_peao():
-    """Permite que o jogador escolha um peão retornando um número inteiro de 0 (incluso) a 3 (incluso) de forma a qual cada número está associado a um dos 4 peões, caso o jogador clique no peão desejado."""
-    return
+    numero_casa = Converte_posicao(cor, casa)
+    casa_relativa = TABULEIRO[numero_casa]
+    peoes = casa_relativa["peoes"]
+    checa = None
 
-def Escolhe_cor():
-    """Associa uma cor a uma instância de jogador."""
-    return 0
+    for peao in peoes:
+        if peao["cor"] == cor:
+            checa = Checa_disponibilidade(numero_dado, casa, cor)
 
+            if checa == -1:
+
+                #Peao esta na posicao recebida, porem nao pode andar.
+                return -1
+
+            #Peao esta na posicao recebida, e pode andar.
+            return 1
+
+    #Peao nao esta na posicao recebida.
+    return -2
+
+    
+def Escolhe_peao(jogador, casa_clicada, numero_dado):
+    '''Recebe um jogador provido pela funcao Quantos_jogam do modulo Main, dois números inteiros representando uma posicao (numero de casa), e o numero do dado que acabou de ser tirado. Permite que o jogador escolha um peão para se mover. Retorna o índice desse peão no array de peões dentro do jogador, -2 caso nenhum peão válido esteja na casa clicada, ou -1 caso esteja porém não pode se mover.'''
+
+    peoes = jogador[1]
+
+    cor = peoes[0]["cor"]
+    
+    checa = Checa_disponibilidade_peao(cor, numero_dado, casa_clicada)
+
+    if checa < 1:
+        #Esse peao nao pode andar
+        return checa
+
+    for num in range(0, len(peoes)):
+        if peoes[num]["pos"] == casa_clicada:
+            return num

@@ -1,0 +1,96 @@
+Aluno: Ariel Mileguir
+Matricula: 1811928
+
+Prova P2 de Programação modular
+
+
+Questão 1:
+
+Considere a seguinte situação hipotética:
+
+Uma determinada equipe de desenvolvedores é contradada para desenvolver uma aplicação.
+
+Detalhes da Aplicação (Escopo):	Um sistema que seja capaz de gerenciar alunos em uma universidade, isto é: Mantenha registro de todos os membros da universidade, alunos e professores (nome, sobrenome, CPF, e Endereço de moradia), e as disciplinas que os alunos estão matriculadas (nome, turma, professor). Para ele foi criado um módulo de criação de membros da universidade, um modulo de criação de disciplinas, e um módulo com as funcionalidades necessárias para persistencia e posteriormente recuperação (retrieve / get) de dados guardados em um banco de dados. Vale notar também que apesar dos membros universitários possuirem uma matricula universitaria única, isso não foi mencionada em momento nenhum durante as reuniões entre o cliente e os desenvolvedores.
+
+	Os membros universitários apesar de serem identificados pela tupla descrita acima, são recuperados sem ambiguidade do banco de dados pela tupla: (CPF, endereço).
+	Após ser aprovado pelo cliente o documento contendo a especificação da aplicação detalhando as suas "regras de negócio" os desenvolvedores começam a de fato programar tal aplicação seguindo rigidamente uma documentação de requisitos, sendo esta criada tendo como base o entendemento destas regras de negócio.
+
+	Os três módulos então são programados e testados com testes unitários com sucesso gerando a primeira versão da aplicação.
+
+	Após o cliente "C" testar a aplicação e verificar que as disciplinas podem ser registradas fácilmente, e sem falhas, que os membros universitários podem ser registrados normalmente, e que todas essas informações podem ser recuperados do banco de dados, o cliente C relata que:
+
+	Ele quer que seja implementada uma maneira mais simples de recuperar os dados referentes aos membros universitários. Apesar disso C diz querer colocar essa versão em produção, e que enquanto esta versão está sendo usada normalmente, as evoluções devem ser desenvolvidas.
+
+	Os desenvolvedores deverão realizar modificações nela para que posteriormente quando as modificações forem feitas, uma nova versão possa ser criada, e ela possa ser colocada para uso.
+
+	É decidido então com base nisso que como será necessário usar um dado único para cada membro universitário (como um ID) para que atravéz dele sozinho, seja possível recuperar dados de qualquer membro, e que será possível recuperar os dados dos membros universitários APENAS colocando no programa responsável por isso esta informação (Primeira manutenção evolutiva). 
+
+	C informa então que cada membro da universidade possuí uma matricula única. após os desenvolvedores perguntarem se existe algo semelhante a isso nesta universidade.
+
+	A matricula universitária é escolhida para fazer este papel, e nota-se que será necessário a realização de algumas modificações nos códigos da aplicação para que seja possível registrar um aluno com a sua matricula (Segunda manutenção evolutiva).
+
+	Posteriormente, C recebe o relato de que certos nomes de membros universitarios estão sendo expostos incorretamente: Nomes com caracteres estrangeiros apesar de serem registrados normalmente, aparecem "corrompidos" quando são recuperados. Uma manutenção emergencial terá de ser realizada na aplicação que já está em uso.
+
+	A equipe então parte para realizar a manutenção de emergencia. Uma nova versão é criada, e testada unitariamente dois dias depois contendo a correção do bug do nome, foi mudada a codificação de caracteres no banco de dados de ASCII para UTF-8. (Manutenção corretiva)
+
+	C testa então na nova versão o recurso de registrar membros com nomes que contenham caracteres estrangeiros, e atesta que ela está funcionando conforme o desejado. Ela é colocada em produção, isto é: Ela substituí a versão anterior com bugs que estava sendo usada.
+
+	Ao longo de alguns dias, muitas modificações são feitas nos códigos da versão recem "congelada" da aplicação afim de confortar as outras mudanças requisitadas por C. Uma nova versão é concluída, e testada com sucesso. 
+
+	Primeiro foi feita a segunda manutenção evolutiva para que o processo de realizar a primeira manutenção evolutiva fosse mais claro e rápido, depois foi feita a primeira manutenção evolutiva.
+
+	A equipe realiza muitos testes na versão nova (como um todo) e concluí que todas as queixas e pedidos que C relatou foram resolvidos e implementados com sucesso, e que a aplicação está funcionando adequadamente em função do que foi proposto.
+
+	C então testa novamente a aplicação de forma semelhante como fez antes, chega na mesma conclusão, e aprova essa última versão para ser colocada em produção.
+
+	Com base nas modificações feitas pela manutenção de correção, membros que tenham nomes com caracteres estrangeiros podem agora utilizar essa aplicação para se cadastrarem normalmente, e os dados de todos os membros universitários podem ser facilmente recuperados atravez de suas matriculas.
+
+
+Questão 2:
+
+	Após a aplicação descrita na questão acima ter sido colocada em uma versão estável, homologada e autenticada por C, C faz uma nova requisição para a equipe durante o período de recesso universitário (férias): Ele gostaria que fossem implementadas funcionalidades que impedissem membros os universitarios de estarem cadastrados simultaneamente em mais de sete disciplinas, e que após o semestre (período de aulas) acabar, que os membros universitários fossem automaticamente descadastrados das disciplinas.
+
+Tem-se então o seguinte fluxo no software de controle de versionamento:
+
+											 (Passam-se apenas alguns dias e após a homologação, ela é integrada na branch principal)
+											                                          |
+Branch principal (Versão em produção): Versão 1.0 (Versão sem as melhorias e correções que C relatou) -------------------------------------------------------> Versão 1.5 (Versão com as melhorias e correções relatadas por C)                                                                                      \                                                     /
+                                                                                                       \                  Branch A1:                       /
+                                                                                                        (Branch com as melhorias e correções que C relatou)
+
+
+                                                                                         (Feito o merge com a branch B1)   (Feito o merge com a branch B1)
+                                                                                                         |                        |
+Branch de desenvolvemento (Essa snapshot do fluxo Parte da versão 1.5): ------------------------------------------------------------------------------------->
+                                           \                                                            /                        /
+                                            \                  Branch B1:                              /                        /
+                                             \                                                        /                        /
+                                              \                                                      /         (Feito o merge com a branch B2)
+                                               \                                                    /                      |
+                                                (Branch com as novas modificações requisitadas por C) -------------------------------------------------------->
+                                                                   \                                                      /
+                                                                    \                      Branch B2:                    /
+                                                                      (Branch para corrigir erros presentes na branch B1)
+
+
+Questão 3:
+
+	Partindo do pressuposto de que trata-se de uma linguagem de programação aonde a indentação não afeta a leitura do código pela maquina, modificar a indentação pode se tratar de uma refatoração.
+	Uma refatoração é definida como uma alteração feita no código sem que se modifique de NENHUMA forma o seu funcionamento ou comportamento com a intenção de que a qualiade do código seja melhorada para futuras manutenções, ou leitura e entendimento humano do código.
+	Modificar as indentações de um código escrito em uma linguagem destas pode se tratar de uma refatoração, caso o objetivo seja de melhorar a visibilidade ou leitura do código para os fins definidos acima.
+
+
+Questão 4:
+
+	Partindo do pressuposto de que cada modificação bem sucedida (testada) em um código deve ser imediatamente integrada com o flxuo principal de projeto (branch main) para que sejam evitados riscos de conflitos, ou merges de alto risco, o processo de refatoração assim como qualquer outra mudança substancial deve ser feita ANTES de um merge.
+	Caso o projeto em questão tenha um numero consideravel de desenvolvedores trabalhando nele, e que parte desses desenvolvedores trabalhem ou não em um mesmo arquivo (que está sendo refatorado), é mais indicado realizar um merge manual para minimizar o risco de conflitos ou merges "bem sucedidos", porém que causam consequencias indesejadas e que podem até quebrar a aplicação, já que por estar sendo feito por um algoritimo (Isto é: uma maquina) que não tem a capacidade de pensar e julgar adequadamente que tipos de modificações devem ser implementadas, e que tipos de modificações devem ser descartadas em um merge, o risco de algum tipo de problema relacionado ao merge acontecer neste caso é naturalmente maior do que se ele estivesse sendo feito por um desenvolvedor que teoricamente, teria um nível de entendimento consíderável da aplicação ou do código.
+
+	Caso seja garantida a hipotese de que um único desenvolvedor trabalhe em um projeto para uma aplicação (por exemplo, o sistema backend de uma aplicação), o merge poderia ser feito automaticamente pois o risco de conflitos, ou casos de merge descritos acima é praticamente inexistente, pois a versão do(s) arquivo(s) em que este desenvolvedor está refatorando poderia teoricamente sempre ser considerada a mais atualizada.
+
+
+Questão 5:
+
+	Plugins utilizados de um acervo mantido por uma equipe de desenvolvemento são necessariamente componentes reutilizáveis internos.
+	Componentes reutilizaveis internos podem ser definido como códigos feitos para um domínio ou aplicação especifica, e que graças a isso podem aumentar a produtividade de desenvolvemento de um projeto, já que apesar de se tratar de um domínio especifico, muitas coisas que precisariam ser implementadas para desenvolver este projeto, podem já estar prontas, evitando a necessidade de ter que programar elas.
+	Plugins podem ser definido como imports dinâmicos (o uso de componentes que complementam a execução de um programa ou aplicação e que fazem parte do domínio da mesma a tempo de execução) porém que não gerem uma versão nova da aplicação.
+	Neste caso, como o uso de um plugin é considerado um import dinâmico, e que bibliotecas de import dinamicos (por fazerem parte do domínio específico da aplicação) podem ser considerados componentes reutilizaveis internos, um plugin então pode ser considerado necessáriamente um componente reutilizável interno (mesmo fazendo a utilização de wrappers que encapsulem chamadas de módulos reutilizáveis externos, isto é: abstrações que facilitem o uso dos mesmos em diversas partes dos códigos, e o acoplamento dos mesmos com diversos módulos).

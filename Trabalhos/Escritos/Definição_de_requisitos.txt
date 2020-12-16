@@ -24,7 +24,9 @@
             			
             		- Salva_Jogadores: Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um array de jogadores provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Itera sobre este array chamando a função Salva_Jogador para cada elemento nele afim de salvar todos os jogadores da partida no Banco. Retorna 0 em caso de sucesso para todos os elementos, -1 para erros genericos em algum elemento, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
             		
-            		- Pega_Posicao_Peão_Cor: Recebe um cursor, um peão (como definido pelo módulo Peões), um número inteiro de 0 a 4 representando um dos quatro peões de um jogador, e um booleano chamado debug (False por padrão). Pega no Banco de Dados a posição deste peão para este jogador (conhecido pela sua cor contída na variável peão recebida), e retorna a posição recolhida em caso seja de sucesso, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
+            		- Pega_Posicao_Peao_Cor: Recebe um cursor, um peão (como definido pelo módulo Peões), um número inteiro de 0 a 4 representando um dos quatro peões de um jogador, e um booleano chamado debug (False por padrão). Pega no Banco de Dados a posição deste peão para este jogador (conhecido pela sua cor contída na variável peão recebida), e retorna a posição recolhida em caso seja de sucesso, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
+            		
+            		- Pega_Posicoes_Peoes_Cor:  Recebe um cursor, uma cor (string), e um booleano chamado debug (False por padrão). Pega no Banco de dados as posições dos quatro peões do jogador associado a esta cor, e as retorna em um array, em caso de erro: retorna -1 por erros genéricos, ou -2 por erros por cursor inválido. Printa informações de erro cas debug seja True.
             		
             		- Salva_Posicao_Peão_Cor: Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um peão (como definido pelo módulo Peoes), um número inteiro de 0 a 4 representando um dos quatro peões de um jogador, a sua posição, e um booleano chamado debug (False por padrão). Salva no banco a posição deste peão para o jogador desta cor (conhecido pela sua cor contída na variável peão recebida), e retorna 0 caso seja bem sucedido, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True.
             		
@@ -37,9 +39,9 @@
 		- Objetivo: Prover a aplicação toda a funcionalidade necessária para simular o objeto Dado do jogo.
 
 		- Funções: 
-			- Cria_dado: função que recebe a cor do jogador, pois a mesma será relacionada com a cord do dado. Cria um dicionário dado que retorna o dicionário com número do dado e uma lista de sprites, cada elemento dessa lista é o número do dado.
+			- Cria_dado: função que recebe a cor do jogador, pois a mesma será relacionada com a cor do dado. Cria e retorna um dicionário com a cor do dado e uma lista de sprites, cada elemento dessa lista é o número do dado.
 				
-			- Clica_dado: Implementa a função Randint da biblioteca Random. Retorna um número inteiro pseudo-randomizado de 1 (incluído) a 6 (incluído).
+			- Clica_dado: Implementa a função Randint da biblioteca Random. Retorna um número inteiro pseudo-randomizado de 1 (incluído) a 6 (incluído) (1 <= número_gerado <= 6).
 			 	
 
 
@@ -77,11 +79,13 @@
 
 			- Quantos_jogam: Permite que o jogador que iniciou o jogo selecione quantos jogadores irão jogar (um inteiro de 2 a 4 (ambos inclusivos) ) (Repete a pergunta até que seja digitado um valor válido, ou sair Sair, ou SAIR (nestes ultimos casos, para a execução do jogo.) ), assim como selecionar as cores que os representam. Entra em um loop para criar a quantidade de jogadores selecionados representados por objetos de Player com seus respectivos nomes. Repete o processo de seleção de cor para um jogador, até que seja digitada uma cor válida, e printa um erro caso o contrário. Mantém-se no loop até que todos os jogadores selecionarem uma cor válida, ou digitem "sair" ou "Sair" ou "SAIR", na seleção de cor ou nome, nesse caso printa uma mensagem adequada e sai do jogo. Retorna um array com um número de índices entre 2 e 4 representando cada jogador, aonde cada índice contém um sub_array tendo em seu primeiro índice um player, e no seu segundo índice um array contendo seus quatro peões já criados e configurados para posição 0.
 			
-			- Cria_dados: Cria n dados de cores distintas aonde n é igual ao numero de jogadores jogando, usando dados providos pela função Quantos_jogam. Retorna um array de dados.
+			- Cria_dados: Cria n dados de cores distintas aonde n é igual ao número de jogadores jogando, usando dados providos pela função Quantos_jogam. Retorna um array de dados.
 			
-			- Salvar_XML: Utilizando funções do módulo XML, salva todas as informações da partida que acabou de ser jogada em um arquivo XML. Retorna 0 caso seja bem sucedido, ou -1 caso contrário.
+			- Salva_XML: Utilizando funções do módulo XML, salva todas as informações da partida que acabou de ser jogada em um arquivo XML. Retorna 0 caso seja bem sucedido, ou -1 caso contrário.
 			
-			- Encerrar_jogo: Chama a tela de mostrar o vencedor, e de jogar novamente, ou a tela de sair, fornecendo o usuário esta escolha. Independente do escolhido, chama a função Deleta_Informações do módulo Banco_de_dados para encerrar a partida. Sai do jogo caso o usuário selecione sair.
+			- Encerrar_jogo: Recebe um array contendo em ordem descrescente cronologicamente os jogadores que conseguiram colocar os seus quatro peões na casa 57, e o (único) jogador que não conseguiu por último. Chama a tela de mostrar o vencedor, e de jogar novamente, ou a tela de sair, fornecendo o usuário esta escolha. Independente do escolhido, chama a função Deleta_Informações do módulo Banco_de_dados para encerrar a partida. Sai do jogo caso o usuário selecione sair.
+			
+			- Quem_ganhou: Deve ser chamada a cada rodada. Recebe uma cor representando o último jogador que jogou, e o número de jogadores jogando e verifica utilizando a função Pega_Posiçoes_Peao_Cor do módulo Banco de Dados se este jogador já possuí todos os seus quatro peões na casa 57. Caso sim, guarda o nome dele em um array (uma variável global) no primeiro índice vazio disponível. Repete o processo até que este array tenha o tamanho de (pessoas jogando - 1). Depois disso coloca o nome do último jogador (o único a não ter os seus quatro peões na casa 57) neste array no primeiro índice vazio disponível. Ao final chama a função Encerrar_jogo passando este array.
 
 
 
@@ -95,21 +99,21 @@
 
 			- Gerência_Partida: Implementa a funcionalidade de troca de turnos
 
-			- Roda_tabuleiro: rotaciona o tabuleiro em 90 graus re calculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation do módulo Tabuleiro, para isso recalculamos a posição de cada casa(canto superior esquerdo da mesma), ultilizando o seguinte algoritimo: [x = (tamanho_y_do_tabuleiro - tamanho_x_da_casa) - y; y = x.
+			- Checa_torres: Recebe um peão, e checa se na sua posição relativa existe uma semi_torre, ou torre de sua cor. Retorna 1 caso exista uma semi_torre, 2 caso exista uma torre, 0 caso caso não existam nenhuma das duas.
 
-			- Controla_peca: Recebe um peão, um número inteiro representando o valor do dado que acabou de ser jogado. De inicio guarda a casa em que o peão recebido está em uma váriavel e chama Move_peao passando o peão e o número inteiro recebidos como parametros também guardando seu retorno em uma variável passando como parametros os dois valores recebidos. Após isso, caso Move_peão tenha retornado 0: Chama Checa_torres e atribui o resultado em uma váriavel. Após isso atribui o resultado de uma chamada a Desfaz_torres a uma váriavel passando o peão recebido e o resultado de Checa_torres como parametros. Após isso caso Desfaz_torres retorne 0: Atualiza a casa em que o peão estava anteriormente tirando este peão do array de peões desta casa. Por último: atualiza a casa que este peão está, colocando este peão no array de peões desta casa, e chama Cria_torres passando como argumento esse peão. Retorna -1 caso o peão recebido não possa se movimentar, ou 0 caso o contrário.
+			- Controla_peca: Recebe um peão, um número inteiro representando o valor do dado que acabou de ser jogado. De inicio guarda a casa_relativa em que o peão recebido está em uma váriavel e chama Move_peao passando o peão e o número inteiro recebidos como parametros também guardando seu retorno em uma variável passando como parametros os dois valores recebidos. Após isso, caso Move_peão tenha retornado 0: Chama Checa_torres e atribui o resultado em uma váriavel. Após isso atribui o resultado de uma chamada a Desfaz_torres a uma váriavel passando o peão recebido e o resultado de Checa_torres como parametros. Após isso caso Desfaz_torres retorne 0 ou 1: Atualiza a casa_relativa em que o peão estava anteriormente tirando este peão do array de peões desta casa. Por último: atualiza a casa_relativa que este peão está, colocando este peão no array de peões desta casa, e chama Cria_torres passando como argumento esse peão. Retorna -1 caso o peão recebido não possa se movimentar, ou 0 caso o contrário.
 			
-			- Cria_torres: Implementa no jogo os objetos torre e semi-torre. É chamada sempre após Controla_peca. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão da mesma cor. Caso sim, retira o peão desta casa, e cria o objeto semi-torre. Caso ele esteja em uma casa que já tem uma semi-torre, retira a semi torre, e uma torre é Criada no lugar dela. Caso ele esteja em uma casa sem nenhum outro peão, ou já exista uma torre desta cor nesta casa, não cria nada. Retorna -1 caso já exista uma torre dessa cor nesta casa, -2 se não crie nada, 0 caso crie uma semi-torre, ou 1 caso crie uma torre. 
+			- Cria_torres: Implementa no jogo os objetos torre e semi-torre. É chamada sempre após Controla_peca. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa_relativa com algum outro peão da mesma cor. Caso sim, retira o peão desta casa, e cria o objeto semi-torre. Caso ele esteja em uma casa_relativa que já tem uma semi-torre, retira a semi torre, e uma torre é Criada no lugar dela. Caso ele esteja em uma casa_relativa sem nenhum outro peão, ou já exista uma torre desta cor nesta casa, não cria nada. Retorna -1 caso já exista uma torre dessa cor nesta casa, -2 se não crie nada, 0 caso crie uma semi-torre, ou 1 caso crie uma torre. 
 
-			- Captura_peão: É chamada sempre após a função Controla_peca. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa com algum outro peão de outra cor, cajo esteja, Manda_para_casa sera executada como esse outro peão como argumento. Retorna 0 Caso um peão seja capturado, 1 caso contrário, e -1 em caso de erro.
+			- Captura_peão: É chamada sempre após a função Controla_peca. Recebe como argumento o peão que acabou de ser movido, e verifica através dele se ele está em uma casa_relativa com algum outro peão de outra cor, cajo esteja, Manda_para_casa sera executada como esse outro peão como argumento. Retorna 0 Caso um peão seja capturado, 1 caso contrário, e -1 em caso de erro.
 			
-			- Desfaz_torre: Recebe um peao, e um número inteiro. Na casa atual deste peão: Desfaz (remove) uma semi-torre da cor do peão recebido caso o inteiro recebido seja igual a 1, ou Desfaz (regressa) uma torre a uma semi-torre caso o inteiro recebido seja igual a 2. Retorna o inteiro recebido.
+			- Desfaz_torre: Recebe um peao, e um número inteiro. Na casa_relativa atual deste peão: Desfaz (remove) uma semi-torre da cor do peão recebido caso o inteiro recebido seja igual a 1, ou Desfaz (regressa) uma torre a uma semi-torre caso o inteiro recebido seja igual a 2. Retorna o inteiro recebido.
 			
 			- Manda_para_casa: É chamada sempre após a função Captura_peão. faz com que o peão capturado retorne para sua posição inicial. Retorna 0 case rode com sucerro, e -1 caso contrário.
 			
-			- Escolhe_peão: Permite que o jogador escolha um peão retornando um número inteiro de 0 (incluso) a 3 (incluso) de forma a qual cada número está associado a um dos 4 peões, caso o jogador clique no peão desejado.
+			- Escolhe_peão: Recebe um jogador provido pela funcao Quantos_jogam do modulo Main, dois números inteiros representando uma posicao (numero de casa), e o numero do dado que acabou de ser tirado. Permite que o jogador escolha um peão para se mover. Retorna o índice desse peão no array de peões dentro do jogador, -2 caso nenhum peão válido esteja na casa clicada, ou -1 caso esteja porém não pode se mover.
 
-			- Quem_ganhou: Retorna o jogador (com seu nome) que venceu o jogo, ou -1 em caso de problema.
+			- Checa_disponibilidade_peao: Recebe um peao, e dois inteiros representando o número de dado que acabou de ser tirado, e uma posição (número de casa). E utilizando a função Checa_disponibilidade do módulo Tabuleiro checa se o peão recebido pode se movimentar baseado no número de dado tirado. Retorna -2 caso não existam peões na posição recebida, -1 caso exista, mas esse peão não pode se mover, ou a casa que ele está caso exista, e possa.
 
 
 
@@ -123,9 +127,9 @@
 			
 			- Cria_peoes: Recebe uma string representando uma cor válida. Utilizando a função Cria_peao, cria um array de 4 peões com a cor selecionada, e com suas respectivas posições em suas respectivas casas iniciais. Retorna este array.
 
-			- Move_peao: Recebe um valor da função "Joga_dado" do módulo Dado, e atualiza o campo "casa" do peão recebido com o valor. Retorna -1 caso receba um valor incorreto, 1 caso o peão passado por parametro já esteja em sua última posição (final do tabuleiro), ou 0 caso a casa em que ele está seja atualizada.
-	
+			- Move_peao: Recebe um valor da função "Joga_dado" do módulo Dado, e atualiza o campo "casa" do peão recebido com o valor. Retorna -1 caso receba um valor incorreto, 1 caso o peão passado por parametro já esteja em sua última posição (final do tabuleiro), ou 0 caso a casa_relativa em que ele está seja atualizada.
 
+			
 
 	- Player: 
 
@@ -151,3 +155,7 @@
 			- Cria_casas: Recebe como parâmetros: Uma casa como posição inicial, o número de casas que irá criar, a distância em x ou y entre duas casas, a direção e o sentido que irá seguir. Utilizando a função Cria_Casa, esta função cria com seus valores x ou y sequencialmente uma ou mais casas, seguindo pela direção (vertical ou horizontal) e pelo sentido  (negativo se igual a -1 , e positivo caso o contrário). Retorna um array de casas, ou -1 em caso de erro.
 
 			- Cria_tabuleiro: Recebe como parâmetros: Uma casa como posição inicial, e a distancia em x ou y entre duas casas, além de um parametro opcional booleano chamado debugging. Cria utilizando sequencialmente a função Cria_Casas todas as casas necessárias para o tabuleiro poder ser usado com seus valores x e y. Retorna um array de 58 Casas representando o tabuleiro. Caso debugging seja diferente de False, printa utilizando a função Printa_tabuleiro todas as casas do tabuleiro criado.
+			
+			- Converte_posicao: Recebe um inteiro representando uma posição (número de casa) do tabuleiro, e uma cor, "converte" a posicao recebida para a posicao correspondente em relacao as posicoes azuis, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes. Retorna esta posição convertida em uma váriavel chamada casa_relativa.
+			
+			- Checa_disponibilidade: Recebe dois valores inteiros um representando o número do dado que acabou de ser tirado, e o outro representando uma posicao (número de casa) e uma cor. Assumindo que um peão da cor recebida exista nessa casa, checa se ele pode se mover baseado no número de dado que tirou. Retorna -1 caso esse peão não possa se movimentar, ou 1 caso ele possa se movimentar. OBS: Convenciona-se que as casas iniciais de cada peão (antes da casa 1) sejam representadas por números negativos de -1 a -4 (ambos inclusos).
