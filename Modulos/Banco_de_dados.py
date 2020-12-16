@@ -1,6 +1,7 @@
 # coding: utf-8
 
 import mysql.connector as mysql
+from Peao import *
 
 def Exporta_Conexao(debug = False):
     db = Conecta_SGBD("localhost","ariel","123456789",debug)
@@ -101,7 +102,8 @@ def Cria_Tabela(cursor, debug = False):
             if (debug):
                 print("\n\nTabela ja existe.")
     except AttributeError:
-        print("\n\nErro: Cursor inválido. Por favor, tente novamente.")
+        if (debug):
+            print("\n\nErro: Cursor inválido. Por favor, tente novamente.")
         return -2
     return 0
 
@@ -161,9 +163,8 @@ def Salva_Jogadores(db, jogadores, debug = False):
              return -2
      return 0
 
-def Pega_Posicao_Peao_Cor(cursor, peao, peao_num, debug = False):
+def Pega_Posicao_Peao_Cor(cursor, cor, peao_num, debug = False):
     """Retorna a posicao do peao recebido do jogador da cor recebida."""
-    cor = peao["cor"]
     try:
         sql = "SELECT posicao FROM pyLudo.posicoes WHERE cor = %s and peao = %s"
         valores = (cor, peao_num)
@@ -171,7 +172,7 @@ def Pega_Posicao_Peao_Cor(cursor, peao, peao_num, debug = False):
 
     except mysql.Error as err:        
         if (debug):
-            print("\n\nErro generico ao pegar o peao %s da cor %s: %s"%(peao_num, cor, err.msg))
+            print("\n\nErro generico ao pegar a posicao peao %s da cor %s: %s"%(peao_num, cor, err.msg))
         return -1
         
     except AttributeError:
@@ -181,11 +182,34 @@ def Pega_Posicao_Peao_Cor(cursor, peao, peao_num, debug = False):
         
     pos = cursor.fetchall()    
     return pos[0][0]
+    
+def Pega_Posicoes_Peoes_Cor(cursor, cor, debug = False):
+    """Retorna as posicoes dos quatro peoes do jogador associado a esta cor"""
+    lista_posicoes = []
+    try:
+        sql = "SELECT posicao FROM pyLudo.posicoes WHERE cor = '%s'"%(cor)
+        cursor.execute(sql)
+        
+    except mysql.Error as err:
+        if (debug):
+            print("\n\nErro generico ao pegar as posicoes dos peoes da cor %s: %s"%(cor, err.msg))
+            return -1
 
-def Salva_Posicao_Peao_Cor(db, peao, peao_num, posicao, debug = False):
+    except AttributeError:
+        if (debug):
+            print("\n\nErro: Cursor inválido. Por favor, tente novamente.")
+        return -2
+        
+    posicoes = cursor.fetchall()
+    
+    for pos in posicoes:
+        lista_posicoes.append(pos[0])
+    
+    return lista_posicoes
+
+def Salva_Posicao_Peao_Cor(db, cor, peao_num, posicao, debug = False):
     """Salva no banco de dados a posicao do peao recebido do jogador da cor recebida."""
     try:
-        cor = peao["cor"]
         sql = "UPDATE pyLudo.posicoes SET posicao = %s WHERE cor = %s and peao = %s"
         valores = (posicao, cor, peao_num)
         db["cursor"].execute(sql, valores)

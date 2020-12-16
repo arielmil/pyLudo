@@ -36,7 +36,8 @@
            		- Cria_Cursor - OK
             		- Cria_Banco - OK
             		- Cria_Tabela - OK
-            		- Pega_Posicao_Peão_Cor - OK
+            		- Pega_Posicao_Peao_Cor - OK
+            		- Pega_Posicoes_Peao_Cor - OK
             		- Salva_Posicao_Peão_Cor - OK
             		- Deleta_Informacoes - OK
 
@@ -57,15 +58,15 @@
 			- Clica_dado(Random) -- OK
 
 		- Main
-			- Quantos_jogam
-			- Cria_dados
-			- Salvar_XML - Guilherme
-			- Encerrar_jogo - Ariel
+			- Quantos_jogam - Ariel Testar
+			- Cria_dados - Ariel Testar
+			- Salva_XML - Guilherme
+			- Encerrar_jogo - Guilherme
+			- Quem_ganhou - Ariel Testar
 			
 		- Partida
 			- Inicia_partida - Guilherme/Ariel
 			- Gerência_Partida - Guilherme/Ariel
-			- Roda_tabuleiro - Guilherme
 			- Checa_torres - Ariel Testar
 			- Controla_peca - Ariel Testar
 			- Cria_torres - Ariel Testar
@@ -73,7 +74,6 @@
 			- Captura_peão - Ariel Testar
 			- Manda_para_casa - Ariel Testar
 			- Escolhe_peão - Ariel Testar
-			- Quem_ganhou - Guilherme/Ariel
 			- Checa_disponibilidade_peao - Ariel Testar
 
 		- Peão

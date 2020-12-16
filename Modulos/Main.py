@@ -3,11 +3,21 @@ from Graphics import *
 from Player import *
 from Partida import *
 
+global vencedores
+vencedores = []
+
+global quantidade_jogadores
+
+db = Exporta_Conexao()
+cursor = db["cursor"]
+db = db["db"]
+
 def Quantos_jogam():
     i = 0
     flag = True
     cores = []
     jogadores = []
+    global quantidade_jogadores
     
     while (flag):
         qntJogadores = input("\nPor favor, digite quantos jogadores irão jogar, ou sair, Sair, ou SAIR caso deseje sair do jogo: ")
@@ -46,6 +56,7 @@ def Quantos_jogam():
                 jogadores.append([jogador, peoes])
                 flag = False
 
+    quantidade_jogadores = len(jogadores)
     return jogadores
 
 def Cria_dados(jogadores):
@@ -56,4 +67,25 @@ def Cria_dados(jogadores):
         dados.append(dado)
 
     return dados
+
+def Encerrar_jogo(vencedores):
+    return
+
+def Quem_ganhou(cor, quantidade_jogadores):
+    checagem = Pega_Posicoes_Peao_cor(cursor, cor)
+    
+    if checagem == [57, 57, 57, 57]:
+        for jogador in jogadores:
+
+            # Encontra o nome do jogador pela cor representando-o no jogo, e encontra esta cor pelos peoes dele
+            if jogador[1][0]["cor"] == cor:
+                vencedores.append(jogador[0]["nome"])
+                
+    if len(vencedores) == quantidade_jogadores - 1:
+        Encerrar_jogo(vencedores)
+        
+    return 0
+
+jogadores = Quantos_jogam()
+    
         

@@ -1,0 +1,833 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 18 36 577 806
+%%Title: Enscript Output
+%%Creator: GNU Enscript 1.6.5.90
+%%CreationDate: Mon Dec 14 22:22:36 2020
+%%Orientation: Portrait
+%%Pages: (atend)
+%%DocumentMedia: A4 595 842 0 () ()
+%%DocumentNeededResources: (atend)
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset Enscript-Prolog 1.6.5 90
+%
+% Procedures.
+%
+
+/_S {	% save current state
+  /_s save def
+} def
+/_R {	% restore from saved state
+  _s restore
+} def
+
+/S {	% showpage protecting gstate
+  gsave
+  showpage
+  grestore
+} bind def
+
+/MF {	% fontname newfontname -> -	make a new encoded font
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  % insert only valid encoding vectors
+  encoding_vector length 256 eq {
+    newfont /Encoding encoding_vector put
+  } if
+
+  newfontname newfont definefont pop
+} def
+
+/MF_PS { % fontname newfontname -> -	make a new font preserving its enc
+  /newfontname exch def
+  /fontname exch def
+
+  /fontdict fontname findfont def
+  /newfont fontdict maxlength dict def
+
+  fontdict {
+    exch
+    dup /FID eq {
+      % skip FID pair
+      pop pop
+    } {
+      % copy to the new font dictionary
+      exch newfont 3 1 roll put
+    } ifelse
+  } forall
+
+  newfont /FontName newfontname put
+
+  newfontname newfont definefont pop
+} def
+
+/SF { % fontname width height -> -	set a new font
+  /height exch def
+  /width exch def
+
+  findfont
+  [width 0 0 height 0 0] makefont setfont
+} def
+
+/SUF { % fontname width height -> -	set a new user font
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF
+  /F-gs-user-font width height SF
+} def
+
+/SUF_PS { % fontname width height -> -	set a new user font preserving its enc
+  /height exch def
+  /width exch def
+
+  /F-gs-user-font MF_PS
+  /F-gs-user-font width height SF
+} def
+
+/M {moveto} bind def
+/s {show} bind def
+
+/Box {	% x y w h -> -			define box path
+  /d_h exch def /d_w exch def /d_y exch def /d_x exch def
+  d_x d_y  moveto
+  d_w 0 rlineto
+  0 d_h rlineto
+  d_w neg 0 rlineto
+  closepath
+} def
+
+/bgs {	% x y height blskip gray str -> -	show string with bg color
+  /str exch def
+  /gray exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    gray setgray
+    fill
+  grestore
+  x y M str s
+} def
+
+/bgcs { % x y height blskip red green blue str -> -  show string with bg color
+  /str exch def
+  /blue exch def
+  /green exch def
+  /red exch def
+  /blskip exch def
+  /height exch def
+  /y exch def
+  /x exch def
+
+  gsave
+    x y blskip sub str stringwidth pop height Box
+    red green blue setrgbcolor
+    fill
+  grestore
+  x y M str s
+} def
+
+% Highlight bars.
+/highlight_bars {	% nlines lineheight output_y_margin gray -> -
+  gsave
+    setgray
+    /ymarg exch def
+    /lineheight exch def
+    /nlines exch def
+
+    % This 2 is just a magic number to sync highlight lines to text.
+    0 d_header_y ymarg sub 2 sub translate
+
+    /cw d_output_w cols div def
+    /nrows d_output_h ymarg 2 mul sub lineheight div cvi def
+
+    % for each column
+    0 1 cols 1 sub {
+      cw mul /xp exch def
+
+      % for each rows
+      0 1 nrows 1 sub {
+        /rn exch def
+        rn lineheight mul neg /yp exch def
+        rn nlines idiv 2 mod 0 eq {
+	  % Draw highlight bar.  4 is just a magic indentation.
+	  xp 4 add yp cw 8 sub lineheight neg Box fill
+	} if
+      } for
+    } for
+
+  grestore
+} def
+
+% Line highlight bar.
+/line_highlight {	% x y width height gray -> -
+  gsave
+    /gray exch def
+    Box gray setgray fill
+  grestore
+} def
+
+% Column separator lines.
+/column_lines {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h translate
+    /cw d_output_w cols div def
+    1 1 cols 1 sub {
+      cw mul 0 moveto
+      0 d_output_h rlineto stroke
+    } for
+  grestore
+} def
+
+% Column borders.
+/column_borders {
+  gsave
+    .1 setlinewidth
+    0 d_footer_h moveto
+    0 d_output_h rlineto
+    d_output_w 0 rlineto
+    0 d_output_h neg rlineto
+    closepath stroke
+  grestore
+} def
+
+% Do the actual underlay drawing
+/draw_underlay {
+  ul_style 0 eq {
+    ul_str true charpath stroke
+  } {
+    ul_str show
+  } ifelse
+} def
+
+% Underlay
+/underlay {	% - -> -
+  gsave
+    0 d_page_h translate
+    d_page_h neg d_page_w atan rotate
+
+    ul_gray setgray
+    ul_font setfont
+    /dw d_page_h dup mul d_page_w dup mul add sqrt def
+    ul_str stringwidth pop dw exch sub 2 div ul_h_ptsize -2 div moveto
+    draw_underlay
+  grestore
+} def
+
+/user_underlay {	% - -> -
+  gsave
+    ul_x ul_y translate
+    ul_angle rotate
+    ul_gray setgray
+    ul_font setfont
+    0 0 ul_h_ptsize 2 div sub moveto
+    draw_underlay
+  grestore
+} def
+
+% Page prefeed
+/page_prefeed {		% bool -> -
+  statusdict /prefeed known {
+    statusdict exch /prefeed exch put
+  } {
+    pop
+  } ifelse
+} def
+
+% Wrapped line markers
+/wrapped_line_mark {	% x y charwith charheight type -> -
+  /type exch def
+  /h exch def
+  /w exch def
+  /y exch def
+  /x exch def
+
+  type 2 eq {
+    % Black boxes (like TeX does)
+    gsave
+      0 setlinewidth
+      x w 4 div add y M
+      0 h rlineto w 2 div 0 rlineto 0 h neg rlineto
+      closepath fill
+    grestore
+  } {
+    type 3 eq {
+      % Small arrows
+      gsave
+        .2 setlinewidth
+        x w 2 div add y h 2 div add M
+        w 4 div 0 rlineto
+        x w 4 div add y lineto stroke
+
+        x w 4 div add w 8 div add y h 4 div add M
+        x w 4 div add y lineto
+	w 4 div h 8 div rlineto stroke
+      grestore
+    } {
+      % do nothing
+    } ifelse
+  } ifelse
+} def
+
+% EPSF import.
+
+/BeginEPSF {
+  /b4_Inc_state save def    		% Save state for cleanup
+  /dict_count countdictstack def	% Count objects on dict stack
+  /op_count count 1 sub def		% Count objects on operand stack
+  userdict begin
+  /showpage { } def
+  0 setgray 0 setlinecap
+  1 setlinewidth 0 setlinejoin
+  10 setmiterlimit [ ] 0 setdash newpath
+  /languagelevel where {
+    pop languagelevel
+    1 ne {
+      false setstrokeadjust false setoverprint
+    } if
+  } if
+} bind def
+
+/EndEPSF {
+  count op_count sub { pos } repeat	% Clean up stacks
+  countdictstack dict_count sub { end } repeat
+  b4_Inc_state restore
+} bind def
+
+% Check PostScript language level.
+/languagelevel where {
+  pop /gs_languagelevel languagelevel def
+} {
+  /gs_languagelevel 1 def
+} ifelse
+%%EndResource
+%%BeginResource: procset Enscript-Encoding-88591 1.6.5 90
+/encoding_vector [
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclam       	/quotedbl     	/numbersign   	
+/dollar       	/percent      	/ampersand    	/quoteright   	
+/parenleft    	/parenright   	/asterisk     	/plus         	
+/comma        	/hyphen       	/period       	/slash        	
+/zero         	/one          	/two          	/three        	
+/four         	/five         	/six          	/seven        	
+/eight        	/nine         	/colon        	/semicolon    	
+/less         	/equal        	/greater      	/question     	
+/at           	/A            	/B            	/C            	
+/D            	/E            	/F            	/G            	
+/H            	/I            	/J            	/K            	
+/L            	/M            	/N            	/O            	
+/P            	/Q            	/R            	/S            	
+/T            	/U            	/V            	/W            	
+/X            	/Y            	/Z            	/bracketleft  	
+/backslash    	/bracketright 	/asciicircum  	/underscore   	
+/quoteleft    	/a            	/b            	/c            	
+/d            	/e            	/f            	/g            	
+/h            	/i            	/j            	/k            	
+/l            	/m            	/n            	/o            	
+/p            	/q            	/r            	/s            	
+/t            	/u            	/v            	/w            	
+/x            	/y            	/z            	/braceleft    	
+/bar          	/braceright   	/tilde        	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/.notdef      	/.notdef      	/.notdef      	/.notdef      	
+/space        	/exclamdown   	/cent         	/sterling     	
+/currency     	/yen          	/brokenbar    	/section      	
+/dieresis     	/copyright    	/ordfeminine  	/guillemotleft	
+/logicalnot   	/hyphen       	/registered   	/macron       	
+/degree       	/plusminus    	/twosuperior  	/threesuperior	
+/acute        	/mu           	/paragraph    	/bullet       	
+/cedilla      	/onesuperior  	/ordmasculine 	/guillemotright	
+/onequarter   	/onehalf      	/threequarters	/questiondown 	
+/Agrave       	/Aacute       	/Acircumflex  	/Atilde       	
+/Adieresis    	/Aring        	/AE           	/Ccedilla     	
+/Egrave       	/Eacute       	/Ecircumflex  	/Edieresis    	
+/Igrave       	/Iacute       	/Icircumflex  	/Idieresis    	
+/Eth          	/Ntilde       	/Ograve       	/Oacute       	
+/Ocircumflex  	/Otilde       	/Odieresis    	/multiply     	
+/Oslash       	/Ugrave       	/Uacute       	/Ucircumflex  	
+/Udieresis    	/Yacute       	/Thorn        	/germandbls   	
+/agrave       	/aacute       	/acircumflex  	/atilde       	
+/adieresis    	/aring        	/ae           	/ccedilla     	
+/egrave       	/eacute       	/ecircumflex  	/edieresis    	
+/igrave       	/iacute       	/icircumflex  	/idieresis    	
+/eth          	/ntilde       	/ograve       	/oacute       	
+/ocircumflex  	/otilde       	/odieresis    	/divide       	
+/oslash       	/ugrave       	/uacute       	/ucircumflex  	
+/udieresis    	/yacute       	/thorn        	/ydieresis    	
+] def
+%%EndResource
+%%EndProlog
+%%BeginSetup
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font Courier
+/HFpt_w 10 def
+/HFpt_h 10 def
+/Courier-Bold /HF-gs-font MF
+/HF /HF-gs-font findfont [HFpt_w 0 0 HFpt_h 0 0] makefont def
+/Courier /F-gs-font MF
+/F-gs-font 10 10 SF
+/#copies 1 def
+% Pagedevice definitions:
+gs_languagelevel 1 gt {
+  <<
+    /PageSize [595 842] 
+  >> setpagedevice
+} if
+%%BeginResource: procset Enscript-Header-simple 1.6.5 90
+
+/do_header {	% print default simple header
+  gsave
+    d_header_x d_header_y HFpt_h 3 div add translate
+
+    HF setfont
+    user_header_p {
+      5 0 moveto user_header_left_str show
+
+      d_header_w user_header_center_str stringwidth pop sub 2 div
+      0 moveto user_header_center_str show
+
+      d_header_w user_header_right_str stringwidth pop sub 5 sub
+      0 moveto user_header_right_str show
+    } {
+      5 0 moveto fname show
+      45 0 rmoveto fmodstr show
+      45 0 rmoveto pagenumstr show
+    } ifelse
+
+  grestore
+} def
+%%EndResource
+/d_page_w 559 def
+/d_page_h 770 def
+/d_header_x 0 def
+/d_header_y 755 def
+/d_header_w 559 def
+/d_header_h 15 def
+/d_footer_x 0 def
+/d_footer_y 0 def
+/d_footer_w 559 def
+/d_footer_h 0 def
+/d_output_w 559 def
+/d_output_h 755 def
+/cols 1 def
+%%EndSetup
+%%Page: (1) 1
+%%BeginPageSetup
+_S
+18 36 translate
+/pagenum 1 def
+/fname (Prova_G2_Ariel_Mileguir_1811928.txt) def
+/fdir (.) def
+/ftail (Prova_G2_Ariel_Mileguir_1811928.txt) def
+% User defined strings:
+/fmodstr (Mon Dec 14 22:18:49 2020) def
+/pagenumstr (1) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 742 M
+(Aluno: Ariel Mileguir) s
+5 731 M
+(Matricula: 1811928) s
+5 709 M
+(Prova P2 de Programa\303\247\303\243o modular) s
+5 676 M
+(Quest\303\243o 1:) s
+5 654 M
+(Considere a seguinte situa\303\247\303\243o hipot\303\251tica:) s
+5 632 M
+(Uma determinada equipe de desenvolvedores \303\251 contradada para desenvolver uma aplica\303\247\303\243o.) s
+5 610 M
+(Detalhes da Aplica\303\247\303\243o \(Escopo\):       Um sistema que seja capaz de gerenciar alunos em um) s
+5 599 M
+(a universidade, isto \303\251: Mantenha registro de todos os membros da universidade, alunos e pr) s
+5 588 M
+(ofessores \(nome, sobrenome, CPF, e Endere\303\247o de moradia\), e as disciplinas que os alunos es) s
+5 577 M
+(t\303\243o matriculadas \(nome, turma, professor\). Para ele foi criado um m\303\263dulo de cria\303\247\303\243o de ) s
+5 566 M
+(membros da universidade, um modulo de cria\303\247\303\243o de disciplinas, e um m\303\263dulo com as funcion) s
+5 555 M
+(alidades necess\303\241rias para persistencia e posteriormente recupera\303\247\303\243o \(retrieve / get\) de ) s
+5 544 M
+(dados guardados em um banco de dados. Vale notar tamb\303\251m que apesar dos membros universit\303\241) s
+5 533 M
+(rios possuirem uma matricula universitaria \303\272nica, isso n\303\243o foi mencionada em momento nenh) s
+5 522 M
+(um durante as reuni\303\265es entre o cliente e os desenvolvedores.) s
+5 500 M
+(        Os membros universit\303\241rios apesar de serem identificados pela tupla descrita acima,) s
+5 489 M
+( s\303\243o recuperados sem ambiguidade do banco de dados pela tupla: \(CPF, endere\303\247o\).) s
+5 478 M
+(        Ap\303\263s ser aprovado pelo cliente o documento contendo a especifica\303\247\303\243o da aplica\303\247\303) s
+5 467 M
+(\243o detalhando as suas "regras de neg\303\263cio" os desenvolvedores come\303\247am a de fato programar ) s
+5 456 M
+(tal aplica\303\247\303\243o seguindo rigidamente uma documenta\303\247\303\243o de requisitos, sendo esta criada te) s
+5 445 M
+(ndo como base o entendemento destas regras de neg\303\263cio.) s
+5 423 M
+(        Os tr\303\252s m\303\263dulos ent\303\243o s\303\243o programados e testados com testes unit\303\241rios com suce) s
+5 412 M
+(sso gerando a primeira vers\303\243o da aplica\303\247\303\243o.) s
+5 390 M
+(        Ap\303\263s o cliente "C" testar a aplica\303\247\303\243o e verificar que as disciplinas podem ser r) s
+5 379 M
+(egistradas f\303\241cilmente, e sem falhas, que os membros universit\303\241rios podem ser registrados ) s
+5 368 M
+(normalmente, e que todas essas informa\303\247\303\265es podem ser recuperados do banco de dados, o cli) s
+5 357 M
+(ente C relata que:) s
+5 335 M
+(        Ele quer que seja implementada uma maneira mais simples de recuperar os dados refer) s
+5 324 M
+(entes aos membros universit\303\241rios. Apesar disso C diz querer colocar essa vers\303\243o em produ\303) s
+5 313 M
+(\247\303\243o, e que enquanto esta vers\303\243o est\303\241 sendo usada normalmente, as evolu\303\247\303\265es devem ser d) s
+5 302 M
+(esenvolvidas.) s
+5 280 M
+(        Os desenvolvedores dever\303\243o realizar modifica\303\247\303\265es nela para que posteriormente qu) s
+5 269 M
+(ando as modifica\303\247\303\265es forem feitas, uma nova vers\303\243o possa ser criada, e ela possa ser col) s
+5 258 M
+(ocada para uso.) s
+5 236 M
+(        \303\\211 decidido ent\303\243o com base nisso que como ser\303\241 necess\303\241rio usar um dado \303\272nico) s
+5 225 M
+( para cada membro universit\303\241rio \(como um ID\) para que atrav\303\251z dele sozinho, seja poss\303\255ve) s
+5 214 M
+(l recuperar dados de qualquer membro, e que ser\303\241 poss\303\255vel recuperar os dados dos membros ) s
+5 203 M
+(universit\303\241rios APENAS colocando no programa respons\303\241vel por isso esta informa\303\247\303\243o \(Prime) s
+5 192 M
+(ira manuten\303\247\303\243o evolutiva\). ) s
+5 170 M
+(        C informa ent\303\243o que cada membro da universidade possu\303\255 uma matricula \303\272nica. ap\303\263) s
+5 159 M
+(s os desenvolvedores perguntarem se existe algo semelhante a isso nesta universidade.) s
+5 137 M
+(        A matricula universit\303\241ria \303\251 escolhida para fazer este papel, e nota-se que ser\303\241 ) s
+5 126 M
+(necess\303\241rio a realiza\303\247\303\243o de algumas modifica\303\247\303\265es nos c\303\263digos da aplica\303\247\303\243o para que s) s
+5 115 M
+(eja poss\303\255vel registrar um aluno com a sua matricula \(Segunda manuten\303\247\303\243o evolutiva\).) s
+5 93 M
+(        Posteriormente, C recebe o relato de que certos nomes de membros universitarios est) s
+5 82 M
+(\303\243o sendo expostos incorretamente: Nomes com caracteres estrangeiros apesar de serem regist) s
+5 71 M
+(rados normalmente, aparecem "corrompidos" quando s\303\243o recuperados. Uma manuten\303\247\303\243o emergen) s
+5 60 M
+(cial ter\303\241 de ser realizada na aplica\303\247\303\243o que j\303\241 est\303\241 em uso.) s
+5 38 M
+(        A equipe ent\303\243o parte para realizar a manuten\303\247\303\243o de emergencia. Uma nova vers\303\243o ) s
+5 27 M
+(\303\251 criada, e testada unitariamente dois dias depois contendo a corre\303\247\303\243o do bug do nome, f) s
+5 16 M
+(oi mudada a codifica\303\247\303\243o de caracteres no banco de dados de ASCII para UTF-8. \(Manuten\303\247\303\243) s
+5 5 M
+(o corretiva\)) s
+_R
+S
+%%Page: (2) 2
+%%BeginPageSetup
+_S
+18 36 translate
+/pagenum 2 def
+/fname (Prova_G2_Ariel_Mileguir_1811928.txt) def
+/fdir (.) def
+/ftail (Prova_G2_Ariel_Mileguir_1811928.txt) def
+% User defined strings:
+/fmodstr (Mon Dec 14 22:18:49 2020) def
+/pagenumstr (2) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 731 M
+(        C testa ent\303\243o na nova vers\303\243o o recurso de registrar membros com nomes que contenh) s
+5 720 M
+(am caracteres estrangeiros, e atesta que ela est\303\241 funcionando conforme o desejado. Ela \303\251 ) s
+5 709 M
+(colocada em produ\303\247\303\243o, isto \303\251: Ela substitu\303\255 a vers\303\243o anterior com bugs que estava send) s
+5 698 M
+(o usada.) s
+5 676 M
+(        Ao longo de alguns dias, muitas modifica\303\247\303\265es s\303\243o feitas nos c\303\263digos da vers\303\243o ) s
+5 665 M
+(recem "congelada" da aplica\303\247\303\243o afim de confortar as outras mudan\303\247as requisitadas por C. ) s
+5 654 M
+(Uma nova vers\303\243o \303\251 conclu\303\255da, e testada com sucesso. ) s
+5 632 M
+(        Primeiro foi feita a segunda manuten\303\247\303\243o evolutiva para que o processo de realizar) s
+5 621 M
+( a primeira manuten\303\247\303\243o evolutiva fosse mais claro e r\303\241pido, depois foi feita a primeira ) s
+5 610 M
+(manuten\303\247\303\243o evolutiva.) s
+5 588 M
+(        A equipe realiza muitos testes na vers\303\243o nova \(como um todo\) e conclu\303\255 que todas ) s
+5 577 M
+(as queixas e pedidos que C relatou foram resolvidos e implementados com sucesso, e que a ap) s
+5 566 M
+(lica\303\247\303\243o est\303\241 funcionando adequadamente em fun\303\247\303\243o do que foi proposto.) s
+5 544 M
+(        C ent\303\243o testa novamente a aplica\303\247\303\243o de forma semelhante como fez antes, chega na) s
+5 533 M
+( mesma conclus\303\243o, e aprova essa \303\272ltima vers\303\243o para ser colocada em produ\303\247\303\243o.) s
+5 511 M
+(        Com base nas modifica\303\247\303\265es feitas pela manuten\303\247\303\243o de corre\303\247\303\243o, membros que ten) s
+5 500 M
+(ham nomes com caracteres estrangeiros podem agora utilizar essa aplica\303\247\303\243o para se cadastr) s
+5 489 M
+(arem normalmente, e os dados de todos os membros universit\303\241rios podem ser facilmente recup) s
+5 478 M
+(erados atravez de suas matriculas.) s
+5 445 M
+(Quest\303\243o 2:) s
+5 423 M
+(        Ap\303\263s a aplica\303\247\303\243o descrita na quest\303\243o acima ter sido colocada em uma vers\303\243o est) s
+5 412 M
+(\303\241vel, homologada e autenticada por C, C faz uma nova requisi\303\247\303\243o para a equipe durante o ) s
+5 401 M
+(per\303\255odo de recesso universit\303\241rio \(f\303\251rias\): Ele gostaria que fossem implementadas funcion) s
+5 390 M
+(alidades que impedissem membros os universitarios de estarem cadastrados simultaneamente em) s
+5 379 M
+( mais de sete disciplinas, e que ap\303\263s o semestre \(per\303\255odo de aulas\) acabar, que os membro) s
+5 368 M
+(s universit\303\241rios fossem automaticamente descadastrados das disciplinas.) s
+5 346 M
+(Tem-se ent\303\243o o seguinte fluxo no software de controle de versionamento:) s
+5 324 M
+(                                                                                         \(P) s
+5 313 M
+(assam-se apenas alguns dias e ap\303\263s a homologa\303\247\303\243o, ela \303\251 integrada na branch principal\)) s
+5 302 M
+(                                                                                           ) s
+5 291 M
+(                                       |) s
+5 280 M
+(Branch principal \(Vers\303\243o em produ\303\247\303\243o\): Vers\303\243o 1.0 \(Vers\303\243o sem as melhorias e corre\303\247\303\265) s
+5 269 M
+(es que C relatou\) -------------------------------------------------------> Vers\303\243o 1.5 \(Ver) s
+5 258 M
+(s\303\243o com as melhorias e corre\303\247\303\265es relatadas por C\)                                       ) s
+5 247 M
+(                                               \\                                           ) s
+5 236 M
+(          /) s
+5 225 M
+(                                                                                           ) s
+5 214 M
+(            \\                  Branch A1:                       /) s
+5 203 M
+(                                                                                           ) s
+5 192 M
+(             \(Branch com as melhorias e corre\303\247\303\265es que C relatou\)) s
+5 159 M
+(                                                                                         \(F) s
+5 148 M
+(eito o merge com a branch B1\)   \(Feito o merge com a branch B1\)) s
+5 137 M
+(                                                                                           ) s
+5 126 M
+(              |                        |) s
+5 115 M
+(Branch de desenvolvemento \(Essa snapshot do fluxo Parte da vers\303\243o 1.5\): ------------------) s
+5 104 M
+(------------------------------------------------------------------->) s
+5 93 M
+(                                           \\                                               ) s
+5 82 M
+(             /                        /) s
+5 71 M
+(                                            \\                  Branch B1:                  ) s
+5 60 M
+(            /                        /) s
+5 49 M
+(                                             \\                                             ) s
+5 38 M
+(           /                        /) s
+5 27 M
+(                                              \\                                            ) s
+5 16 M
+(          /         \(Feito o merge com a branch B2\)) s
+5 5 M
+(                                               \\                                           ) s
+_R
+S
+%%Page: (3) 3
+%%BeginPageSetup
+_S
+18 36 translate
+/pagenum 3 def
+/fname (Prova_G2_Ariel_Mileguir_1811928.txt) def
+/fdir (.) def
+/ftail (Prova_G2_Ariel_Mileguir_1811928.txt) def
+% User defined strings:
+/fmodstr (Mon Dec 14 22:18:49 2020) def
+/pagenumstr (3) def
+/user_header_p false def
+/user_footer_p false def
+%%EndPageSetup
+do_header
+5 742 M
+(         /                      |) s
+5 731 M
+(                                                \(Branch com as novas modifica\303\247\303\265es requisi) s
+5 720 M
+(tadas por C\) -------------------------------------------------------->) s
+5 709 M
+(                                                                   \\                       ) s
+5 698 M
+(                               /) s
+5 687 M
+(                                                                    \\                      ) s
+5 676 M
+(Branch B2:                    /) s
+5 665 M
+(                                                                      \(Branch para corrigir) s
+5 654 M
+( erros presentes na branch B1\)) s
+5 621 M
+(Quest\303\243o 3:) s
+5 599 M
+(        Partindo do pressuposto de que trata-se de uma linguagem de programa\303\247\303\243o aonde a i) s
+5 588 M
+(ndenta\303\247\303\243o n\303\243o afeta a leitura do c\303\263digo pela maquina, modificar a indenta\303\247\303\243o pode se ) s
+5 577 M
+(tratar de uma refatora\303\247\303\243o.) s
+5 566 M
+(        Uma refatora\303\247\303\243o \303\251 definida como uma altera\303\247\303\243o feita no c\303\263digo sem que se modi) s
+5 555 M
+(fique de NENHUMA forma o seu funcionamento ou comportamento com a inten\303\247\303\243o de que a quali) s
+5 544 M
+(ade do c\303\263digo seja melhorada para futuras manuten\303\247\303\265es, ou leitura e entendimento humano ) s
+5 533 M
+(do c\303\263digo.) s
+5 522 M
+(        Modificar as indenta\303\247\303\265es de um c\303\263digo escrito em uma linguagem destas pode se tr) s
+5 511 M
+(atar de uma refatora\303\247\303\243o, caso o objetivo seja de melhorar a visibilidade ou leitura do c\303) s
+5 500 M
+(\263digo para os fins definidos acima.) s
+5 467 M
+(Quest\303\243o 4:) s
+5 445 M
+(        Partindo do pressuposto de que cada modifica\303\247\303\243o bem sucedida \(testada\) em um c\303\263d) s
+5 434 M
+(igo deve ser imediatamente integrada com o flxuo principal de projeto \(branch main\) para qu) s
+5 423 M
+(e sejam evitados riscos de conflitos, ou merges de alto risco, o processo de refatora\303\247\303\243o ) s
+5 412 M
+(assim como qualquer outra mudan\303\247a substancial deve ser feita ANTES de um merge.) s
+5 401 M
+(        Caso o projeto em quest\303\243o tenha um numero consideravel de desenvolvedores trabalha) s
+5 390 M
+(ndo nele, e que parte desses desenvolvedores trabalhem ou n\303\243o em um mesmo arquivo \(que est) s
+5 379 M
+(\303\241 sendo refatorado\), \303\251 mais indicado realizar um merge manual para minimizar o risco de c) s
+5 368 M
+(onflitos ou merges "bem sucedidos", por\303\251m que causam consequencias indesejadas e que podem) s
+5 357 M
+( at\303\251 quebrar a aplica\303\247\303\243o, j\303\241 que por estar sendo feito por um algoritimo \(Isto \303\251: uma ) s
+5 346 M
+(maquina\) que n\303\243o tem a capacidade de pensar e julgar adequadamente que tipos de modifica\303\247) s
+5 335 M
+(\303\265es devem ser implementadas, e que tipos de modifica\303\247\303\265es devem ser descartadas em um mer) s
+5 324 M
+(ge, o risco de algum tipo de problema relacionado ao merge acontecer neste caso \303\251 naturalm) s
+5 313 M
+(ente maior do que se ele estivesse sendo feito por um desenvolvedor que teoricamente, teria) s
+5 302 M
+( um n\303\255vel de entendimento cons\303\255der\303\241vel da aplica\303\247\303\243o ou do c\303\263digo.) s
+5 280 M
+(        Caso seja garantida a hipotese de que um \303\272nico desenvolvedor trabalhe em um projet) s
+5 269 M
+(o para uma aplica\303\247\303\243o \(por exemplo, o sistema backend de uma aplica\303\247\303\243o\), o merge poderia) s
+5 258 M
+( ser feito automaticamente pois o risco de conflitos, ou casos de merge descritos acima \303\251 ) s
+5 247 M
+(praticamente inexistente, pois a vers\303\243o do\(s\) arquivo\(s\) em que este desenvolvedor est\303\241 r) s
+5 236 M
+(efatorando poderia teoricamente sempre ser considerada a mais atualizada.) s
+5 203 M
+(Quest\303\243o 5:) s
+5 181 M
+(        Plugins utilizados de um acervo mantido por uma equipe de desenvolvemento s\303\243o nece) s
+5 170 M
+(ssariamente componentes reutiliz\303\241veis internos.) s
+5 159 M
+(        Componentes reutilizaveis internos podem ser definido como c\303\263digos feitos para um ) s
+5 148 M
+(dom\303\255nio ou aplica\303\247\303\243o especifica, e que gra\303\247as a isso podem aumentar a produtividade de ) s
+5 137 M
+(desenvolvemento de um projeto, j\303\241 que apesar de se tratar de um dom\303\255nio especifico, muita) s
+5 126 M
+(s coisas que precisariam ser implementadas para desenvolver este projeto, podem j\303\241 estar p) s
+5 115 M
+(rontas, evitando a necessidade de ter que programar elas.) s
+5 104 M
+(        Plugins podem ser definido como imports din\303\242micos \(o uso de componentes que comple) s
+5 93 M
+(mentam a execu\303\247\303\243o de um programa ou aplica\303\247\303\243o e que fazem parte do dom\303\255nio da mesma a ) s
+5 82 M
+(tempo de execu\303\247\303\243o\) por\303\251m que n\303\243o gerem uma vers\303\243o nova da aplica\303\247\303\243o.) s
+5 71 M
+(        Neste caso, como o uso de um plugin \303\251 considerado um import din\303\242mico, e que bibli) s
+5 60 M
+(otecas de import dinamicos \(por fazerem parte do dom\303\255nio espec\303\255fico da aplica\303\247\303\243o\) podem) s
+5 49 M
+( ser considerados componentes reutilizaveis internos, um plugin ent\303\243o pode ser considerado) s
+5 38 M
+( necess\303\241riamente um componente reutiliz\303\241vel interno \(mesmo fazendo a utiliza\303\247\303\243o de wrap) s
+5 27 M
+(pers que encapsulem chamadas de m\303\263dulos reutiliz\303\241veis externos, isto \303\251: abstra\303\247\303\265es que) s
+5 16 M
+( facilitem o uso dos mesmos em diversas partes dos c\303\263digos, e o acoplamento dos mesmos com) s
+5 5 M
+( diversos m\303\263dulos\).) s
+_R
+S
+%%Trailer
+%%Pages: 3
+%%DocumentNeededResources: font Courier-Bold Courier 
+%%EOF

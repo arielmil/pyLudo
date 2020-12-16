@@ -1,5 +1,6 @@
 from Peao import *
 from Tabuleiro import *
+from Banco_de_dados import *
 from Dados import *
 
 MENOR_CASA = 1
@@ -8,9 +9,14 @@ MAIOR_CASA = 57
 
 #OBS: Foi obtida permissão do professor para fazer com que a casa guarde quantos peoes tem nela.
 
-def Gerencia_partida():
+def Gerencia_partida(jogadores):
     '''Implementa a funcionalidade de troca de turnos.'''
-    return 0
+    #flag = 0
+
+    #while !flag:
+     #   num_dado = Clica_dado()
+      #  flag = Checa_disponibilidade_peao()
+    #return 0
 
 def Checa_torres(peao):
     '''Recebe um peão, e checa se na sua posição relativa existe uma semi_torre, ou torre de sua cor. Retorna 1 caso exista uma semi_torre, 2 caso exista uma torre, 0 caso caso não existam nenhuma das duas.'''
