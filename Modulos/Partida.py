@@ -3,7 +3,7 @@ from Tabuleiro import *
 from Dados import *
 
 MENOR_CASA = 1
-TABULEIRO = Cria_tabuleiro(0, 0, 1)
+#TABULEIRO = Cria_tabuleiro(0, 0, 1)
 MAIOR_CASA = 57
 
 def Inicia_partida():
@@ -25,24 +25,21 @@ def Inicia_partida():
     return
 
 def Gerencia_partida(turno):
-    """Implementa a funcionalidade de troca de turnos."""
-    
-
-    while peao
+    """Implementa a funcionalidade de troca de turnos.""" 
     if turno == 4:
         turno = 1
     else:
         turno += 1
     
     if turno == 1:
-        #vez do vermelho
-        print("Vez do vermelho")        
-    elif turno == 2:
-        #vez do verde
-        print("Vez do verde")        
-    elif turno == 3:
         #vez do azul
         print("Vez do azul")        
+    elif turno == 2:
+        #vez do vermelho
+        print("Vez do vermelho")        
+    elif turno == 3:
+        #vez do verde
+        print("Vez do verde")        
     elif turno == 4:
         #vez do amarelo
         print("Vez do amarelo")        
@@ -51,22 +48,6 @@ def Gerencia_partida(turno):
         return -1
 
     return turno
-
-def Roda_tabuleiro(tabuleiro):
-    """Rotaciona o tabuleiro em 90 graus recalculando as posições de todos os elementos do tabuleiro, após isso chama a função Tabuleiro_animation() do módulo Tabuleiro."""
-    if len(tabuleiro) <= 0:
-        return -1
-    else:
-        for casa in tabuleiro:
-            if type(casa) == dict: 
-                casa["x"] = ALT_TABULEIRO - casa["y"] - LARG_CASA
-                casa["y"] = casa["x"]
-                if casa["x"] < 0 or casa["y"] < 0:
-                    print("ERRO AO ROTACIONAR TABULEIRO, POSIÇÃO DE CASA NEGATIVO")
-                    return -2
-            else:
-                Roda_tabuleiro(casa)
-    return 0
 
 def Checa_torres(peao):
     cor = peao["cor"]

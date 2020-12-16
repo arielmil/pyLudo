@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import time
 from Dados import *
-from Partida import Gerencia_partida
+from random import randint
 
 
 def Inicia_telas():
@@ -15,10 +15,7 @@ def Inicia_telas():
 def Desenha_jogo():
     """Renderiza as imagens recebidas"""
     imagens = []
-    tabuleiro1 = pygame.image.load(path+'Tabuleiro1.png')
-    tabuleiro2 = pygame.image.load(path+'Tabuleiro2.png')
-    tabuleiro3 = pygame.image.load(path+'Tabuleiro3.png')
-    tabuleiro4 = pygame.image.load(path+'Tabuleiro4.png')
+    tabuleiro = pygame.image.load(path+'Tabuleiro.png')
     peao_vermelho = pygame.image.load(path + 'peão_vermelho.png')
     peao_verde = pygame.image.load(path + 'peão_verde.png')
     peao_azul = pygame.image.load(path + 'peão_azul.png')
@@ -29,7 +26,7 @@ def Desenha_jogo():
     dado4 = pygame.image.load(path + 'Dado_branco/dice_4.png')
     dado5 = pygame.image.load(path + 'Dado_branco/dice_5.png')
     dado6 = pygame.image.load(path + 'Dado_branco/dice_6.png')
-    imagens = [[tabuleiro1, tabuleiro2, tabuleiro3, tabuleiro4], [peao_vermelho, peao_verde, peao_azul, peao_amarelo], [dado1, dado2, dado3, dado4, dado5, dado6]]
+    imagens = [tabuleiro, [peao_vermelho, peao_verde, peao_azul, peao_amarelo], [dado1, dado2, dado3, dado4, dado5, dado6]]
     return imagens
    
 def Aonde_clicou():
@@ -91,6 +88,9 @@ def Desenha_peao(img_peao):
     amar3 = tela.blit(img_peao[3], (850, 548))
     amar4 = tela.blit(img_peao[3], (770, 618))
 
+    #Diferença: 44 pixels
+    tela.blit(img_peao[2], (482, 618))
+
     lista_peoes = [verm1, verm2, verm3, verm4, verd1, verd2, verd3, verd4, azul1, azul2, azul3, azul4, amar1, amar2, amar3, amar4]
     return lista_peoes
 
@@ -108,87 +108,23 @@ def Desenha_dado(img_dado):
     return
 
 def Move_peao(valor_dado, peao):
-    """Faz o peão escolhido se mover a quantidade de casas que foi tirada no dadao."""
-    for casa in range(len(valor_dado)):
-
-        #Primeira casa depois de sair da casa inicial
-        if casa == 1:
-            peao[1] = (482, 618)
-
-        #Norte
-        elif (casa > 1 and casa < 6) or (casa > 11 and casa < 14) or (casa > 19 and casa < 25) or (casa > 51):
-            peao[1][1] = peao[1][1] - 44
-
-        #Noroeste
-        elif casa == 6:
-            peao[1][0] = peao[0][1] - 45
-            peao[1][1] = peao[1][1] - 45
-
-        #Oeste
-        elif (casa > 6 and casa < 12) or (casa > 39 and casa < 45) or (casa == 51):
-            peao[1][0] = peao[1][0] - 44
-        
-        #Nordeste
-        elif casa == 19:
-            peao[1][0] += 45
-            peao[1][1] = peao[1][1] - 45
-
-        #Leste
-        elif (casa >= 14 and casa < 19) or (casa >= 25 and casa < 27) or (casa > 32 and casa <= 37):
-            peao[1][0] += 44
-
-        #Sudeste
-        elif casa == 32:
-            peao[1][0] += 45
-            peao[1][1] += 45
-
-        #Sul
-        elif (casa > 26 and casa < 32) or (casa > 37 and casa < 40) or (casa > 45 and casa < 52):
-            peao[1][1] += 45
-
-        #Sudoeste
-        elif casa == 45:
-            peao[1][0] = peao[1][0] - 45
-            peao[1][1] += 45
-
-        valor_dado = valor_dado - 1
-        lista_peoes[casa] = peao
-
-    return
-
-def Roda_tabuleiro():
-    """Faz o tabuleiro girar, quando muda a vez do jogador."""
-    if Gerencia_partida() == 1:
-        Desenha_tabuleiro(imagens[0][0])
-    elif Gerencia_partida() == 2:
-        Desenha_tabuleiro(imagens[0][1])
-    elif Gerencia_partida() == 3:
-        Desenha_tabuleiro(imagens[0][2])
-    elif Gerencia_partida() == 4:
-        Desenha_tabuleiro(imagens[0][3])
-
-    for peao in range(len(lista_peoes)):
-        if peao[1] == ((285, 85) or (205, 155) or (355, 155) or (285, 225) or (725, 30) or (655, 110) or (795, 110) or (725, 180) or (333, 522) or (260, 595) or (400, 595) or (333, 672) or (770, 478) or (700, 548) or (850, 548) or (770, 618)):
-            peao[1] = lista_peoes[(peao+4)%16]
-        else:
-            Move_peao(13, lista_peoes[peao])
+    #while valor_dado > 0:
+        #peao = ((coordenadas[casa][0] + coordenadas[casa][2])/2, (coordenadas[casa][1] + coordenadas[casa][3])/2)
     return
 
 
 def Posicao_peoes():
     """Retorna o número da casa em que os peões estão."""
-    for peao in range(len(coord)):
-        if (Aonde_clicou()[0] > coord[peao][0] and Aonde_clicou()[0] < coord[peao][2]) and (Aonde_clicou()[1] > coord[peao][1] and Aonde_clicou()[1] < coord[peao][3]) :
+    for peao in range(len(coordenadas)):
+        if (Aonde_clicou()[0] > coordenadas[peao][0] and Aonde_clicou()[0] < coordenadas[peao][2]) and (Aonde_clicou()[1] > coordenadas[peao][1] and Aonde_clicou()[1] < coordenadas[peao][3]) :
             return peao
     return 0
 
 def Clica_casa():
     """Retorna o valor absoluto da casa"""
     click = pygame.font.SysFont("Arial", 15)
-    for casa in range(len(coord)):
-        if (Aonde_clicou()[0] > coord[casa][0] and Aonde_clicou()[0] < coord[casa][2]) and (Aonde_clicou()[1] > coord[casa][1] and Aonde_clicou()[1] < coord[casa][3]) :
-            texto = click.render(str(casa), (0, 0, 0))
-            tela.blit(texto, (720, 720))
+    for casa in range(len(coordenadas)):
+        if (Aonde_clicou()[0] > coordenadas[casa][0] and Aonde_clicou()[0] < coordenadas[casa][2]) and (Aonde_clicou()[1] > coordenadas[casa][1] and Aonde_clicou()[1] < coordenadas[casa][3]) :
             return casa
     return 0
 
@@ -244,20 +180,11 @@ def Localiza_casas():
     return coordenadas
 
 def Tela_final():
-    pygame.draw.rect(tela, (122, 122, 122), (210, 30, 660, 660))
-    opcao_jogar_novamente = pygame.draw.rect(tela, (0, 0, 0), (390, 290, 100, 50))
-    opcao_sair = pygame.draw.rect(tela, (0, 0, 0), (390, 390, 100, 50))
-    fonte = pygame.font.SysFont("Arial", 30)
-    texto_menu = fonte.render("Fim de jogo!", 1, (255, 255, 25))
-    texto_jogar_novamente = fonte.render("Jogar novamente", 1, (255, 255, 255))
-    texto_menu_sair = fonte.render("Sair do jogo", 1, (255, 255, 255))
-    tela.blit(texto_menu, (400, 100))
-    tela.blit(texto_jogar_novamente, (400, 300))
-    tela.blit(texto_sair, (400, 400))
-    if (Aonde_clicou()[0] > 390 and Aonde_clicou()[0] < 490) and (Aonde_clicou()[1] > 290 and Aonde_clicou()[1] < 340):
+    if pygame.key.get_pressed()[pygame.K_s] != 0:
         return True
-    elif (Aonde_clicou()[0] > 390 and Aonde_clicou()[0] < 490) and (Aonde_clicou()[1] > 290 and Aonde_clicou()[1] < 340):
+    elif pygame.key.get_pressed()[pygame.K_n] != 0:
         return False
+    return 0
 
 
 
@@ -295,19 +222,15 @@ while True:
 
     #Durante o jogo
     elif jogo == True:
-        Desenha_tabuleiro(imagens[0][0])
-        lista_peoes = Desenha_peao(imagens[1])
+        Desenha_tabuleiro(imagens[0])
+        Desenha_peao(imagens[1])
         Desenha_dado(imagens[2])
-        coord = Localiza_casas()
+        coordenadas = Localiza_casas()
         if Clica_casa() != 0:
-            Clica_casa()
+            print(Clica_casa())
 
         if (Aonde_clicou()[0] > 50 and Aonde_clicou()[1] < 118) and (Aonde_clicou()[1] > 50 and Aonde_clicou()[1] < 118):
-            valor_dado = Clica_dado(dado_usado)
-
-        if Aonde_clicou() in lista_peoes:
-            Move_peao(valor_dado, lista_peoes[Clica_casa()])
-            Roda_tabuleiro()
+            Clica_dado(dado_usado)
 
     #Fim de jogo
     elif final == True:
