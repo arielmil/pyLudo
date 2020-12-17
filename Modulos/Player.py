@@ -1,5 +1,5 @@
-def Cria_jogador(debug):
-    """Usado para criar um jogador"""
+def Cria_jogador(debug_helper):
+    """Para ser usado em conjunto com o banco de dados: Entra em um loop até que seja digitada uma sequência de caracteres que será o nome do jogador, ou até que o jogador resolva sair. Retorna um dicionario chamado jogador com um campo nome, ou -1 caso seja digitado: sair, Sair, SAIR, ou nada. Pode receber opcionalmente um inteiro chamado debug que é usado nos testes unitários."""
 
     limit = 30
     escolhendo = True
@@ -7,12 +7,12 @@ def Cria_jogador(debug):
 
     while (escolhendo):
 
-        if debug:
+        if debug_helper:
             
-            if debug == 1:
+            if debug_helper == 1:
                 nome = "Teste"                
 
-            elif debug == 2:
+            elif debug_helper == 2:
                 nome = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 
         else:
@@ -21,7 +21,7 @@ def Cria_jogador(debug):
         if len(nome) > limit:
             print("\nErro: o nome deve ter no máximo 30 caracteres.")
 
-            if debug:
+            if debug_helper:
                 return -1
 
         elif nome == "sair" or nome == "Sair" or nome == "SAIR" or nome == "":

@@ -99,3 +99,5 @@
 			- Peão - Guilherme
 			- Tabuleiro - Guilherme
 		- Linkar sprites - Guilherme
+		
+	- Decidir como tratar a posição 0 do tabuleiro

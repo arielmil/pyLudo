@@ -1,1 +1,1 @@
-print("oi")
+from Main import *

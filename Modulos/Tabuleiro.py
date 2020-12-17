@@ -2,9 +2,8 @@ from copy import copy
 
 img = "../../Assets/Board.jpg"
 
-#Não sera exportada.
 def Cria_tabuleiro_vazio():
-    """Função auxiliar a Cria_tabuleiro."""
+    """Utilizado pela função Cria_tabuleiro, esta função cria e retorna um array de 58 índices com todos os valores de seus índices iguais a [] (lista vazia)."""
     i = 0
     
     tabuleiro = []
@@ -16,28 +15,26 @@ def Cria_tabuleiro_vazio():
 
     return tabuleiro
 
-#Ver se sera exportada.
 def Cria_casa(x = None, y = None):
-    """Cria e retorna um dicionario com dois itens inteiros x e y chamado casa."""
+    """Recebe como parâmetro um ou dois valores inteiros (x e y). Cria e retorna um dicionario chamado Casa representando uma casa do tabuleiro com suas coordenadas x e y iguais aos parametros recebidos, além de que Casa terá também os campos: "peoes" (uma lista que mantem registro dos peões nessa casa), "semi_torres" (uma lista que mantem registro das semi torres nessa casa), e "torres" (uma lista que mantem registro das torres nessa casa), todos iguais a [] (lista vazia). Retorna -1 e printa uma mensagem de erro caso não sejam recebidos x e y."""
+    
     if (x == None or y == None):
         print("Valor nulo")
         return -1
     casa = {"x": x, "y": y, "peoes": [], "semi_torres": [], "torres": []}
     return casa
 
-#Ver se sera exportada.
 def Printa_tabuleiro(tabuleiro):
-    """Usada para debugging"""
+    """Usados para fins de debug. Recebe um tabuleiro (um array de 58 casas) e printa todas as coordenadas x e y de cada uma das casas de forma estruturada."""
+    
     i = 1
     while (i < 58):
         print("Posição x da casa: "+  str(i) +": " + str(tabuleiro[i]["x"])+" Posição y da casa "+str(i) + ": " + str(tabuleiro[i]["y"]))
         i = i + 1
-    return 0
 
-#Ver se sera exportada.
 def Cria_casas (posicao_inicial, times, inc, direction, x = False, y = False):
-    """Para ser usado em conjunto com Cria_tabuleiro: Cria uma lista de casas, e as retorna."""
-    
+    """Recebe como parâmetros: Uma casa como posição inicial, o número de casas que irá criar, a distância em x ou y entre duas casas, a direção e o sentido que irá seguir. Utilizando a função Cria_Casa, esta função cria com seus valores x ou y sequencialmente uma ou mais casas, seguindo pela direção (vertical ou horizontal) e pelo sentido  (negativo se igual a -1 , e positivo caso o contrário). Retorna um array de casas, ou -1 em caso de erro."""
+        
     i = 0
     j = 0
     
@@ -96,10 +93,8 @@ def Cria_casas (posicao_inicial, times, inc, direction, x = False, y = False):
         
     return casas_array
 
-#Sera exportada.       
 def Cria_tabuleiro(posicao_inicial, inc, debugging = False):
-    """Chamadada uma vez por tabulerio, cria e preenche um array contendo 58 casas representando as posições no tabuleiro."""
-    
+    """Recebe como parâmetros: Uma casa como posição inicial, e a distancia em x ou y entre duas casas, além de um parametro opcional booleano chamado debugging. Cria utilizando sequencialmente a função Cria_Casas todas as casas necessárias para o tabuleiro poder ser usado com seus valores x e y. Retorna um array de 58 Casas representando o tabuleiro. Caso debugging seja diferente de False, printa utilizando a função Printa_tabuleiro todas as casas do tabuleiro criado."""    
     times = 5
 
     tabuleiro = Cria_tabuleiro_vazio()
@@ -228,7 +223,7 @@ def Cria_tabuleiro(posicao_inicial, inc, debugging = False):
     return tabuleiro
 
 def Converte_posicao(cor, posicao):
-    '''"Converte" a posicao recebida para a posicao correspondente em relacao as posicoes azuis, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes. Retorna esta posição convertida em uma váriavel chamada casa_relativa, ou -1 em caso de erros.'''
+    '''Recebe um inteiro representando uma posição (número de casa) do tabuleiro, e uma cor, "converte" a posicao recebida para a posicao correspondente em relacao as posicoes azuis, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes. Retorna esta posição convertida em uma váriavel chamada casa_relativa.'''
     
     if posicao == 0 or (posicao >= 52 and posicao <= 57):
         return posicao
@@ -246,7 +241,8 @@ def Converte_posicao(cor, posicao):
     return posicao
 
 def Checa_disponibilidade(casa, cor):
-    
+    """Recebe dois valores inteiros um representando o número do dado que acabou de ser tirado, e o outro representando uma posicao (número de casa) e uma cor. Assumindo que um peão da cor recebida exista nessa casa, checa se ele pode se mover baseado no número de dado que tirou. Retorna -1 caso esse peão não possa se movimentar, ou 1 caso ele possa se movimentar. OBS: Convenciona-se que as casas iniciais de cada peão (antes da casa 1) sejam representadas por números negativos de -1 a -4 (ambos inclusos)."""
+
     if casa < 0 or casa > 57:
         return -1
     

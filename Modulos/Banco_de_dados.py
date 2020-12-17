@@ -3,6 +3,8 @@
 import mysql.connector as mysql
 
 def Exporta_Conexao(debug = False):
+    """Recebe um booleno chamado debug (False por padrão). Cria, ou retorna todos os dados necessários para o uso do banco de dados em um dicionário contendo dois campos: db que armazena um ponteiro para o SGBD configurado para o banco de dados pyLudo, e cursor que armazena um cursor para este SGBD, ou sai do jogo com um código de erro caso o contrário (código de erro 1 para: Erro no nome do host para conexão com o SGBD, criação do cursor, criação do Banco de dados, ou criação da tabela. Ou código de erro 2 para: Erros no nome de usuário ou senha ou algum erro genérico para conexão com o SGBD, ou de cursor inválido). Printa informações de erro caso debug seja True."""
+    
     db = Conecta_SGBD("localhost","ariel","123456789",debug)
     cursor = 0
     checagem = 0
@@ -40,6 +42,8 @@ def Exporta_Conexao(debug = False):
     return {"db":db, "cursor":cursor}
 
 def Conecta_SGBD(h, u, p, debug = False):
+    """Recebe quatro strings: h (host), u (usuário), p (senha), e um booleno chamado debug (False por padrão). Conecta com o SBGD. Retorna um ponteiro para ele em caso de sucesso, -1 em caso de erro por host inválido, -2 em caso de erro nos campos user ou senha, ou -3 em caso de erros genéricos. Printa informações de erro caso debug seja True."""
+    
     try:
         db = mysql.connect(host = h, user = u, passwd = p)
     except mysql.Error as err:
@@ -59,6 +63,8 @@ def Conecta_SGBD(h, u, p, debug = False):
         return db
 
 def Cria_Cursor(db, debug = False):
+    """Recebe um ponteiro para o SGBD, e um booleano chamado debug (False por padão). Cria um cursor (objeto de Banco de Dados). Retorna o cursor em caso de sucesso, -1 em caso de erro por conexão ao SGBD, ou -2 em caso de erros genéricos."""
+    
     if (type(db) != mysql.connection_cext.CMySQLConnection):
         if (debug):
             print("Erro: Problemas na conexao com o SGBD. Por favor, tente novamente.")
@@ -73,6 +79,8 @@ def Cria_Cursor(db, debug = False):
     return cursor
 
 def Cria_Banco(cursor, debug = False):
+    """Recebe um cursor, e um booleno chamado debug (False por padrão). Cria um banco de dados chamado pyGames (ou não faz nada caso esse banco já exista). Retorna 0 em caso de sucesso, -1 em caso de erros genéricos, ou -2 em caso de erro por cursor inválido."""
+    
     try:
         cursor.execute("CREATE DATABASE pyLudo")
     except mysql.Error as err:
@@ -90,6 +98,8 @@ def Cria_Banco(cursor, debug = False):
     return 0
 
 def Cria_Tabela(cursor, debug = False):
+    """Recebe um cursor, e um booleno chamado debug (False por padrão). Cria uma tabela para guardar dados de jogador dentro do banco de dados (ou não faz nada caso essa tabela já exista). Retorna 0 em caso de sucesso, -1 em caso de erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erros caso debug seja True."""
+    
     try:
         cursor.execute("CREATE TABLE pyLudo.posicoes (jogador VARCHAR(31), cor VARCHAR(20), peao SMALLINT, posicao SMALLINT, PRIMARY KEY (cor, peao))")
     except mysql.Error as err:
@@ -107,7 +117,8 @@ def Cria_Tabela(cursor, debug = False):
     return 0
 
 def Deleta_Informacoes(db, debug = False):
-    '''Para ser chamada sempre ao final de uma partida: Deleta todos os dados nao estruturais salvos na tabela posicoes.'''
+    """Deve ser chamada pelo módulo Main ao final de cada partida. Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), e um booleano chamado debug (False por padrão). Deleta todas as informações salvas na tabela Jogadores do Banco, mantendo somente sua estrutura semantica (Primary Keys, Foreign Keys, etc...). Retorna 0 caso seja bem sucedido, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True."""
+
     try:
         db["cursor"].execute("TRUNCATE TABLE pyLudo.posicoes")
         db["db"].commit()
@@ -132,7 +143,8 @@ def Deleta_Informacoes(db, debug = False):
 
 
 def Salva_Jogador(db, jogador, debug = False):
-    """Salva na base um jogador, com seus respectivos peões e suas posições iniciais."""
+    """Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um jogador (um array contendo em seu primeiro índice um player (como definido pelo módulo Player), e em seu segundo índice um array contendo seus quatro peões (como definidos pelo módulo Peão) ), e um booleano chamado debug (False por padrão). Salva no Banco este jogador com a sua cor e seus quatro peões em suas posições iniciais. Retorna 0 em caso de sucesso, -1 em caso de erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True."""
+
     for i in range(0,4):
         try:
             sql = "INSERT INTO pyLudo.posicoes (jogador, cor, peao, posicao) VALUES (%s, %s, %s, %s)"
@@ -152,7 +164,8 @@ def Salva_Jogador(db, jogador, debug = False):
     return 0
 
 def Salva_Jogadores(db, jogadores, debug = False):
-     """Salva na base todos os jogadores com todos os peões."""
+    """Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um array de jogadores provido pela função Quantos_jogam do módulo Main, e um booleano chamado debug (False por padrão). Itera sobre este array chamando a função Salva_Jogador para cada elemento nele afim de salvar todos os jogadores da partida no Banco. Retorna 0 em caso de sucesso para todos os elementos, -1 para erros genericos em algum elemento, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True."""
+    
      ok = 0
      for i in range(0,len(jogadores)):
          ok = Salva_Jogador(db, jogadores[i], debug)
@@ -163,7 +176,8 @@ def Salva_Jogadores(db, jogadores, debug = False):
      return 0
 
 def Pega_Posicao_Peao_Cor(cursor, cor, peao_num, debug = False):
-    """Retorna a posicao do peao recebido do jogador da cor recebida."""
+    """Recebe um cursor, um peão (como definido pelo módulo Peões), um número inteiro de 0 a 4 representando um dos quatro peões de um jogador, e um booleano chamado debug (False por padrão). Pega no Banco de Dados a posição deste peão para este jogador (conhecido pela sua cor contída na variável peão recebida), e retorna a posição recolhida em caso seja de sucesso, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True."""
+
     try:
         sql = "SELECT posicao FROM pyLudo.posicoes WHERE cor = %s and peao = %s"
         valores = (cor, peao_num)
@@ -183,7 +197,8 @@ def Pega_Posicao_Peao_Cor(cursor, cor, peao_num, debug = False):
     return pos[0][0]
     
 def Pega_Posicoes_Peoes_Cor(cursor, cor, debug = False):
-    """Retorna as posicoes dos quatro peoes do jogador associado a esta cor"""
+    """Recebe um cursor, uma cor (string), e um booleano chamado debug (False por padrão). Pega no Banco de dados as posições dos quatro peões do jogador associado a esta cor, e as retorna em um array, em caso de erro: retorna -1 por erros genéricos, ou -2 por erros por cursor inválido. Printa informações de erro cas debug seja True."""
+    
     lista_posicoes = []
     try:
         sql = "SELECT posicao FROM pyLudo.posicoes WHERE cor = '%s'"%(cor)
@@ -207,7 +222,8 @@ def Pega_Posicoes_Peoes_Cor(cursor, cor, debug = False):
     return lista_posicoes
 
 def Salva_Posicao_Peao_Cor(db, cor, peao_num, posicao, debug = False):
-    """Salva no banco de dados a posicao do peao recebido do jogador da cor recebida."""
+    """Recebe uma variável chamada db (um dicionário conténdo um ponteiro para o banco de dados, e um cursor para o mesmo), um peão (como definido pelo módulo Peoes), um número inteiro de 0 a 4 representando um dos quatro peões de um jogador, a sua posição, e um booleano chamado debug (False por padrão). Salva no banco a posição deste peão para o jogador desta cor (conhecido pela sua cor contída na variável peão recebida), e retorna 0 caso seja bem sucedido, -1 para erros genericos, ou -2 em caso de erro por cursor inválido. Printa informações de erro caso debug seja True."""
+    
     try:
         sql = "UPDATE pyLudo.posicoes SET posicao = %s WHERE cor = %s and peao = %s"
         valores = (posicao, cor, peao_num)
