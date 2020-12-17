@@ -84,6 +84,87 @@ class Testa_Partida(unittest.TestCase):
         print("Teste Módulo Partida - Caso de Teste 08 - Peão não e um dicionário")
         retorno_esperado = -1
         self.assertEqual(retorno_esperado, teste)
+
+    def test_09_Manda_para_casa_OK(self):
+        peao = Peao.Cria_peao("branco", 1)
+        teste = Partida.Manda_para_casa(peao)
+       
+        print("Teste Módulo Partida - Caso de Teste 09 - Manda para casa com sucesso")
+        retorno_esperado = 0
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_10_Manda_para_casa_NOK(self):
+        peao = Peao.Cria_peao("branco", 110)
+        teste = Partida.Manda_para_casa(peao)
+       
+        print("Teste Módulo Partida - Caso de Teste 09 - fin_pos não é um valor válido - MAIOR QUE 57")
+        retorno_esperado = -1
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_11_Manda_para_casa_NOK(self):
+        peao = 'a'
+        teste = Partida.Manda_para_casa(peao)
+       
+        print("Teste Módulo Partida - Caso de Teste 11 - Peão não é um dicionário")
+        retorno_esperado = -1
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_12_Checa_disponibilidade_peao_NOK(self):
+        peao = Peao.Cria_peao("vermelho", 5, 0)
+        teste = Partida.Checa_disponibilidade(peao)
+       
+        print("Teste Módulo Partida - Caso de Teste 12 - Checa disponibilidade com erro: Peão está na posição recebida, mas não pode andar")
+        retorno_esperado = -1
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_13_Checa_disponibilidade_peao_OK(self):
+        teste = Partida.Manda_para_casa("azul", 6, 0)
+       
+        print("Teste Módulo Partida - Caso de Teste 13 - Checa disponibilidade com sucesso: Peão está na posição recebida, e pode andar")
+        retorno_esperado = 1
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_14_Checa_disponibilidade_peao_NOK(self):
+        teste = Partida.Checa_disponibilidade_peao("amarelo", 5, 54)
+       
+        print("Teste Módulo Partida - Caso de Teste 14 -Checa disponibilidade com erro: Peão está na posição recebida, mas não pode andar")
+        retorno_esperado = -1
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_15_Checa_disponibilidade_peao_OK(self):
+        teste = Partida.Checa_disponibilidade_peao("amarelo", 3, 54)
+       
+        print("Teste Módulo Partida - Caso de Teste 15 - Checa disponibilidade com sucesso: Peão está na posição recebida, e pode andar")
+        retorno_esperado = 1
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_16_Checa_peao_NOK(self):
+        jogador = Cria_jogador(1)
+        teste = Partida.Checa_peao(jogador, 12, 2)
+        checa = Checa_disponibilidade_peao("amarelo", 5, 54)
+       
+        print("Teste Módulo Partida - Caso de Teste 16 - Checa_peao com erro: peão não pode andar.")
+        retorno_esperado = checa
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_17_Checa_peao_OK(self):
+        jogador = Cria_jogador(1)
+        teste = Partida.Checa_peao(jogador, 12, 2)
+        checa = Checa_disponibilidade_peao("amarelo", 2, 10)
+       
+        print("Teste Módulo Partida - Caso de Teste 17 - Checa_peao com sucesso.")
+        retorno_esperado = 2 #num
+        self.assertEqual(retorno_esperado, teste)
+
+    def test_18_Checa_peao_NOK(self):
+        jogador = Cria_jogador(1)
+        teste = Partida.Checa_peao(jogador, 12, 2)
+        checa = Checa_disponibilidade_peao("amarelo", 2, 8)
+       
+        print("Teste Módulo Partida - Caso de Teste 17 - Checa_peao com erro: Nenhum peão válido foi selecionado.")
+        retorno_esperado = -2
+        self.assertEqual(retorno_esperado, teste)
+
         
 if __name__ == '__main__':
     unittest.main()

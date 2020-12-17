@@ -2,9 +2,15 @@
 	
 	- XML:
 		
-		- Objetivo:
+		- Objetivo: Gravar os históricos de partidas do jogo, assim como as posições dos peões durante a mesma.
 		
 		- Funções:
+
+            - Cria_xml: Cria um arquivo .xml para guardar os dados da partida: rodada e posição dos peões de cada jogador.
+
+            - Formata_saida: Adequa a saida das informações do arquivo .xml gerado.
+
+            - Le_xml: Lê, através do retorno da função Formata_saida, o arquivo .xml, percorrendo por cada item dele.
 		
 		- Funções exportadas:
 		
@@ -77,6 +83,16 @@
 			- Desenha_tabuleiro: Deve ser usada sendo chamada por Desenha_jogo. Implementa toda a funcionalidade necessária para desenhar o tabuleiro. Deve ser usada em conjunto com Roda_tabuleiro.
 			
 			- Desenha_dado: Deve ser usada sendo chamada por Desenha_jogo. Implementa toda a funcionalidade necessária para desenhar o dado.
+
+            - Move_peao: É responsável pela movimentação do peão do jogador pelo tabuleiro. Recebe o valor tirado no dado e o peão que o jogador escolheu mover.
+	
+	            - Roda_tabuleiro: Função responsável pela rotação do tabuleiro, quando muda a vez do jogador. É feita utilizando 4 imagens diferentes do tabuleiro, que são equivalentes à anterior rotacionada em 90°.
+	
+	            - Posicao_peoes: Usada para localizar em que casa se encontram os peões em cada rodada. Retorna uma lista com as coordenadas dos peões.
+	
+	            - Clica_casa: Usada para obter o valor de uma casa no tabuleiro. Retorna um número que equivale a ela.
+	
+	            - Localiza_casas: Função que calcula e mapeia as casas do tabuleiro, na ordem da qual os peões do jogador passarão.
 
 			- Tela_final: Renderiza o nome do vencedor e dá a opção de sair do jogo ou continuar. Retorna 1, caso o usuário clique em continuar ou 0, caso escolha sair.
 			

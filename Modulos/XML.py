@@ -69,6 +69,4 @@ def Le_xml():
         lista_historico.append(dict_historico)
     print(lista_historico)
 
-Cria_xml()
-#Formata_saida()
-Le_xml()
+
