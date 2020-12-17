@@ -228,10 +228,13 @@ def Cria_tabuleiro(posicao_inicial, inc, debugging = False):
     return tabuleiro
 
 def Converte_posicao(cor, posicao):
-    '''"Converte" a posicao recebida para a posicao correspondente em relacao as posicoes azuis, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes. Retorna esta posição convertida em uma váriavel chamada casa_relativa'''
+    '''"Converte" a posicao recebida para a posicao correspondente em relacao as posicoes azuis, para que todas as pecas do jogo de cores distintas possam interagir umas com as outras apesarem de estarem em relacao a sua propria cor em posicoes diferentes. Retorna esta posição convertida em uma váriavel chamada casa_relativa, ou -1 em caso de erros.'''
     
-    if posicao == 0 or posicao >= 52:
+    if posicao == 0 or (posicao >= 52 and posicao <= 57):
         return posicao
+
+    elif posicao >= 58:
+        return -1
     
     cor_e_defasagem = {'amarelo': 39, 'verde': 26, 'vermelho': 13, 'azul': 0}
     cor = peao["cor"]
@@ -242,14 +245,11 @@ def Converte_posicao(cor, posicao):
 
     return posicao
 
-def Checa_disponibilidade(numero_dado, casa, cor):
+def Checa_disponibilidade(casa, cor):
     
-    if casa < 0:
-        if numero_dado != 6:
-            return -1
-        return 1
-
-    if casa_relativa + numero_dado > 57:
+    if casa < 0 or casa > 57:
         return -1
     
     return 1
+    
+__all__ = ['Cria_tabuleiro', 'Converte_posicao', 'Checa_disponibilidade']

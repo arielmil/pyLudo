@@ -21,3 +21,5 @@ def Move (peao,numero_dado):
     else:
         #Peao nao pode se mover.
         return 1
+        
+__all__ = ['Cria_peoes', 'Move']

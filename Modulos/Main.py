@@ -1,4 +1,3 @@
-#from Banco_de_dados import *
 from Graphics import *
 from Player import *
 from Partida import *
@@ -56,23 +55,16 @@ def Quantos_jogam():
             else:
                 cores.append(cor)
                 peoes = Cria_peoes(cor)
-                jogadores.append([jogador, peoes])
+                dado = Cria_dado(cor)
+                jogadores.append([jogador, peoes, cor])
                 flag = False
-
+    
     quantidade_jogadores = len(jogadores)
     return jogadores
 
-def Cria_dados(jogadores):
-    dados = []
-    for jogador in jogadores:
-        cor = jogador[1]["cor"]
-        dado = Cria_dado(cor)
-        dados.append(dado)
-
-    return dados
-
 def Encerrar_jogo(vencedores):
-    return
+    # Chama as funcoes do graphics para expor os jogadores que acabaram de vencer, e retorna 1
+    return 1
 
 def Quem_ganhou(cor, quantidade_jogadores):
     checagem = Pega_Posicoes_Peao_cor(cursor, cor)
@@ -82,15 +74,21 @@ def Quem_ganhou(cor, quantidade_jogadores):
 
             # Encontra o nome do jogador pela cor representando-o no jogo, e encontra esta cor pelos peoes dele
             if jogador[1][0]["cor"] == cor:
-                vencedores.append(jogador[0]["nome"])
+                vencedores.append({"nome": jogador[0]["nome"], cor: cor)}
                 
     if len(vencedores) == quantidade_jogadores - 1:
-        Encerrar_jogo(vencedores)
+        return Encerrar_jogo(vencedores)
         
     return 0
-
-jogadores = Quantos_jogam()
     
+def Gerencia_rodadas(jogadores):
+
+    encerrado = 0
+    i = -1
+    
+    while !encerrado:
+
+        i = i + 1
         
 
 def Salvar_XML():
@@ -115,3 +113,35 @@ def Salvar_XML():
     with open(nome_arquivo, 'w') as file_object:
         file_object.write(Formata_saida(historico))
 
+        if i >= quantidade_jogadores - 1:
+    	    i = -1
+    	    continue
+    	
+    	jogador = jogadores[i]
+    	nome = jogador[0]["nome"]
+    	peoes = jogador[1]
+    	cor = peoes[0]["cor"]
+    	dado = jogador[2]
+    	
+    	for vencedor in vencedores:
+    	    if cor == vencedor["cor"]:
+    	        continue
+    	    
+    	casa_clicada = Clica_casa()
+    	
+    	checa = Checa_peao(jogador, casa_clicada, numero_dado)
+    	
+    	while checa < 0:
+    	    checa = Checa_peao(jogador, casa_clicada, numero_dado)
+    	
+    	num_peao = checa
+    	peao = peoes[num_peao]
+    	
+    	Gerencia_rodada(peao, casa_clicada, dado)
+    	
+    	encerrado = Quem_ganhou(cor, quantidade_jogadores)
+    	   	
+    return 0
+    
+jogadores = Quantos_jogam()
+Gerencia_rodadas(jogadores)
