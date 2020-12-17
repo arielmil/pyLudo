@@ -59,21 +59,19 @@
 
 		- Main
 			- Quantos_jogam - Ariel Testar
-			- Cria_dados - Ariel Testar
 			- Salva_XML - Guilherme
-			- Encerrar_jogo - Guilherme
+			- Encerrar_jogo - Guilherme/Ariel Testar
 			- Quem_ganhou - Ariel Testar
+			- Gerência_rodadas - Ariel Testar
 			
 		- Partida
-			- Inicia_partida - Guilherme/Ariel
-			- Gerência_Partida - Guilherme/Ariel
 			- Checa_torres - Ariel Testar
 			- Controla_peca - Ariel Testar
 			- Cria_torres - Ariel Testar
 			- Desfaz_torres - Ariel Testar
 			- Captura_peão - Ariel Testar
 			- Manda_para_casa - Ariel Testar
-			- Escolhe_peão - Ariel Testar
+			- Checa_peão - Ariel Testar
 			- Checa_disponibilidade_peao - Ariel Testar
 
 		- Peão
@@ -89,13 +87,13 @@
 			- Printa_tabuleiro -- OK
 			- Cria_casas -- OK
 			- Cria_tabuleiro -- OK
-			- Converte_posicao -- Testar
-			- Checa_disponibilidade -- Testar
+			- Converte_posicao -- OK
+			- Checa_disponibilidade -- OK
 			
 
-	- Desenvolver sprites
-		- Escolher sprite
-			- Dado
-			- Peão
-			- Tabuleiro
-		- Linkar sprites
+	- Desenvolver sprites - Guilherme
+		- Escolher sprite - Guilherme
+			- Dado - Guilherme
+			- Peão - Guilherme
+			- Tabuleiro - Guilherme
+		- Linkar sprites - Guilherme

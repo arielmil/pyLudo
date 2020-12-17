@@ -1,7 +1,6 @@
 # coding: utf-8
 
 import mysql.connector as mysql
-from Peao import *
 
 def Exporta_Conexao(debug = False):
     db = Conecta_SGBD("localhost","ariel","123456789",debug)
@@ -226,3 +225,5 @@ def Salva_Posicao_Peao_Cor(db, cor, peao_num, posicao, debug = False):
             return -2
         
     return 0
+    
+__all__ = ['Salva_Posicao_Peao_Cor', 'Pega_Posicoes_Peao_Cor', 'Pega_Posicao_Peao_Cor', 'Salva_Jogadores', 'Deleta_Informacoes']

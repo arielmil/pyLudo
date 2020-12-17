@@ -1,7 +1,7 @@
 # coding: utf-8
 
 from Banco_de_dados import *
-from Peao import Cria_peoes
+from Peao import *
 import unittest
 
 class Testa_Partida(unittest.TestCase):
