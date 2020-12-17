@@ -26,7 +26,7 @@ def Cria_xml():
         peao3.text = str(posicoes_3[i])
         peao4 = ET.SubElement(cores[i], 'Peao4')
         peao4.text = str(posicoes_4[i])
-    nome_arquivo = 'Salva_XML.xml'
+    nome_arquivo = '../Partidas/Salva_XML.xml'
     with open(nome_arquivo, 'w') as file_object:
         file_object.write(Formata_saida(historico))
 
