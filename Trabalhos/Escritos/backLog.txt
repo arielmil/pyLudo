@@ -40,17 +40,26 @@
             		- Salva_Posicao_Peão_Cor - OK
             		- Deleta_Informacoes - OK
 
-		- XML - Guilherme -- Ok
+		- XML:
+            - Cria_xml - Guilherme
+            - Formata_saida - Guilherme
+            - Le_xml - Guilherme
 		
-		- Graphics - Guilherme
-			- pygame.init -- OK
-			- Inicia_telas
-			- Desenha_jogo -- OK
-			- Aonde_clicou -- OK
-			- Renderiza_tela_quantos_jogam()
-			- Desenha_peão
-			- Desenha_tabuleiro -- OK
-			- Desenha_dado
+		- Graphics
+			- pygame.init - Guilherme
+			- Inicia_telas - Guilherme
+			- Desenha_jogo - Guilherme
+			- Aonde_clicou - Guilherme
+			- Renderiza_tela_quantos_jogam - Guilherme
+			- Desenha_peão - Guilherme
+			- Desenha_tabuleiro - Guilherme
+			- Desenha_dado - Guilherme
+            - Move_peao - Guilherme
+            - Roda_tabuleiro - Guilherme
+            - Posicao_peoes - Guilherme
+            - Clica_casa - Guilherme
+            - Localiza_casas - Guilherme
+            - Tela_final - Guilherme
 
 		- Dados -- OK
 			- Cria_dado -- OK
@@ -64,7 +73,7 @@
 			
 		- Partida
 			- Inicia_partida - Guilherme/Ariel
-			- Gerência_Partida - Guilherme -- Ok
+			- Gerência_Partida - Ariel/Guilherme
 			- Roda_tabuleiro - Guilherme
 			- Checa_torres - Ariel OK
 			- Controla_peca - Ariel OK

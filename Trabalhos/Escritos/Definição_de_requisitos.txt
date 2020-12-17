@@ -49,8 +49,6 @@
 
 		- Funções:
 
-			- pygames.init: Função própria da biblioteca “pygames”, inicializa as funções para a interface gráfica.
-
 			- Inicia_telas: Envia para o pygames os parametros necessários para inicializar e posteriormente renderizar a interface gráfica.
 
 			- Desenha_jogo: Recebe uma lista composta por sublistas aonde o índice 0 de uma sublista contêm uma referência a uma imagem a ser renderizada, o segundo índice da sublista contem a posição x da imagem a ser renderizada, e o terceiro índice da sublista contem a posição y da imagem a ser renderizada. Renderiza as imagens recebidas nessa lista em suas respectivas posições x e y.
@@ -65,7 +63,17 @@
 			
 			- Desenha_dado: Deve ser usada sendo chamada por Desenha_jogo. Implementa toda a funcionalidade necessária para desenhar o dado.
 
-			- Tela_final: Renderiza o nome do vencedor e dá a opção de sair do jogo ou continuar. Retorna 1, caso o usuário clique em continuar ou 0, caso escolha sair.
+            - Move_peao: É responsável pela movimentação do peão do jogador pelo tabuleiro. Recebe o valor tirado no dado e o peão que o jogador escolheu mover.
+
+            - Roda_tabuleiro: Função responsável pela rotação do tabuleiro, quando muda a vez do jogador. É feita utilizando 4 imagens diferentes do tabuleiro, que são equivalentes à anterior rotacionada em 90°.
+
+            - Posicao_peoes: Usada para localizar em que casa se encontram os peões em cada rodada. Retorna uma lista com as coordenadas dos peões.
+
+            - Clica_casa: Usada para obter o valor de uma casa no tabuleiro. Retorna um número que equivale a ela.
+
+            - Localiza_casas: Função que calcula e mapeia as casas do tabuleiro, na ordem da qual os peões do jogador passarão.
+
+			- Tela_final: Renderiza o nome do vencedor e dá a opção de sair do jogo ou continuar. Retorna True, caso o usuário clique em "jogar novamente" ou False, caso escolha sair.
 
 
 

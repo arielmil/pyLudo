@@ -23,13 +23,13 @@ def Desenha_jogo():
     peao_verde = pygame.image.load(path + 'peão_verde.png')
     peao_azul = pygame.image.load(path + 'peão_azul.png')
     peao_amarelo = pygame.image.load(path + 'peão_amarelo.png')
-    dado1 = pygame.image.load(path + 'Dado_branco/dice_1.png')
-    dado2 = pygame.image.load(path + 'Dado_branco/dice_2.png')
-    dado3 = pygame.image.load(path + 'Dado_branco/dice_3.png')
-    dado4 = pygame.image.load(path + 'Dado_branco/dice_4.png')
-    dado5 = pygame.image.load(path + 'Dado_branco/dice_5.png')
-    dado6 = pygame.image.load(path + 'Dado_branco/dice_6.png')
-    imagens = [[tabuleiro1, tabuleiro2, tabuleiro3, tabuleiro4], [peao_vermelho, peao_verde, peao_azul, peao_amarelo], [dado1, dado2, dado3, dado4, dado5, dado6]]
+    dado1 = pygame.image.load(path + 'Dado_' + cor_usada + '/dice_1.png')
+    dado2 = pygame.image.load(path + 'Dado_' + cor_usada + '/dice_2.png')
+    dado3 = pygame.image.load(path + 'Dado_' + cor_usada + '/dice_3.png')
+    dado4 = pygame.image.load(path + 'Dado_' + cor_usada + '/dice_4.png')
+    dado5 = pygame.image.load(path + 'Dado_' + cor_usada + '/dice_5.png')
+    dado6 = pygame.image.load(path + 'Dado_' + cor_usada + '/dice_6.png')
+    imagens = [[tabuleiro1, tabuleiro2, tabuleiro3, tabuleiro4], [peao_azul, peao_vermelho, peao_verde, peao_amarelo], [dado1, dado2, dado3, dado4, dado5, dado6]]
     return imagens
    
 def Aonde_clicou():
@@ -267,12 +267,13 @@ amarelo = (0, 255, 255)
 
 cor_fundo = (139,69,19)
 
+cor_usada = 'vermelho'
 path = '../Assets/'
 imagens = []
 imagens = Desenha_jogo()
 jogo = False
 final = False
-dado_usado = Cria_dado("branco")
+dado_usado = Cria_dado(cor_usada)
 
 tela = pygame.display.set_mode((1080, 748))
 icone = pygame.image.load(path + 'icone_ludo.png')
