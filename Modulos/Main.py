@@ -1,7 +1,10 @@
-from Banco_de_Dados import *
+#from Banco_de_dados import *
 from Graphics import *
 from Player import *
 from Partida import *
+from xml.etree import ElementTree
+from xml.etree.ElementTree import Element, SubElement, Comment
+from xml.dom import minidom
 
 global vencedores
 vencedores = []
@@ -89,3 +92,26 @@ def Quem_ganhou(cor, quantidade_jogadores):
 jogadores = Quantos_jogam()
     
         
+
+def Salvar_XML():
+    titulo = Element('Título')
+    titulo.text = 'Ludo: Grupo 1'
+    historico = Element('Histórico')
+    rodada = SubElement(historico, 'Rodada')
+    rodada.text = '1'
+    localizacao = SubElement(historico, 'Localização dos peões')
+    azul = SubElement(localizacao, 'Azul')
+    vermelho = SubElemente(localizacao, 'Vermelho')
+    verde = SubElement(localizacao, 'Verde')
+    amarelo = SubElement(localizacao, 'Amarelo')
+    cores = [azul, vermelho, verde, amarelo]
+    posicoes_iniciais = [(330, 522), (285, 85), (725, 30), (770, 478)]
+    for i in range(len(cores)):
+        peao1 = SubElement(cores[i], 'Peão1')
+        peao2 = SubElement(cores[i], 'Peão2')
+        peao3 = SubElement(cores[i], 'Peão3')
+        peao4 = SubElement(cores[i], 'Peão4')
+    nome_arquivo = 'Salva_XML.xml'
+    with open(nome_arquivo, 'w') as file_object:
+        file_object.write(Formata_saida(historico))
+

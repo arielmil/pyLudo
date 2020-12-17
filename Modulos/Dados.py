@@ -14,5 +14,3 @@ def Clica_dado(dado):
     """Gera um número randomico entre [1,6]"""
     return random.randint(1,6)
 
-
-
