@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<Histórico>
+ <Rodada>1</Rodada>
+ <Cor>
+  <Azul>
+   <Peao1>(330, 522)</Peao1>
+   <Peao2>(260, 595)</Peao2>
+   <Peao3>(400, 595)</Peao3>
+   <Peao4>(330, 675)</Peao4>
+  </Azul>
+  <Vermelho>
+   <Peao1>(285, 85)</Peao1>
+   <Peao2>(205, 155)</Peao2>
+   <Peao3>(355, 155)</Peao3>
+   <Peao4>(285, 225)</Peao4>
+  </Vermelho>
+  <Verde>
+   <Peao1>(725, 30)</Peao1>
+   <Peao2>(655, 110)</Peao2>
+   <Peao3>(795, 110)</Peao3>
+   <Peao4>(725, 180)</Peao4>
+  </Verde>
+  <Amarelo>
+   <Peao1>(770, 478)</Peao1>
+   <Peao2>(700, 548)</Peao2>
+   <Peao3>(850, 548)</Peao3>
+   <Peao4>(770, 618)</Peao4>
+  </Amarelo>
+ </Cor>
+</Histórico>

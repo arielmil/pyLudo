@@ -67,23 +67,24 @@ def Renderiza_tela_quantos_jogam():
 
 def Desenha_peao(img_peao):
     """Implementa a funcionalidade necessária para desenhar os peões"""
-    #Peões vermelhos
-    verm1 = tela.blit(img_peao[0], (285, 85))
-    verm2 = tela.blit(img_peao[0], (205, 155))
-    verm3 = tela.blit(img_peao[0], (355, 155))
-    verm4 = tela.blit(img_peao[0], (285, 225))
-
-    #Peões verdes
-    verd1 = tela.blit(img_peao[1], (725, 30))
-    verd2 = tela.blit(img_peao[1], (655, 110))
-    verd3 = tela.blit(img_peao[1], (795, 110))
-    verd4 = tela.blit(img_peao[1], (725, 180))
 
     #Peões azuis
-    azul1 = tela.blit(img_peao[2], (333, 522))
-    azul2 = tela.blit(img_peao[2], (260, 595))
-    azul3 = tela.blit(img_peao[2], (400, 595))
-    azul4 = tela.blit(img_peao[2], (333, 672))
+    azul1 = tela.blit(img_peao[0], (330, 525))
+    azul2 = tela.blit(img_peao[0], (260, 595))
+    azul3 = tela.blit(img_peao[0], (400, 595))
+    azul4 = tela.blit(img_peao[0], (330, 675))
+
+    #Peões vermelhos
+    verm1 = tela.blit(img_peao[1], (285, 85))
+    verm2 = tela.blit(img_peao[1], (205, 155))
+    verm3 = tela.blit(img_peao[1], (355, 155))
+    verm4 = tela.blit(img_peao[1], (285, 225))
+
+    #Peões verdes
+    verd1 = tela.blit(img_peao[2], (725, 30))
+    verd2 = tela.blit(img_peao[2], (655, 110))
+    verd3 = tela.blit(img_peao[2], (795, 110))
+    verd4 = tela.blit(img_peao[2], (725, 180))
 
     #Peões amarelos
     amar1 = tela.blit(img_peao[3], (770, 478))
@@ -91,8 +92,8 @@ def Desenha_peao(img_peao):
     amar3 = tela.blit(img_peao[3], (850, 548))
     amar4 = tela.blit(img_peao[3], (770, 618))
 
-    lista_peoes = [verm1, verm2, verm3, verm4, verd1, verd2, verd3, verd4, azul1, azul2, azul3, azul4, amar1, amar2, amar3, amar4]
-    return lista_peoes
+    list_peoes = [azul1, azul2, azul3, azul4, verm1, verm2, verm3, verm4, verd1, verd2, verd3, verd4, amar1, amar2, amar3, amar4]
+    return list_peoes
 
 def Desenha_tabuleiro(img_tab):
     """Implementa a funcionalidade necessária para desenhar o tabuleiro"""
@@ -177,20 +178,18 @@ def Roda_tabuleiro():
 
 def Posicao_peoes():
     """Retorna o número da casa em que os peões estão."""
-    for peao in range(len(coord)):
-        if (Aonde_clicou()[0] > coord[peao][0] and Aonde_clicou()[0] < coord[peao][2]) and (Aonde_clicou()[1] > coord[peao][1] and Aonde_clicou()[1] < coord[peao][3]) :
-            return peao
-    return 0
+    posicoes = []
+    for peao in range(len(lista_peoes)):
+        if lista_peoes[peao][0] > coord[peao][0] and lista_peoes[peao][0] < coord[peao][2] and lista_peoes[peao][1] > coord[peao][1] and lista_peoes[peao][1] < coord[peao][3]:
+            posicoes.append(coord[peao])
+    return posicoes
 
 def Clica_casa():
     """Retorna o valor absoluto da casa"""
-    click = pygame.font.SysFont("Arial", 15)
     for casa in range(len(coord)):
-        if (Aonde_clicou()[0] > coord[casa][0] and Aonde_clicou()[0] < coord[casa][2]) and (Aonde_clicou()[1] > coord[casa][1] and Aonde_clicou()[1] < coord[casa][3]) :
-            texto = click.render(str(casa), (0, 0, 0))
-            tela.blit(texto, (720, 720))
+        if (Aonde_clicou()[0] > coord[casa][0] and Aonde_clicou()[0] < coord[casa][2]) and (Aonde_clicou()[1] > coord[casa][1] and Aonde_clicou()[1] < coord[casa][3]):
             return casa
-    return 0
+    return None
 
 def Localiza_casas():
     coordenadas = []
@@ -248,7 +247,7 @@ def Tela_final():
     opcao_jogar_novamente = pygame.draw.rect(tela, (0, 0, 0), (390, 290, 100, 50))
     opcao_sair = pygame.draw.rect(tela, (0, 0, 0), (390, 390, 100, 50))
     fonte = pygame.font.SysFont("Arial", 30)
-    texto_menu = fonte.render("Fim de jogo!", 1, (255, 255, 25))
+    texto_menu = fonte.render("Fim de jogo!", 1, (255, 255, 255))
     texto_jogar_novamente = fonte.render("Jogar novamente", 1, (255, 255, 255))
     texto_menu_sair = fonte.render("Sair do jogo", 1, (255, 255, 255))
     tela.blit(texto_menu, (400, 100))
@@ -279,7 +278,12 @@ tela = pygame.display.set_mode((1080, 748))
 icone = pygame.image.load(path + 'icone_ludo.png')
 pygame.display.set_caption('Ludo')
 pygame.display.set_icon(icone)
+
 Inicia_telas()
+coord = Localiza_casas()
+#if Clica_casa() != None:
+#Clica_casa()
+print(coord)
 
 while True:
     tela.fill(cor_fundo)
@@ -298,9 +302,14 @@ while True:
         Desenha_tabuleiro(imagens[0][0])
         lista_peoes = Desenha_peao(imagens[1])
         Desenha_dado(imagens[2])
+
         coord = Localiza_casas()
-        if Clica_casa() != 0:
-            Clica_casa()
+        if Clica_casa() != None:
+            fonte = pygame.font.SysFont("Arial", 15)
+            cc = Clica_casa()
+            texto1 = fonte.render(str(cc), 1, (255, 255, 255))
+            tela.blit(texto1, (0,0))
+        
 
         if (Aonde_clicou()[0] > 50 and Aonde_clicou()[1] < 118) and (Aonde_clicou()[1] > 50 and Aonde_clicou()[1] < 118):
             valor_dado = Clica_dado(dado_usado)
