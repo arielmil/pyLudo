@@ -226,4 +226,4 @@ def Salva_Posicao_Peao_Cor(db, cor, peao_num, posicao, debug = False):
         
     return 0
     
-__all__ = ['Salva_Posicao_Peao_Cor', 'Pega_Posicoes_Peao_Cor', 'Pega_Posicao_Peao_Cor', 'Salva_Jogadores', 'Deleta_Informacoes']
+__all__ = ['Salva_Posicao_Peao_Cor', 'Pega_Posicoes_Peoes_Cor', 'Pega_Posicao_Peao_Cor', 'Salva_Jogadores', 'Deleta_Informacoes']

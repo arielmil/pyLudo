@@ -9,35 +9,31 @@ MAIOR_CASA = 57
 
 #OBS: Foi obtida permissão do professor para fazer com que a casa guarde quantos peoes tem nela.
 
-<<<<<<< HEAD
-=======
 def Gerencia_rodada(peao, casa_clicada, dado):
     '''Implementa uma rodada do jogo.'''
 
     flag = 0
     numero_dado = 6
-    
+
     while (True):
-    	
-    	if numero_dado != 6:
-    	    break
-        
+
+        if numero_dado != 6:
+            break
+
         num_dado = Clica_dado(dado)
-        
         checa = Controla_peca(peao, numero_dado)
-    
+
         while (checa == 1):
-    	    numero_dado = Clica_dado(dado)
+            numero_dado = Clica_dado(dado)
             checa = Controla_peca(peao, numero_dado)
-            
+
         if flag == 1:
             break
-            
-	if num_dado == 6:
+
+        if num_dado == 6:
             flag = 1
 
     return 0
->>>>>>> d50e7248ee85ff4659eb335353a5ad8c56dc8f4c
 
 def Checa_torres(peao):
     '''Recebe um peão, e checa se na sua posição relativa existe uma semi_torre, ou torre de sua cor. Retorna 1 caso exista uma semi_torre, 2 caso exista uma torre, 0 caso caso não existam nenhuma das duas.'''
@@ -175,24 +171,25 @@ def Checa_disponibilidade_peao(cor, numero_dado, casa):
 
     numero_casa = Converte_posicao(cor, casa)
     casa_relativa = TABULEIRO[numero_casa]
-    
+
     #aqui tratar caso casa_relativa seja igual a 0
-    
+
     peoes = casa_relativa["peoes"]
+
     checa = None
-      
+
     for peao in peoes:
         if peao["cor"] == cor:
-		
-	    if casa == 0:
+
+            if casa == 0:
                 if numero_dado != 6:
-			
-                #Peao esta na posicao recebida, porem nao pode andar.
-                return -1
-			    
-            #Peao esta na posicao recebida, e pode andar.
-            return 1
-			
+        
+                    #Peao esta na posicao recebida, porem nao pode andar.
+                    return -1
+            
+                #Peao esta na posicao recebida, e pode andar.
+                return 1
+        
             checa = Checa_disponibilidade(casa + numero_dado, cor)
 
             if checa == -1:
